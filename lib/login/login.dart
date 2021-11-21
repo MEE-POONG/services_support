@@ -7,8 +7,19 @@ class SignIn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      body: Container(
+        constraints: BoxConstraints.expand(),
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/images/1111.png"),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Body(),
+      ),
       appBar: AppBar(),
-      body: Body(),
+      
+     // body: Body(),
     );
   }
 }
@@ -28,7 +39,7 @@ class _BodyState extends State<Body> {
       child: SizedBox(
         width: double.infinity,
         child: Padding(
-          padding: const EdgeInsets.all(30),
+          padding: const EdgeInsets.fromLTRB(50, 0, 50, 0),
           child: Column(
             children: <Widget>[
               Text(
@@ -71,14 +82,13 @@ class _SignFormState extends State<SignForm> {
       child: Column(
         children: [
           SizedBox(height: 10),
-          Image.network(
-            "https://askaunjai.ais.co.th/aunjai-get-files/images/AJ_Call_center_boy2.png",
+          Image.asset("assets/images/MEE POONG GROUP-03 (1).png",
             height: 200,
             width: 200,
           ),
           TextFormField(
             decoration: InputDecoration(
-                labelText: "User ID",
+                labelText: "Username",
                 // hintText: "Enter your ID",
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(40),
@@ -106,7 +116,7 @@ class _SignFormState extends State<SignForm> {
             ],
           ),
           Padding(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(10),
             child: SizedBox(
               height: 50,
               width: 150,
@@ -114,7 +124,7 @@ class _SignFormState extends State<SignForm> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
                 ),
-                color: Colors.green[800],
+                color: Colors.lightBlue,
                 onPressed: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
@@ -133,7 +143,7 @@ class _SignFormState extends State<SignForm> {
               ),
             ),
           ),
-          Text("Don't have an account ?"),
+          Text("Hello Word"),
         ],
       ),
     );

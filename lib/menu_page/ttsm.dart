@@ -15,6 +15,8 @@ class TTSM extends StatelessWidget {
             color: Colors.grey,
           ),
         ),
+        backgroundColor: Colors.grey[100],
+        elevation: 1,
       ),
     body: Container(
         constraints: BoxConstraints.expand(),

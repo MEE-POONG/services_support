@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:services_support/home/home.dart';
 
 class Report extends StatelessWidget {
   const Report({Key? key}) : super(key: key);
@@ -9,24 +10,35 @@ class Report extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           "Report",
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w500,
-            color: Colors.grey,
+          style: TextStyle(color: Colors.white),
+        ),
+        centerTitle: true,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios),
+          onPressed: () {
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (context) => Home()));
+          },
+        ),
+        actions: [
+          IconButton(
+            icon: Icon(
+              Icons.search,
+              size: 30,
+            ),
+            onPressed: () {},
+          ),
+        ],
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Colors.deepPurple, Colors.lightBlue],
+            ),
           ),
         ),
-        leading: Icon(Icons.menu),
+        elevation: 4,
       ),
-      body: Container(
-        constraints: BoxConstraints.expand(),
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("assets/images/7.jpeg"),
-            fit: BoxFit.cover,
-          ),
-        ),
-        child: Body(),
-      ),
+      body: Body(),
     );
   }
 }
@@ -42,6 +54,60 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Column(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Colors.deepPurple, Colors.lightBlue],
+            ),
+          ),
+          height: 50,
+          child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "Today Report all job",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+          ),
+        ),
+        Container(
+          child: Column(
+            children: <Widget>[
+              SizedBox(
+                height: 10,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  RaisedButton(
+                    child: Text("โหลดตัวอย่างรายงาน"),
+                    onPressed: () {},
+                  ),
+                  RaisedButton(
+                    child: Text("ส่งรายงาน"),
+                    onPressed: () {},
+                  ),
+                  RaisedButton(
+                    child: Row(
+                      children: [Icon(Icons.widgets_sharp)],
+                    ),
+                    onPressed: () {},
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
   }
 }

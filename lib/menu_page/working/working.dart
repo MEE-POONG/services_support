@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:services_support/home/bottomnavbar.dart';
 import 'package:services_support/home/home.dart';
+import 'package:services_support/menu_page/working/depart_working.dart';
 
-class CheckName extends StatelessWidget {
-  const CheckName({Key? key}) : super(key: key);
+class Working extends StatelessWidget {
+  const Working({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Check Name",
+          "เลือกไซต์เพื่อดำเนินการ",
           style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,
@@ -40,12 +40,11 @@ class CheckName extends StatelessWidget {
         elevation: 5,
       ),
       body: Body(),
-      bottomNavigationBar: BottomNavBarFb5(),
     );
   }
 }
 
-////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
 class Body extends StatefulWidget {
   const Body({Key? key}) : super(key: key);
 
@@ -70,41 +69,49 @@ class _BodyState extends State<Body> {
             child: Row(
               children: [
                 Text(
-                  "แจ้งรายชื่อผู้ปฏิบัติงานประจำวันที่ :",
+                  "รายละเอียดไซต์ :",
                   style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 15,
-                  ),
+                      color: Colors.white,
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold),
                 ),
               ],
             ),
           ),
-        ),
-        SizedBox(
-          height: 200,
         ),
         Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Colors.deepPurple, Colors.lightBlue],
-            ),
-          ),
-          height: 50,
-          child: Padding(
-            padding: const EdgeInsets.all(10),
-            child: Row(
-              children: [
-                Text(
-                  "ใบงานทั้งหมดในTTSM",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 15,
+          child: Column(
+            children: <Widget>[
+              SizedBox(
+                height: 10,
+              ),
+              TextField(maxLines: 3,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  RaisedButton(
+                      child: Text("Depart"),
+                      onPressed: () {},
+                    ),
+                    
+                  RaisedButton(
+                    child: Text("Onsite"),
+                    onPressed: () {},
                   ),
-                ),
-              ],
-            ),
+                  RaisedButton(
+                    child: Text("Done"),
+                    onPressed: () {},
+                  ),
+                  
+                  RaisedButton(
+                    child: Text("Get location"),
+                    onPressed: () {},
+                  ),
+                ],
+              ),
+            ],
           ),
-        )
+        ),
       ],
     );
   }

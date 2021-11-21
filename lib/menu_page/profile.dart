@@ -42,7 +42,18 @@ class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Column(),
+      child: Column(
+        children: [
+           Text(
+          "",
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w500,
+            color: Colors.grey,
+          ),
+        ),
+        ],
+      ),
     );
   }
 }
