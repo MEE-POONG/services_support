@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:services_support/home/home.dart';
-import 'package:services_support/menu_page/working/depart_working.dart';
 
 class Working extends StatelessWidget {
   const Working({Key? key}) : super(key: key);
@@ -85,25 +84,29 @@ class _BodyState extends State<Body> {
               SizedBox(
                 height: 10,
               ),
-              TextField(maxLines: 3,),
+              TextField(
+                maxLines: 3,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   RaisedButton(
-                      child: Text("Depart"),
-                      onPressed: () {},
-                    ),
-                    
+                    color: Colors.lightBlue,
+                    child: Text("Depart"),
+                    onPressed: () {},
+                  ),
                   RaisedButton(
+                    color: Colors.lightBlue,
                     child: Text("Onsite"),
                     onPressed: () {},
                   ),
                   RaisedButton(
+                    color: Colors.lightBlue,
                     child: Text("Done"),
                     onPressed: () {},
                   ),
-                  
                   RaisedButton(
+                    color: Colors.lightBlue,
                     child: Text("Get location"),
                     onPressed: () {},
                   ),

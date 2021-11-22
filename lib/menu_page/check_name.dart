@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:services_support/home/bottomnavbar.dart';
 import 'package:services_support/home/home.dart';
 
 class CheckName extends StatelessWidget {
@@ -40,7 +39,6 @@ class CheckName extends StatelessWidget {
         elevation: 5,
       ),
       body: Body(),
-      bottomNavigationBar: BottomNavBarFb5(),
     );
   }
 }

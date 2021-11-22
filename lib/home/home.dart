@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:services_support/home/bottomnavbar.dart';
-import 'package:services_support/menu_page/profile.dart';
+import 'package:services_support/menu_page/profile/profile.dart';
 
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
