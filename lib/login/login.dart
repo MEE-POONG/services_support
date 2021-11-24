@@ -76,6 +76,7 @@ class SignForm extends StatefulWidget {
 }
 
 class _SignFormState extends State<SignForm> {
+  
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -120,6 +121,7 @@ class _SignFormState extends State<SignForm> {
             child: SizedBox(
               height: 50,
               width: 150,
+              // ignore: deprecated_member_use
               child: FlatButton(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),

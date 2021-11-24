@@ -82,6 +82,7 @@ class BtnLogin extends StatelessWidget {
     return SizedBox(
       width: 250,
       height: 60,
+      // ignore: deprecated_member_use
       child: FlatButton(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),

@@ -19,9 +19,13 @@ class Body extends StatefulWidget {
   _BodyState createState() => _BodyState();
 }
 
+// ignore: non_constant_identifier_names
 TextEditingController Data1 = TextEditingController();
+// ignore: non_constant_identifier_names
 TextEditingController Data2 = TextEditingController();
+// ignore: non_constant_identifier_names
 TextEditingController Data3 = TextEditingController();
+// ignore: non_constant_identifier_names
 TextEditingController Data4 = TextEditingController();
 
 String _input1 = "";
@@ -101,6 +105,7 @@ class _BodyState extends State<Body> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
+                          // ignore: deprecated_member_use
                           RaisedButton(
                             child: Text("Update"),
                             onPressed: () {
@@ -109,6 +114,7 @@ class _BodyState extends State<Body> {
                               });
                             },
                           ),
+                          // ignore: deprecated_member_use
                           RaisedButton(
                             child: Text("ล้างข้อมูล"),
                             onPressed: () {},
@@ -143,6 +149,7 @@ class _BodyState extends State<Body> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
+                          // ignore: deprecated_member_use
                           RaisedButton(
                             child: Text("Update"),
                             onPressed: () {
@@ -151,6 +158,7 @@ class _BodyState extends State<Body> {
                               });
                             },
                           ),
+                          // ignore: deprecated_member_use
                           RaisedButton(
                             child: Text("ล้างข้อมูล"),
                             onPressed: () {},
@@ -185,6 +193,7 @@ class _BodyState extends State<Body> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
+                          // ignore: deprecated_member_use
                           RaisedButton(
                             child: Text("Update"),
                             onPressed: () {
@@ -193,6 +202,7 @@ class _BodyState extends State<Body> {
                               });
                             },
                           ),
+                          // ignore: deprecated_member_use
                           RaisedButton(
                             child: Text("ล้างข้อมูล"),
                             onPressed: () {},
@@ -227,6 +237,7 @@ class _BodyState extends State<Body> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
+                          // ignore: deprecated_member_use
                           RaisedButton(
                             child: Text("Update"),
                             onPressed: () {
@@ -235,6 +246,7 @@ class _BodyState extends State<Body> {
                               });
                             },
                           ),
+                          // ignore: deprecated_member_use
                           RaisedButton(
                             child: Text("ล้างข้อมูล"),
                             onPressed: () {},

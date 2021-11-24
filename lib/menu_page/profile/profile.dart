@@ -131,6 +131,7 @@ class _BodyState extends State<Body> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  // ignore: deprecated_member_use
                   OutlineButton(
                     padding: EdgeInsets.symmetric(horizontal: 50),
                     shape: RoundedRectangleBorder(
@@ -142,6 +143,7 @@ class _BodyState extends State<Body> {
                             letterSpacing: 2.2,
                             color: Colors.black)),
                   ),
+                  // ignore: deprecated_member_use
                   RaisedButton(
                     onPressed: () {},
                     color: Colors.lightBlue,

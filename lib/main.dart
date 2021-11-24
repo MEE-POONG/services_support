@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:services_support/home/home.dart';
 
 import 'splash_screen/splash.dart';
 
@@ -15,11 +14,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Service Support',
       theme: ThemeData(
-       // scaffoldBackgroundColor: Colors.lightGreenAccent,
         appBarTheme: AppBarTheme(
           color: Colors.white10,
           elevation: 0,
-           brightness: Brightness.light,
+          brightness: Brightness.light,
           iconTheme: IconThemeData(
             color: Colors.black,
           ),

@@ -88,14 +88,17 @@ class _BodyState extends State<Body> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
+                  // ignore: deprecated_member_use
                   RaisedButton(
                     child: Text("โหลดตัวอย่างรายงาน"),
                     onPressed: () {},
                   ),
+                  // ignore: deprecated_member_use
                   RaisedButton(
                     child: Text("ส่งรายงาน"),
                     onPressed: () {},
                   ),
+                  // ignore: deprecated_member_use
                   RaisedButton(
                     child: Row(
                       children: [Icon(Icons.widgets_sharp)],

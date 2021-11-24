@@ -104,6 +104,7 @@ class _SettingsPageState extends State<SettingsPage> {
               height: 50,
             ),
             Center(
+              // ignore: deprecated_member_use
               child: OutlineButton(
                 padding: EdgeInsets.symmetric(horizontal: 40),
                 shape: RoundedRectangleBorder(
@@ -158,6 +159,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   ],
                 ),
                 actions: [
+                  // ignore: deprecated_member_use
                   FlatButton(
                       onPressed: () {
                         Navigator.of(context).pop();

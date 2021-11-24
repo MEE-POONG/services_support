@@ -11,8 +11,11 @@ class GradientAppBarFb1 extends StatelessWidget with PreferredSizeWidget {
   Widget build(BuildContext context) {
     const primaryColor = Color(0xff4338CA);
     const secondaryColor = Color(0xff6D28D9);
+    // ignore: unused_local_variable
     const accentColor = Color(0xffffffff);
+    // ignore: unused_local_variable
     const backgroundColor = Color(0xffffffff);
+    // ignore: unused_local_variable
     const errorColor = Color(0xffEF4444);
 
     return AppBar(

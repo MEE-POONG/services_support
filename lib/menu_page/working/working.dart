@@ -90,21 +90,25 @@ class _BodyState extends State<Body> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  // ignore: deprecated_member_use
                   RaisedButton(
                     color: Colors.lightBlue,
                     child: Text("Depart"),
                     onPressed: () {},
                   ),
+                  // ignore: deprecated_member_use
                   RaisedButton(
                     color: Colors.lightBlue,
                     child: Text("Onsite"),
                     onPressed: () {},
                   ),
+                  // ignore: deprecated_member_use
                   RaisedButton(
                     color: Colors.lightBlue,
                     child: Text("Done"),
                     onPressed: () {},
                   ),
+                  // ignore: deprecated_member_use
                   RaisedButton(
                     color: Colors.lightBlue,
                     child: Text("Get location"),
