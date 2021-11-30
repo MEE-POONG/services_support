@@ -145,7 +145,7 @@ class _SignFormState extends State<SignForm> {
               ),
             ),
           ),
-          Text("Hello Word"),
+          Text(""),
         ],
       ),
     );

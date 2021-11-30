@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+// Import the firebase_core and cloud_firestore plugin
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Work extends StatelessWidget {
   const Work({Key? key}) : super(key: key);
 
@@ -28,12 +31,38 @@ TextEditingController Data3 = TextEditingController();
 // ignore: non_constant_identifier_names
 TextEditingController Data4 = TextEditingController();
 
-String _input1 = "";
+String _inputCm = "";
 String _input2 = "";
 String _input3 = "";
 String _input4 = "";
 
 class _BodyState extends State<Body> {
+  // Create a CollectionReference called users that references the firestore collection
+  CollectionReference addWork = FirebaseFirestore.instance.collection('work');
+
+  Future<void> addInputWork(type, data) {
+    // Call the user's CollectionReference to add a new user
+    String subStr = data;
+    return addWork
+        .add({'text': subStr, 'type': type})
+        .then((value) => print("CM Added"))
+        .catchError((error) => print("Failed to add CM: $error"));
+  }
+
+  clearData() {
+    setState(() {
+      _inputCm = "";
+      _input2 = "";
+      _input3 = "";
+      _input4 = "";
+      Data1.clear();
+      Data2.clear();
+      Data3.clear();
+      Data4.clear();
+    });
+    print("CLEAR");
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -69,6 +98,8 @@ class _BodyState extends State<Body> {
             isScrollable: false,
             indicatorColor: Colors.white,
             indicatorWeight: 2.5,
+            labelColor: Colors.white,
+            unselectedLabelColor: Colors.black,
             tabs: <Tab>[
               Tab(text: "CM"),
               Tab(text: "CM Manual"),
@@ -76,7 +107,7 @@ class _BodyState extends State<Body> {
               Tab(text: "Activity"),
             ],
           ),
-           elevation: 10,
+          elevation: 10,
           titleSpacing: 20,
         ),
         body: Container(
@@ -108,20 +139,23 @@ class _BodyState extends State<Body> {
                           // ignore: deprecated_member_use
                           RaisedButton(
                             child: Text("Update"),
-                            onPressed: () {
+                            onPressed: () async {
                               setState(() {
-                                _input1 = Data1.text;
+                                _inputCm = Data1.text;
                               });
+                              await addInputWork("CM", Data1.text);
                             },
                           ),
                           // ignore: deprecated_member_use
                           RaisedButton(
                             child: Text("ล้างข้อมูล"),
-                            onPressed: () {},
+                            onPressed: () {
+                              clearData();
+                            },
                           ),
                         ],
                       ),
-                      Text("$_input1")
+                      Text(Data1.text)
                     ],
                   ),
                 ),
@@ -152,16 +186,19 @@ class _BodyState extends State<Body> {
                           // ignore: deprecated_member_use
                           RaisedButton(
                             child: Text("Update"),
-                            onPressed: () {
+                            onPressed: () async {
                               setState(() {
                                 _input2 = Data2.text;
                               });
+                              await addInputWork("CM MANUAL", Data2.text);
                             },
                           ),
                           // ignore: deprecated_member_use
                           RaisedButton(
                             child: Text("ล้างข้อมูล"),
-                            onPressed: () {},
+                            onPressed: () {
+                              clearData();
+                            },
                           ),
                         ],
                       ),
@@ -205,7 +242,9 @@ class _BodyState extends State<Body> {
                           // ignore: deprecated_member_use
                           RaisedButton(
                             child: Text("ล้างข้อมูล"),
-                            onPressed: () {},
+                            onPressed: () {
+                              clearData();
+                            },
                           ),
                         ],
                       ),
@@ -249,7 +288,9 @@ class _BodyState extends State<Body> {
                           // ignore: deprecated_member_use
                           RaisedButton(
                             child: Text("ล้างข้อมูล"),
-                            onPressed: () {},
+                            onPressed: () {
+                              clearData();
+                            },
                           ),
                         ],
                       ),

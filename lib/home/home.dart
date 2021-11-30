@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:services_support/check_name/tab1.dart';
 import 'package:services_support/home/bottomnavbar.dart';
 import 'package:services_support/menu_page/profile/profile.dart';
 
@@ -35,8 +36,8 @@ class _BodyState extends State<Body> {
         leading: IconButton(
           icon: Icon(Icons.menu),
           onPressed: () {
-             Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => Profile()));
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (context) => Profile()));
           },
         ),
         actions: [
@@ -56,7 +57,8 @@ class _BodyState extends State<Body> {
           ),
         ),
       ),
-      body: Container(),
+      body: Tab1(),
+      
       bottomNavigationBar: BottomNavBarFb5(),
     );
   }

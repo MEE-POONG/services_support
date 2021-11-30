@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:services_support/home/home.dart';
-import 'package:services_support/menu_page/check_name.dart';
+import 'package:services_support/check_name/check_name.dart';
 import 'package:services_support/menu_page/report.dart';
 import 'package:services_support/menu_page/work.dart';
 import 'package:services_support/menu_page/working/working.dart';
