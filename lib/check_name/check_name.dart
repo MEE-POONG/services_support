@@ -72,57 +72,5 @@ class _BodyState extends State<Body> {
         ),
       ),
     );
-
-    // Column(
-    //   children: [
-    //     Container(
-    //       decoration: BoxDecoration(
-    //         gradient: LinearGradient(
-    //           colors: [Colors.deepPurple, Colors.lightBlue],
-    //         ),
-    //       ),
-    //       height: 50,
-    //       child: Padding(
-    //         padding: const EdgeInsets.all(10),
-    //         child: Row(
-    //           children: [
-    //             Text(
-    //               "แจ้งรายชื่อผู้ปฏิบัติงานประจำวันที่ :",
-    //               style: TextStyle(
-    //                 color: Colors.white,
-    //                 fontSize: 15,
-    //               ),
-    //             ),
-    //           ],
-    //         ),
-    //       ),
-    //     ),
-    //     SizedBox(
-    //       height: 200,
-    //     ),
-    //     Container(
-    //       decoration: BoxDecoration(
-    //         gradient: LinearGradient(
-    //           colors: [Colors.deepPurple, Colors.lightBlue],
-    //         ),
-    //       ),
-    //       height: 50,
-    //       child: Padding(
-    //         padding: const EdgeInsets.all(10),
-    //         child: Row(
-    //           children: [
-    //             Text(
-    //               "ใบงานทั้งหมดในTTSM",
-    //               style: TextStyle(
-    //                 color: Colors.white,
-    //                 fontSize: 15,
-    //               ),
-    //             ),
-    //           ],
-    //         ),
-    //       ),
-    //     )
-    //   ],
-    // );
   }
 }

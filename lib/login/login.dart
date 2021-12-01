@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:services_support/home/home.dart';
 
@@ -18,8 +19,8 @@ class SignIn extends StatelessWidget {
         child: Body(),
       ),
       appBar: AppBar(),
-      
-     // body: Body(),
+
+      // body: Body(),
     );
   }
 }
@@ -76,18 +77,47 @@ class SignForm extends StatefulWidget {
 }
 
 class _SignFormState extends State<SignForm> {
-  
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  TextEditingController _email = TextEditingController();
+  TextEditingController _password = TextEditingController();
+
+  signIn() {
+    _auth
+        .signInWithEmailAndPassword(
+      email: _email.text,
+      password: _password.text,
+    )
+        .then((user) {
+      print(user);
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => Home(),
+        ),
+      );
+    }).catchError((error) {
+      print(error);
+      print(error.message);
+      // ignore: deprecated_member_use
+      Scaffold.of(context).showSnackBar(SnackBar(
+        content: Text(error.message, style: TextStyle(color: Colors.white)),
+        backgroundColor: Colors.red,
+      ));
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
       child: Column(
         children: [
           SizedBox(height: 10),
-          Image.asset("assets/images/MEE POONG GROUP-03 (1).png",
+          Image.asset(
+            "assets/images/MEE POONG GROUP-03 (1).png",
             height: 200,
             width: 200,
           ),
           TextFormField(
+            controller: _email,
             decoration: InputDecoration(
                 labelText: "Username",
                 // hintText: "Enter your ID",
@@ -97,6 +127,7 @@ class _SignFormState extends State<SignForm> {
           ),
           SizedBox(height: 30),
           TextFormField(
+            controller: _password,
             decoration: InputDecoration(
                 labelText: "Password",
                 // hintText: "****",
@@ -128,11 +159,7 @@ class _SignFormState extends State<SignForm> {
                 ),
                 color: Colors.lightBlue,
                 onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => Home(),
-                    ),
-                  );
+                  signIn();
                 },
                 child: Text(
                   "Login",

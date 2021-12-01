@@ -1,3 +1,4 @@
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:services_support/check_name/tab1.dart';
@@ -24,6 +25,8 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
+  //final FirebaseAuth _auth = FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,7 +49,14 @@ class _BodyState extends State<Body> {
               Icons.search,
               size: 30,
             ),
-            onPressed: () {},
+            onPressed: () {
+              // _auth.signOut();
+              // Navigator.pushAndRemoveUntil(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => SplashSrceen()),
+              //   ModalRoute.withName('/'),
+              // );
+            },
           ),
         ],
         flexibleSpace: Container(
@@ -58,7 +68,6 @@ class _BodyState extends State<Body> {
         ),
       ),
       body: Tab1(),
-      
       bottomNavigationBar: BottomNavBarFb5(),
     );
   }
