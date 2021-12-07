@@ -11,11 +11,11 @@ class SignIn extends StatelessWidget {
       body: Container(
         constraints: BoxConstraints.expand(),
         decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("assets/images/1111.png"),
-            fit: BoxFit.cover,
-          ),
-        ),
+            // image: DecorationImage(
+            //   image: AssetImage("assets/images/1111.png"),
+            //   fit: BoxFit.cover,
+            // ),
+            ),
         child: Body(),
       ),
       appBar: AppBar(),
@@ -44,7 +44,7 @@ class _BodyState extends State<Body> {
           child: Column(
             children: <Widget>[
               Text(
-                "Services Support",
+                "Mee Report",
                 style: TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
@@ -112,36 +112,37 @@ class _SignFormState extends State<SignForm> {
         children: [
           SizedBox(height: 10),
           Image.asset(
-            "assets/images/MEE POONG GROUP-03 (1).png",
+            "assets/images/iconApp 1 4.png",
             height: 200,
             width: 200,
           ),
           TextFormField(
-            controller: _email,
-            decoration: InputDecoration(
-                labelText: "Username",
-                // hintText: "Enter your ID",
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(40),
-                )),
-          ),
+              controller: _email,
+              decoration: InputDecoration(
+                  labelText: "Username",
+
+                  // hintText: "Enter your ID",
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(40),
+                  )),
+              textAlign: TextAlign.start),
           SizedBox(height: 30),
           TextFormField(
-            controller: _password,
-            decoration: InputDecoration(
-                labelText: "Password",
-                // hintText: "****",
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(40),
-                )),
-          ),
+              controller: _password,
+              decoration: InputDecoration(
+                  labelText: "Password",
+                  // hintText: "****",
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(40),
+                  )),
+              textAlign: TextAlign.start),
           SizedBox(
             height: 5,
           ),
           Row(
             children: [
               Checkbox(
-                value: false,
+                value: true,
                 onChanged: (value) {},
               ),
               Text("จดจำรหัสผ่าน"),

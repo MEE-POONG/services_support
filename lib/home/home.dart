@@ -1,7 +1,7 @@
 // import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:services_support/check_name/tab1.dart';
 import 'package:services_support/home/bottomnavbar.dart';
 import 'package:services_support/menu_page/profile/profile.dart';
 
@@ -32,7 +32,7 @@ class _BodyState extends State<Body> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Service Support",
+          "Mee Report",
           style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,
@@ -67,7 +67,7 @@ class _BodyState extends State<Body> {
           ),
         ),
       ),
-      body: Tab1(),
+      body: Container(),
       bottomNavigationBar: BottomNavBarFb5(),
     );
   }

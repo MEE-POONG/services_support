@@ -13,11 +13,11 @@ class SplashSrceen extends StatelessWidget {
       body: Container(
         constraints: BoxConstraints.expand(),
         decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("assets/images/1111.png"),
-            fit: BoxFit.cover,
-          ),
-        ),
+            // image: DecorationImage(
+            //   image: AssetImage("assets/images/1111.png"),
+            //   fit: BoxFit.cover,
+            // ),
+            ),
         child: Body(),
       ),
     );
@@ -55,7 +55,7 @@ class _BodyState extends State<Body> {
                 style: TextStyle(color: Colors.black),
               ),
               Image.asset(
-                "assets/images/MEE POONG GROUP-03 (1).png",
+                "assets/images/iconApp.png",
                 height: 500,
                 width: double.infinity,
               ),

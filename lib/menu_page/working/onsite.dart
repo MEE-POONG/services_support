@@ -8,25 +8,20 @@ class Onsite extends StatefulWidget {
 }
 
 class _OnsiteState extends State<Onsite> {
+  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      
       body: Container(
+        padding: EdgeInsets.all(15.0),
         child: Column(
-          children: <Widget>[
-            SizedBox(
-              height: 10,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              
+            ],
             ),
-            Text("รายละเอียดงาน", style: TextStyle(fontSize: 20)),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [],
-            ),
-          ],
-        ),
       ),
     );
   }
