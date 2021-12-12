@@ -5,6 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:services_support/home/bottomnavbar.dart';
 import 'package:services_support/menu_page/profile/profile.dart';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:services_support/menu_page/working/working.dart';
+
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
 
@@ -26,6 +29,8 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   //final FirebaseAuth _auth = FirebaseAuth.instance;
+  final Stream<QuerySnapshot> _worksStream =
+      FirebaseFirestore.instance.collection('work').snapshots();
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +72,40 @@ class _BodyState extends State<Body> {
           ),
         ),
       ),
-      body: Container(),
+      body: Container(
+        child: StreamBuilder<QuerySnapshot>(
+          stream: _worksStream,
+          builder:
+              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (snapshot.hasError) {
+              return Text('Something went wrong');
+            }
+
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Text("Loading");
+            }
+
+            return ListView(
+              children: snapshot.data!.docs.map((DocumentSnapshot document) {
+                Map<String, dynamic> data =
+                    document.data()! as Map<String, dynamic>;
+                return TextButton(
+                  onPressed: () {
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => Working()));
+                  },
+                  child: ListTile(
+                   
+                    tileColor: Colors.black12,
+                    title: Text(data['JobId']),
+                    subtitle: Text(data['Site']),
+                  ),
+                );
+              }).toList(),
+            );
+          },
+        ),
+      ),
       bottomNavigationBar: BottomNavBarFb5(),
     );
   }

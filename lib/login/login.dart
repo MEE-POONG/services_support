@@ -11,11 +11,11 @@ class SignIn extends StatelessWidget {
       body: Container(
         constraints: BoxConstraints.expand(),
         decoration: BoxDecoration(
-            // image: DecorationImage(
-            //   image: AssetImage("assets/images/1111.png"),
-            //   fit: BoxFit.cover,
-            // ),
-            ),
+          image: DecorationImage(
+            image: AssetImage("assets/images/พื้นหลัง App.png"),
+            fit: BoxFit.cover,
+          ),
+        ),
         child: Body(),
       ),
       appBar: AppBar(),
@@ -112,7 +112,7 @@ class _SignFormState extends State<SignForm> {
         children: [
           SizedBox(height: 10),
           Image.asset(
-            "assets/images/iconApp 1 4.png",
+            "assets/images/New iconApp pre2-2.png",
             height: 200,
             width: 200,
           ),
@@ -142,7 +142,7 @@ class _SignFormState extends State<SignForm> {
           Row(
             children: [
               Checkbox(
-                value: true,
+                value: false,
                 onChanged: (value) {},
               ),
               Text("จดจำรหัสผ่าน"),
@@ -158,7 +158,7 @@ class _SignFormState extends State<SignForm> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
                 ),
-                color: Colors.lightBlue,
+                color: Colors.lightBlueAccent,
                 onPressed: () {
                   signIn();
                 },
@@ -173,7 +173,7 @@ class _SignFormState extends State<SignForm> {
               ),
             ),
           ),
-          Text(""),
+          Text("กด Login เพื่อเข้าสู่ระบบ",style: TextStyle(fontSize: 15,color: Colors.black),),
         ],
       ),
     );

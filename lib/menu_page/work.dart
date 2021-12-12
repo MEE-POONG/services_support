@@ -40,12 +40,56 @@ class _BodyState extends State<Body> {
   // Create a CollectionReference called users that references the firestore collection
   CollectionReference addWork = FirebaseFirestore.instance.collection('work');
 
-  Future<void> addInputWork(type, data) {
+  Future<void> addInputWork(
+    type,
+    data,
+  ) {
     // Call the user's CollectionReference to add a new user
     String subStr = data;
+    String str = subStr;
+    List _listData = str.split(":");
+
+    setState(() {
+      Data1.text = 'JobId: ' +
+          _listData[0].toString() +
+          '\n' +
+          'Alarm: ' +
+          _listData[1].toString() +
+          '\n' +
+          'Site: ' +
+          _listData[2].toString().split("-")[0] +
+          '\n' +
+          'LocationFault: ' +
+          _listData[2].toString().split("-")[1].split(" ")[0] +
+          '\n' +
+          'Priority: ' +
+          _listData[6].toString() +
+          '\n' +
+          'FinshTime: ' +
+          _listData[7].replaceAll("Finish Before ", "").toString() +
+          '\n' +
+          'AssignTo: ' +
+          str.substring(str.indexOf("to") + 3, str.indexOf("by")) +
+          '\n' +
+          'AssignBy: ' +
+          str.substring(str.indexOf("by") + 3);
+    });
     return addWork
-        .add({'text': subStr, 'type': type})
-        .then((value) => print("CM Added"))
+        .add({
+          'JobId': _listData[0].toString(),
+          'Alarm': _listData[1].toString(),
+          'Site': _listData[2].toString().split("-")[0],
+          'LocationFault': _listData[2].toString().split("-")[1].split(" ")[0],
+          'Priority': _listData[6].toString(),
+          'FinshTime': _listData[7].replaceAll("Finish Before ", "").toString(),
+          'AssignTo': str.substring(str.indexOf("to") + 3, str.indexOf("by")),
+          'AssignBy': str.substring(str.indexOf("by") + 3),
+          'createAt': DateTime.now(),
+          'createBy': 'ADMIN',
+          'updateAt': DateTime.now(),
+          'updateBy': 'ADMIN',
+        })
+        .then((value) => print("CM Added $value"))
         .catchError((error) => print("Failed to add CM: $error"));
   }
 
@@ -95,7 +139,7 @@ class _BodyState extends State<Body> {
             ),
           ),
           bottom: TabBar(
-            isScrollable: false,
+            isScrollable: true,
             indicatorColor: Colors.white,
             indicatorWeight: 2.5,
             labelColor: Colors.white,
@@ -120,14 +164,14 @@ class _BodyState extends State<Body> {
                       SizedBox(
                         height: 10,
                       ),
-                      Text("รายละเอียดงาน", style: TextStyle(fontSize: 20)),
+                      Text("รายละเอียดงาน", style: TextStyle(fontSize: 15)),
                       Padding(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 10, vertical: 10),
                         child: TextField(
                           decoration: InputDecoration(
                             border: OutlineInputBorder(),
-                            labelText: "วางข้อความที่ได้รับจากTTSM",
+                            labelText: "วางข้อความที่ได้รับจากSMS",
                           ),
                           maxLines: 10,
                           controller: Data1,
@@ -167,14 +211,14 @@ class _BodyState extends State<Body> {
                       SizedBox(
                         height: 10,
                       ),
-                      Text("รายละเอียดงาน", style: TextStyle(fontSize: 20)),
+                      Text("รายละเอียดงาน", style: TextStyle(fontSize: 15)),
                       Padding(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 10, vertical: 10),
                         child: TextField(
                           decoration: InputDecoration(
                             border: OutlineInputBorder(),
-                            labelText: "วางข้อความที่ได้รับจากTTSM",
+                            labelText: "วางข้อความที่ได้รับจากSMS",
                           ),
                           maxLines: 10,
                           controller: Data2,
@@ -214,14 +258,14 @@ class _BodyState extends State<Body> {
                       SizedBox(
                         height: 10,
                       ),
-                      Text("รายละเอียดงาน", style: TextStyle(fontSize: 20)),
+                      Text("รายละเอียดงาน", style: TextStyle(fontSize: 15)),
                       Padding(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 10, vertical: 10),
                         child: TextField(
                           decoration: InputDecoration(
                             border: OutlineInputBorder(),
-                            labelText: "วางข้อความที่ได้รับจากTTSM",
+                            labelText: "วางข้อความที่ได้รับจากSMS",
                           ),
                           maxLines: 10,
                           controller: Data3,
@@ -260,14 +304,14 @@ class _BodyState extends State<Body> {
                       SizedBox(
                         height: 10,
                       ),
-                      Text("รายละเอียดงาน", style: TextStyle(fontSize: 20)),
+                      Text("รายละเอียดงาน", style: TextStyle(fontSize: 15)),
                       Padding(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 10, vertical: 10),
                         child: TextField(
                           decoration: InputDecoration(
                             border: OutlineInputBorder(),
-                            labelText: "วางข้อความที่ได้รับจากTTSM",
+                            labelText: "วางข้อความที่ได้รับจากSMS",
                           ),
                           maxLines: 10,
                           controller: Data4,

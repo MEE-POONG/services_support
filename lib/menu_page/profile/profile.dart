@@ -136,7 +136,9 @@ class _BodyState extends State<Body> {
                     padding: EdgeInsets.symmetric(horizontal: 50),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20)),
-                    onPressed: () {},
+                    onPressed: () {
+                       Navigator.of(context).pop();
+                    },
                     child: Text("CANCEL",
                         style: TextStyle(
                             fontSize: 14,

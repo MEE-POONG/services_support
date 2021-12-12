@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class Tab1 extends StatefulWidget {
@@ -9,7 +10,9 @@ class Tab1 extends StatefulWidget {
 
 class _Tab1State extends State<Tab1> {
   final _formkey = GlobalKey<FormState>();
-  String dropdownValue = 'One';
+  //final FirebaseAuth _auth = FirebaseAuth.instance;
+  final Stream<QuerySnapshot> _worksStream =
+      FirebaseFirestore.instance.collection('work').snapshots();
 
   @override
   Widget build(BuildContext context) {
@@ -35,74 +38,70 @@ class _Tab1State extends State<Tab1> {
             ),
           ),
           Container(
-            height: 200,
+            height: 280,
             child: Padding(
               padding: const EdgeInsets.all(20.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Row(
-                    children: [
-                      Text(
-                        "1. ",
-                        style: TextStyle(color: Colors.black, fontSize: 15),
-                      ),
-                      // DropdownButton<String>(
-                      //   iconSize: 30,
-                      //   value: dropdownValue,
-                      //   onChanged: (String? newValue) {
-                      //     setState(() {
-                      //       dropdownValue = newValue!;
-                      //     });
-                      //   },
-                      //   items: <String>[
-                      //     'สิทธิกร ครบกลาง T121',
-                      //     'ยุรนันท์ ประจวบสุข T122',
-                      //     'วราวุธ เทกระโทก T123',
-                      //     'พยุงศักดิ์ ขนุนสูงเนิน T124'
-                      //   ].map<DropdownMenuItem<String>>((String value) {
-                      //     return DropdownMenuItem<String>(
-                      //       value: value,
-                      //       child: Text(value),
-                      //     );
-                      //   }).toList(),
-                      // ),
-                    ],
+                  SingleChildScrollView(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "1. ",
+                          style: TextStyle(color: Colors.black, fontSize: 15),
+                        ),
+                        Container(
+                          child: SizedBox(
+                            width: 220,
+                            child: TextFormField(
+                              keyboardType: TextInputType.number,
+                              decoration: InputDecoration(labelText: ""),
+                              onChanged: (newText) {},
+                            ),
+                          ),
+                        ),
+                        FlatButton(
+                          child: Text(
+                            'Add',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          color: Colors.grey,
+                          onPressed: () {},
+                        )
+                      ],
+                    ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        "2. ",
-                        style: TextStyle(color: Colors.black, fontSize: 15),
-                      ),
-                      // DropdownButton<String>(
-                      //   value: dropdownValue,
-                      //   iconSize: 30,
-                      //   style: const TextStyle(
-                      //       color: Colors.deepPurple, fontSize: 16),
-                      //   underline: Container(
-                      //     height: 1,
-                      //     color: Colors.deepPurpleAccent,
-                      //   ),
-                      //   onChanged: (String? newValue) {
-                      //     setState(() {
-                      //       dropdownValue = newValue!;
-                      //     });
-                      //   },
-                      //   items: <String>[
-                      //     'สิทธิกร ครบกลาง T121',
-                      //     'ยุรนันท์ ประจวบสุข T122',
-                      //     'วราวุธ เทกระโทก T123',
-                      //     'พยุงศักดิ์ ขนุนสูงเนิน T124'
-                      //   ].map<DropdownMenuItem<String>>((String value) {
-                      //     return DropdownMenuItem<String>(
-                      //       value: value,
-                      //       child: Text(value),
-                      //     );
-                      //   }).toList(),
-                      // )
-                    ],
+                 
+                  SingleChildScrollView(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "2. ",
+                          style: TextStyle(color: Colors.black, fontSize: 15),
+                        ),
+                        Container(
+                          child: SizedBox(
+                            width: 220,
+                            child: TextFormField(
+                              keyboardType: TextInputType.number,
+                              decoration: InputDecoration(labelText: ""),
+                              onChanged: (newText) {},
+                            ),
+                          ),
+                        ),
+                        FlatButton(
+                          child: Text(
+                            'Add',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          color: Colors.grey,
+                          onPressed: () {},
+                        )
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -129,31 +128,60 @@ class _Tab1State extends State<Tab1> {
             ),
           ),
           Container(
-            padding: EdgeInsets.symmetric(vertical: 0, horizontal: 150),
             child: Form(
               key: _formkey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  TextFormField(
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(labelText: "Critical:"),
-                    onChanged: (newText) {},
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Container(
+                        child: SizedBox(
+                          width: 150,
+                          child: TextFormField(
+                            keyboardType: TextInputType.number,
+                            decoration: InputDecoration(labelText: "Critical:"),
+                            onChanged: (newText) {},
+                          ),
+                        ),
+                      ),
+                      Container(
+                        child: SizedBox(
+                          width: 150,
+                          child: TextFormField(
+                            keyboardType: TextInputType.number,
+                            decoration: InputDecoration(labelText: "Minor:"),
+                            onChanged: (newText) {},
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                  TextFormField(
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(labelText: "Minor:"),
-                    onChanged: (newText) {},
-                  ),
-                  TextFormField(
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(labelText: "Major:"),
-                    onChanged: (newText) {},
-                  ),
-                  TextFormField(
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(labelText: "None:"),
-                    onChanged: (newText) {},
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Container(
+                        child: SizedBox(
+                          width: 150,
+                          child: TextFormField(
+                            keyboardType: TextInputType.number,
+                            decoration: InputDecoration(labelText: "Major:"),
+                            onChanged: (newText) {},
+                          ),
+                        ),
+                      ),
+                      Container(
+                        child: SizedBox(
+                          width: 150,
+                          child: TextFormField(
+                            keyboardType: TextInputType.number,
+                            decoration: InputDecoration(labelText: "None:"),
+                            onChanged: (newText) {},
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -171,6 +199,7 @@ class _Tab1State extends State<Tab1> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
+              // ignore: deprecated_member_use
               FlatButton(
                 child: Text(
                   'ยืนยัน',
@@ -179,6 +208,7 @@ class _Tab1State extends State<Tab1> {
                 color: Colors.blue,
                 onPressed: () {},
               ),
+              // ignore: deprecated_member_use
               FlatButton(
                 child: Text(
                   'Get location',

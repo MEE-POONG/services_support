@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:services_support/home/home.dart';
 import 'package:services_support/login/login.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashSrceen extends StatelessWidget {
   const SplashSrceen({Key? key}) : super(key: key);
@@ -13,11 +14,11 @@ class SplashSrceen extends StatelessWidget {
       body: Container(
         constraints: BoxConstraints.expand(),
         decoration: BoxDecoration(
-            // image: DecorationImage(
-            //   image: AssetImage("assets/images/1111.png"),
-            //   fit: BoxFit.cover,
-            // ),
-            ),
+          image: DecorationImage(
+            image: AssetImage("assets/images/พื้นหลัง App.png"),
+            fit: BoxFit.cover,
+          ),
+        ),
         child: Body(),
       ),
     );
@@ -55,16 +56,22 @@ class _BodyState extends State<Body> {
                 style: TextStyle(color: Colors.black),
               ),
               Image.asset(
-                "assets/images/iconApp.png",
-                height: 500,
+                "assets/images/New iconApp pre2-2.png",
+                height: 400,
                 width: double.infinity,
               ),
-
-              //Text("ประเทศไทยใครก็ได้",style: TextStyle(fontSize: 20),),
-              Padding(padding: EdgeInsets.all(10)),
-
+              SizedBox(
+                height: 50,
+              ),
               BtnLogin(),
-              Spacer()
+              SizedBox(
+                height: 100,
+              ),
+              Text(
+                "<< ยินดีต้อนรับสู่ Mee Report >>",
+                style: TextStyle(fontSize: 15,color: Colors.white60),
+              ),
+              Spacer(),
             ],
           ),
         ),
@@ -88,7 +95,15 @@ class BtnLogin extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
         ),
-        color: Colors.lightBlue,
+        color: Colors.white60,
+        child: Text(
+          "เข้าสู่ระบบ/ลงทะเบียน",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+            color: Colors.indigo,
+          ),
+        ),
         onPressed: () {
           FirebaseAuth.instance.authStateChanges().listen((User? user) {
             if (user == null) {
@@ -106,14 +121,6 @@ class BtnLogin extends StatelessWidget {
             }
           });
         },
-        child: Text(
-          "เข้าสู่ระบบ/ลงทะเบียน",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
-            color: Colors.white,
-          ),
-        ),
       ),
     );
   }

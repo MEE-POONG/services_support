@@ -56,6 +56,7 @@ class _AppState extends State<App> {
       debugShowCheckedModeBanner: false,
       title: 'Service Support',
       theme: ThemeData(
+        fontFamily: 'K2D',
         appBarTheme: AppBarTheme(
           color: Colors.white10,
           elevation: 0,

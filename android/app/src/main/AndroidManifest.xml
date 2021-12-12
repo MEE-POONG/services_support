@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.services_support">
    <application
-        android:label="services_support"
+        android:label="Mee Report"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

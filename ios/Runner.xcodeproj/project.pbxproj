@@ -17,6 +17,20 @@
 		E4D3771B84454296B276C92B /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D00148F13460856420816406 /* Pods_Runner.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXBuildRule section */
+		66FD2EAB276100C800A69A7E /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.proxy.script;
+			fileType = sourcecode.metal;
+			inputFiles = (
+			);
+			isEditable = 1;
+			outputFiles = (
+			);
+			script = "# metal\n";
+		};
+/* End PBXBuildRule section */
+
 /* Begin PBXCopyFilesBuildPhase section */
 		9705A1C41CF9048500538489 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -145,6 +159,7 @@
 				3B1A009472E91337EB92DF58 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
+				66FD2EAB276100C800A69A7E /* PBXBuildRule */,
 			);
 			dependencies = (
 			);
@@ -386,7 +401,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.meepoong.mee-report";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.meepoong.Mee-Report";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -518,7 +533,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.meepoong.mee-report";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.meepoong.Mee-Report";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -542,7 +557,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.meepoong.mee-report";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.meepoong.Mee-Report";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
