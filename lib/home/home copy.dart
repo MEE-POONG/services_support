@@ -76,7 +76,6 @@ class _BodyState extends State<Body> {
             height: 50,
             padding: EdgeInsets.symmetric(horizontal: 15),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
                   "เลือกไซท์เพื่อเริ่มดำเนินการ ",
@@ -85,10 +84,8 @@ class _BodyState extends State<Body> {
               ],
             ),
           ),
-          
           Container(
-            height: 250,
-            child:  StreamBuilder<QuerySnapshot>(
+            child: StreamBuilder<QuerySnapshot>(
               stream: _worksStream,
               builder: (BuildContext context,
                   AsyncSnapshot<QuerySnapshot> snapshot) {

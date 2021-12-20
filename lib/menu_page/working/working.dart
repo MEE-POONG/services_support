@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:services_support/menu_page/working/depart.dart';
-import 'package:services_support/menu_page/working/get_loc.dart';
-import 'package:services_support/menu_page/working/onsite.dart';
-
-import 'done/done.dart';
+import 'package:maps_launcher/maps_launcher.dart';
+import 'package:services_support/menu_page/working/done/done.dart';
 
 class Working extends StatelessWidget {
   const Working({Key? key}) : super(key: key);
@@ -11,7 +8,7 @@ class Working extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Body(),
+      body: Body()
     );
   }
 }
@@ -25,63 +22,117 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
+  bool isOnsite = false;
+  bool isDone = false;
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 4,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text("Working",
-            // "เลือกไซต์เพื่อเริ่มดำเนินการ",
-            style: TextStyle(color: Colors.white),
-          ),
-          // centerTitle: true,
-          // leading: IconButton(
-          //   icon: Icon(Icons.arrow_back_ios_outlined),
-          //   onPressed: () {},
-          // ),
-          actions: [
-            IconButton(
-              icon: Icon(
-                Icons.search,
-                size: 30,
-              ),
-              onPressed: () {},
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          "Working",
+          // "เลือกไซต์เพื่อเริ่มดำเนินการ",
+          style: TextStyle(color: Colors.white),
+        ),
+        actions: [
+          IconButton(
+            icon: Icon(
+              Icons.search,
+              size: 30,
             ),
-          ],
-          flexibleSpace: Container(
+            onPressed: () {},
+          ),
+        ],
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Colors.deepPurple, Colors.lightBlue],
+            ),
+          ),
+        ),
+        elevation: 10,
+      ),
+      body: Column(
+        children: [
+          Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [Colors.deepPurple, Colors.lightBlue],
               ),
             ),
+            height: 50,
+            padding: EdgeInsets.symmetric(horizontal: 15),
+            child: Row(
+              children: [
+                Text(
+                  "รายละเอียดไซต์งาน : ",
+                  style: TextStyle(color: Colors.white, fontSize: 15),
+                ),
+              ],
+            ),
           ),
-          bottom: TabBar(
-            isScrollable: true,
-            indicatorColor: Colors.white,
-            indicatorWeight: 2.5,
-            labelColor: Colors.white,
-            unselectedLabelColor: Colors.black,
-            tabs: <Tab>[
-              Tab(text: "Depart"),
-              Tab(text: "Onsite"),
-              Tab(text: "Done"),
-              Tab(text: "Get location"),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              // ignore: deprecated_member_use
+              FlatButton(
+                child: Row(
+                  children: [
+                    Text('Depart', style: TextStyle(color: Colors.white)),
+                  ],
+                ),
+                color: Colors.purple,
+                onPressed: () => MapsLauncher.launchCoordinates(
+                    14.9698804, 102.1020475, 'MEE POONG CO., LTD.'),
+              ),
+              // ignore: deprecated_member_use
+              FlatButton(
+                  child: Text('Onsite', style: TextStyle(color: Colors.white)),
+                  color: Colors.orange,
+                  onPressed: () {
+                    showDialog<String>(
+                      context: context,
+                      builder: (BuildContext context) => AlertDialog(
+                        title: const Text('Onsite'),
+                        content: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 80),
+                          child: const Text('ยืนยันสำเร็จ',style: TextStyle(fontSize: 18),),
+                        ),
+                        actions: <Widget>[
+                          TextButton(
+                            onPressed: () => Navigator.pop(context, 'OK'),
+                            child: const Text('OK'),
+                          ),
+                        ],
+                      ),
+                    );
+
+                    setState(() {
+                      isOnsite = true;
+                    });
+                  }),
+              // ignore: deprecated_member_use
+              FlatButton(
+                  child: Text('Done', style: TextStyle(color: Colors.white)),
+                  color: Colors.green,
+                  onPressed: () {
+                    setState(() {
+                      isDone = true;
+                    });
+                  }),
             ],
           ),
-          elevation: 10,
-          titleSpacing: 20,
-        ),
-        body: Container(
-          child: TabBarView(
-            children: <Widget>[
-              Depart(),
-              Onsite(),
-              Done(),
-              GetLocation(),
-            ],
+          SizedBox(
+            height: 10,
           ),
-        ),
+          isDone == true
+              ? SingleChildScrollView(
+                  child: Container(
+                    height: 620,
+                    child: Done(),
+                  ),
+                )
+              : Text(''),
+        ],
       ),
     );
   }

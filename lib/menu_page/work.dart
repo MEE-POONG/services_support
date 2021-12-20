@@ -117,11 +117,6 @@ class _BodyState extends State<Body> {
             "เลือกประเภทงานที่ได้รับ",
             style: TextStyle(color: Colors.white),
           ),
-          // centerTitle: true,
-          // leading: IconButton(
-          //   icon: Icon(Icons.arrow_back_ios_outlined),
-          //   onPressed: () {},
-          // ),
           actions: [
             IconButton(
               icon: Icon(
@@ -169,6 +164,7 @@ class _BodyState extends State<Body> {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 10, vertical: 10),
                         child: TextField(
+                          keyboardType: TextInputType.text,
                           decoration: InputDecoration(
                             border: OutlineInputBorder(),
                             labelText: "วางข้อความที่ได้รับจากSMS",
@@ -216,6 +212,7 @@ class _BodyState extends State<Body> {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 10, vertical: 10),
                         child: TextField(
+                          keyboardType: TextInputType.text,
                           decoration: InputDecoration(
                             border: OutlineInputBorder(),
                             labelText: "วางข้อความที่ได้รับจากSMS",
@@ -263,6 +260,7 @@ class _BodyState extends State<Body> {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 10, vertical: 10),
                         child: TextField(
+                          keyboardType: TextInputType.text,
                           decoration: InputDecoration(
                             border: OutlineInputBorder(),
                             labelText: "วางข้อความที่ได้รับจากSMS",
@@ -309,6 +307,7 @@ class _BodyState extends State<Body> {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 10, vertical: 10),
                         child: TextField(
+                          keyboardType: TextInputType.text,
                           decoration: InputDecoration(
                             border: OutlineInputBorder(),
                             labelText: "วางข้อความที่ได้รับจากSMS",

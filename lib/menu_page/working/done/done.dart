@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:services_support/menu_page/report.dart';
 
 class Done extends StatefulWidget {
   const Done({Key? key}) : super(key: key);
@@ -25,9 +27,18 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  bool isShowLocation2 = false;
+  bool checkBox0 = false;
+  bool checkBox1 = false;
+  bool checkBox2 = false;
+  bool checkBox3 = false;
+  bool checkBox4 = false;
+  bool checkBox5 = false;
+  bool checkBox6 = false;
+
   String dropdownvalue = 'เลือก';
-  String _currentSubCaseValue = 'AIR';
+  String _currentSubCaseValue = '';
+  String _currentActionValue = '';
+  String _currentFaulttypeValue = '';
 
   var items1 = [
     'AIR',
@@ -55,11 +66,59 @@ class _BodyState extends State<Body> {
     'AC Adaptor-154',
     'AP-101',
     'Core-104',
-    'Effect From Customer Side-105',
+    'Ef From Customer Side-105',
     'Hub-103',
     'L2-102',
     'Optic ตอนนอกขาด-124',
     'RJ45-155'
+  ];
+  var items4 = [
+    'PM3-20',
+    'PM5-21',
+    'RECTIFIER UNIT FAILED-3',
+    'SA-17',
+    'SA3-19',
+    'SE-18',
+    'SFP BBU 10G 10KM-26',
+    'SFP BBU 10G 15KM-27',
+    'SFP BBU 2.5G 15KM-22',
+    'SFP BBU 2.5G 2KM-128',
+    'SFP BBU 6G 1.4KM-23',
+    'SFP BBU 6G 10KM-25',
+    'SFP BBU 6G 15KM-133',
+    'SFP BBU 6G 2KM-24',
+    'UTP-123'
+  ];
+  var items5 = [
+    'ABIA-28',
+    'AMIA-135',
+    'ASIA-117',
+    'Aoto clear-116',
+    'BBU-4',
+    'BPK-9',
+    'BPK_d-10',
+    'BPN2-11',
+    'CB TRIP-161',
+    'CC16B-7',
+    'CC17B-6',
+    'CC2-5',
+    'CCE1-8',
+    'Control RECTIFIER FAILED-2',
+    'CR0-16',
+    'Door open-1',
+    'FC Adaptor(แกนI)-144',
+    'FOUA 9.8G/20KM-156',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
   ];
 
   String get title => dropdownvalue;
@@ -68,174 +127,199 @@ class _BodyState extends State<Body> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child: Container(
-          child: Column(
-            children: <Widget>[
-              Text(
-                'สรุปผลการซ่อม',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 20.0,
-                  color: Colors.blue,
-                ),
+        child: Column(
+          children: <Widget>[
+            Text(
+              'สรุปผลการซ่อม',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 20.0,
+                color: Colors.blue,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Padding(
-                      padding:
-                          EdgeInsets.symmetric(vertical: 20, horizontal: 10)),
-                  Text(
-                    "อาการเสียที่ตรวจพบ:",
-                    style: TextStyle(
-                      fontSize: 15.0,
-                      color: Colors.black,
+            ),
+            SizedBox(height: 10),
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Text("อาการเสียที่ตรวจพบ:",
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        color: Colors.black,
+                      )),
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Container(
+                  child: SizedBox(
+                    width: 280,
+                    height: 40,
+                    child: TextFormField(
+                      decoration: InputDecoration(hintText: "ระบุอาการเสีย"),
+                      onChanged: (newText) {},
                     ),
                   ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Container(
-                    child: SizedBox(
-                      width: 300,
-                      child: TextFormField(
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(labelText: "ระบุอาการเสีย"),
-                        onChanged: (newText) {},
-                      ),
+                ),
+                Container(
+                  child: SizedBox(
+                    width: 50,
+                    height: 40,
+                    child: TextFormField(
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(hintText: "Sector"),
+                      onChanged: (newText) {},
                     ),
                   ),
-                  Container(
-                    child: SizedBox(
-                      width: 50,
-                      child: TextFormField(
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(labelText: "Sector"),
-                        onChanged: (newText) {},
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    width: 20,
-                    height: 50,
-                  ),
-                  Text(
-                    "การแก้ไข:",
-                    textAlign: TextAlign.start,
-                    style: TextStyle(
-                      fontSize: 15.0,
-                      color: Colors.black,
-                    ),
-                  ),
-                ],
-              ),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
-                child: TextField(
-                  decoration: InputDecoration(labelText: "ระบุการแก้ไข"),
-                  // textAlign: TextAlign.center,
-                  onChanged: (newText) {},
                 ),
-              ),
-              Text(
-                'สรุปรายงาน',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 20.0,
-                  color: Colors.blue,
+              ],
+            ),
+            SizedBox(height: 10),
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Text("การแก้ไข:",
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        color: Colors.black,
+                      )),
                 ),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
+              child: TextField(
+                decoration: InputDecoration(hintText: "ระบุการแก้ไข"),
+                // textAlign: TextAlign.center,
+                onChanged: (newText) {},
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  Checkbox(
-                    value: false,
-                    onChanged: (value) {},
-                  ),
-                  Text("ปฏิบัติงานบนที่สูง"),
-                  Checkbox(
-                    value: false,
-                    onChanged: (value) {},
-                  ),
-                  Text("เทปพันสาย"),
-                  Checkbox(
-                    value: false,
-                    onChanged: (value) {},
-                  ),
-                  Text("Spare part"),
-                ],
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              'สรุปรายงาน',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 20.0,
+                color: Colors.blue,
               ),
-
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  Checkbox(
-                    value: false,
-                    onChanged: (value) {},
-                  ),
-                  Text("Alarm clear"),
-                  Checkbox(
-                    value: false,
-                    onChanged: (value) {},
-                  ),
-                  Text("ต้องใช้กุญแจ"),
-                  Checkbox(
-                    value: false,
-                    onChanged: (value) {},
-                  ),
-                  Text("ปั่นไฟ"),
-                ],
-              ),
-
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  Checkbox(
-                    value: false,
-                    onChanged: (value) {},
-                  ),
-                  Text("เป็นข้อผิดพลาดจากการติดตั้ง"),
-                ],
-              ),
-
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
-                child: TextField(
-                  decoration: InputDecoration(labelText: "หมายเหตุ:"),
-                  textAlign: TextAlign.start,
-                  onChanged: (newText) {},
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Checkbox(
+                  value: checkBox0,
+                  onChanged: (value) {
+                    setState(() {
+                      this.checkBox0 = value!;
+                    });
+                  },
                 ),
-              ),
-
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                'ช่วยสร้าง Problem cause',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 20.0,
-                  color: Colors.blue,
+                Text("ปฏิบัติงานบนที่สูง"),
+                Checkbox(
+                  value: checkBox1,
+                  onChanged: (value) {
+                    setState(() {
+                      this.checkBox1 = value!;
+                    });
+                  },
                 ),
-              ),
+                Text("เทปพันสาย"),
+                Checkbox(
+                  value: checkBox2,
+                  onChanged: (value) {
+                    setState(() {
+                      this.checkBox2 = value!;
+                    });
+                  },
+                ),
+                Text("Spare part"),
+              ],
+            ),
 
-              SizedBox(height: 20),
-              Row(
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Checkbox(
+                  value: checkBox3,
+                  onChanged: (value) {
+                    setState(() {
+                      this.checkBox3 = value!;
+                    });
+                  },
+                ),
+                Text("Alarm clear      "),
+                Checkbox(
+                  value: checkBox4,
+                  onChanged: (value) {
+                    setState(() {
+                      this.checkBox4 = value!;
+                    });
+                  },
+                ),
+                Text("ต้องใช้กุญแจ"),
+                Checkbox(
+                  value: checkBox5,
+                  onChanged: (value) {
+                    setState(() {
+                      this.checkBox5 = value!;
+                    });
+                  },
+                ),
+                Text("ปั่นไฟ"),
+              ],
+            ),
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Checkbox(
+                  value: checkBox6,
+                  onChanged: (value) {
+                    setState(() {
+                      this.checkBox6 = value!;
+                    });
+                  },
+                ),
+                Text("เป็นข้อผิดพลาดจากการติดตั้ง"),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
+              child: TextField(
+                decoration: InputDecoration(labelText: "หมายเหตุ:"),
+                textAlign: TextAlign.start,
+                onChanged: (newText) {},
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              'ช่วยสร้าง Problem cause',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 20.0,
+                color: Colors.blue,
+              ),
+            ),
+
+            SizedBox(height: 20),
+            SingleChildScrollView(
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   // ignore: deprecated_member_use
                   FlatButton(
+                    minWidth: 0,
                     child: Text(
-                      'Sub cause',
+                      _currentSubCaseValue.isEmpty
+                          ? 'Sub cause'
+                          : _currentSubCaseValue,
                       style: TextStyle(color: Colors.white),
                     ),
                     color: Colors.grey,
@@ -262,7 +346,7 @@ class _BodyState extends State<Body> {
                                                       val.toString();
                                                 });
                                                 Navigator.of(context).pop();
-                                                isShowLocation2 = true;
+                                                // isShowLocation2 = true;
                                               },
                                             ))
                                         .toList()),
@@ -276,8 +360,11 @@ class _BodyState extends State<Body> {
 
                   // ignore: deprecated_member_use
                   FlatButton(
+                    minWidth: 0,
                     child: Text(
-                      'Action',
+                      _currentActionValue.isEmpty
+                          ? 'Action'
+                          : _currentActionValue,
                       style: TextStyle(color: Colors.white),
                     ),
                     color: Colors.grey,
@@ -296,15 +383,14 @@ class _BodyState extends State<Body> {
                                         .map((e) => RadioListTile(
                                               title: Text(e),
                                               value: e,
-                                              groupValue: _currentSubCaseValue,
+                                              groupValue: _currentActionValue,
                                               onChanged: (val) {
                                                 setState(() {
                                                   debugPrint('VAL = $val');
-                                                  _currentSubCaseValue =
+                                                  _currentActionValue =
                                                       val.toString();
                                                 });
                                                 Navigator.of(context).pop();
-                                                isShowLocation2 = true;
                                               },
                                             ))
                                         .toList()),
@@ -315,11 +401,15 @@ class _BodyState extends State<Body> {
                       );
                     },
                   ),
+
                   // ignore: deprecated_member_use
                   FlatButton(
+                      minWidth: 0,
                       child: Text(
-                        'Fault type',
-                        style: TextStyle(color: Colors.white),
+                        _currentFaulttypeValue.isEmpty
+                            ? 'Fault type'
+                            : _currentFaulttypeValue,
+                        style: TextStyle(color: Colors.white, fontSize: 12),
                       ),
                       color: Colors.grey,
                       onPressed: () {
@@ -338,15 +428,15 @@ class _BodyState extends State<Body> {
                                                 title: Text(e),
                                                 value: e,
                                                 groupValue:
-                                                    _currentSubCaseValue,
+                                                    _currentFaulttypeValue,
                                                 onChanged: (val) {
                                                   setState(() {
                                                     debugPrint('VAL = $val');
-                                                    _currentSubCaseValue =
+                                                    _currentFaulttypeValue =
                                                         val.toString();
                                                   });
                                                   Navigator.of(context).pop();
-                                                  isShowLocation2 = true;
+                                                  // isShowLocation2 = true;
                                                 },
                                               ))
                                           .toList()),
@@ -358,36 +448,69 @@ class _BodyState extends State<Body> {
                       }),
                 ],
               ),
+            ),
+            checkBox3
+                ? Text(_currentSubCaseValue +
+                    ' => ' +
+                    _currentActionValue +
+                    ' => ' +
+                    _currentFaulttypeValue +
+                    ' => ' +
+                    'Clear')
+                : Text(_currentSubCaseValue +
+                    ' => ' +
+                    _currentActionValue +
+                    ' => ' +
+                    _currentFaulttypeValue +
+                    ' => ' +
+                    'Not Clear'),
 
-              RowWidget(),
-              // ignore: dead_code
-              isShowLocation2 ? SizedBox1() : Text(""),
-              SizedBox(
-                height: 20,
+            RowWidget(),
+            // ignore: dead_code
+            checkBox2 ? SizedBox1() : Text(""),
+            SizedBox(
+              height: 10,
+            ),
+            // ignore: deprecated_member_use
+            FlatButton(
+              child: Text(
+                'ส่งรายงาน',
+                style: TextStyle(color: Colors.white),
               ),
-              // ignore: deprecated_member_use
-              FlatButton(
-                child: Text(
-                  'ส่งรายงาน',
-                  style: TextStyle(color: Colors.white),
-                ),
-                color: Colors.blue,
-                onPressed: () {},
-              ),
-              SizedBox(
-                height: 50,
-              ),
-            ],
-          ),
+              color: Colors.blue,
+              onPressed: () {
+                showDialog<String>(
+                  context: context,
+                  builder: (BuildContext context) => AlertDialog(
+                    title: const Text(''),
+                    content: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 70),
+                      child: const Text(
+                        'ยืนยันสำเร็จ',
+                        style: TextStyle(fontSize: 18),
+                      ),
+                    ),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () {
+                           Navigator.of(context).push(MaterialPageRoute(
+                  builder: (BuildContext context) => Report()));
+                        },
+                        child: const Text('OK'),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+            SizedBox(
+              height: 50,
+            ),
+          ],
         ),
       ),
     );
   }
-}
-
-class _singleNotifier {
-  static var currentCountry;
-  static void updateCountry(Object? value) {}
 }
 
 Widget RowWidget() {
@@ -403,9 +526,15 @@ Widget SizedBox1() {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          SizedBox(height: 30,),
           Padding(
-            padding: const EdgeInsets.all(6.0),
+            padding: const EdgeInsets.all(20.0),
+            child: Container(
+              height: 0.5,
+              color: Colors.black,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(7.0),
             child: Text(
               "อุปกรณ์ที่เปลี่ยน(ห้ามแก้ไขชื่อ Spare ถ้ามีเพิ่มเติมให้ใส่เครื่องหมาย,คั้น)",
               style: TextStyle(fontSize: 13),
@@ -418,8 +547,10 @@ Widget SizedBox1() {
                 child: SizedBox(
                   width: 250,
                   child: TextFormField(
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(labelText: "AP"),
+                    decoration: InputDecoration(
+                      labelText: "",
+                      // hintText: 'AP',floatingLabelBehavior: FloatingLabelBehavior.always,
+                    ),
                     onChanged: (newText) {},
                   ),
                 ),
@@ -436,7 +567,6 @@ Widget SizedBox1() {
               ),
             ],
           ),
-         
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: Text("Equipment move in Serial No.(ของดี>เปลี่ยนเข้า)",
@@ -455,6 +585,7 @@ Widget SizedBox1() {
                   ),
                 ),
               ),
+              // ignore: deprecated_member_use
               FlatButton(
                 child: Text(
                   'Scan In',
@@ -465,25 +596,25 @@ Widget SizedBox1() {
               )
             ],
           ),
-         
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: Text("Equipment move Out Serial No.(ของเสีย>เปลี่ยนออก)",
                 style: TextStyle(fontSize: 13)),
           ),
           Row(
-           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Container(
                 child: SizedBox(
                   width: 250,
                   child: TextFormField(
                     keyboardType: TextInputType.number,
-                    decoration: InputDecoration(labelText: "Serial Out::"),
+                    decoration: InputDecoration(labelText: "Serial Out:"),
                     onChanged: (newText) {},
                   ),
                 ),
               ),
+              // ignore: deprecated_member_use
               FlatButton(
                 child: Text(
                   'Scan Out',

@@ -80,7 +80,7 @@ class _SignFormState extends State<SignForm> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   TextEditingController _email = TextEditingController();
   TextEditingController _password = TextEditingController();
-
+  bool checkBox = false;
   signIn() {
     _auth
         .signInWithEmailAndPassword(
@@ -108,73 +108,90 @@ class _SignFormState extends State<SignForm> {
   @override
   Widget build(BuildContext context) {
     return Form(
-      child: Column(
-        children: [
-          SizedBox(height: 10),
-          Image.asset(
-            "assets/images/New iconApp pre2-2.png",
-            height: 200,
-            width: 200,
-          ),
-          TextFormField(
-              controller: _email,
-              decoration: InputDecoration(
-                  labelText: "Username",
-
-                  // hintText: "Enter your ID",
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(40),
-                  )),
-              textAlign: TextAlign.start),
-          SizedBox(height: 30),
-          TextFormField(
-              controller: _password,
-              decoration: InputDecoration(
-                  labelText: "Password",
-                  // hintText: "****",
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(40),
-                  )),
-              textAlign: TextAlign.start),
-          SizedBox(
-            height: 5,
-          ),
-          Row(
-            children: [
-              Checkbox(
-                value: false,
-                onChanged: (value) {},
-              ),
-              Text("จดจำรหัสผ่าน"),
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.all(10),
-            child: SizedBox(
-              height: 50,
-              width: 150,
-              // ignore: deprecated_member_use
-              child: FlatButton(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(height: 10),
+            Image.asset(
+              "assets/images/New iconApp pre2-2.png",
+              height: 200,
+              width: 200,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: TextFormField(
+                  controller: _email,
+                  decoration: InputDecoration(
+                      // labelText: "Username ID",
+                      hintText: "      Username ID",
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(40),
+                      )),
+                  textAlign: TextAlign.start),
+            ),
+            SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20,),
+              child: TextFormField(
+                  obscureText: true,
+                  controller: _password,
+                  decoration: InputDecoration(
+                      // labelText: "Password",
+                      hintText: '     Password',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(40),
+                      )),
+                  textAlign: TextAlign.start),
+            ),
+            SizedBox(height: 5),
+            Row(
+              children: [
+                Checkbox(
+                  value: checkBox,
+                  activeColor: Colors.green,
+                  onChanged: (value) {
+                    setState(() {
+                      checkBox = value!;
+                    });
+                  },
                 ),
-                color: Colors.lightBlueAccent,
-                onPressed: () {
-                  signIn();
-                },
-                child: Text(
-                  "Login",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                    color: Colors.white,
+                Text("จดจำรหัสผ่าน"),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: SizedBox(
+                height: 50,
+                width: 150,
+                // ignore: deprecated_member_use
+                child: FlatButton(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  color: Colors.lightBlueAccent,
+                  onPressed: () {
+                    signIn();
+                  },
+                  child: Text(
+                    "Login",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-          Text("กด Login เพื่อเข้าสู่ระบบ",style: TextStyle(fontSize: 15,color: Colors.black),),
-        ],
+            SizedBox(
+              height: 100,
+            ),
+            Text(
+              "<< ยินดีต้อนรับสู่ Mee Report >>",
+              style: TextStyle(fontSize: 15, color: Colors.white60),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -68,7 +68,7 @@ class _BodyState extends State<Body> {
                 height: 100,
               ),
               Text(
-                "<< ยินดีต้อนรับสู่ Mee Report >>",
+                "<< Mee Report by Meepoong.com >>",
                 style: TextStyle(fontSize: 15,color: Colors.white60),
               ),
               Spacer(),
@@ -87,11 +87,11 @@ class BtnLogin extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 250,
-      height: 60,
+    return 
       // ignore: deprecated_member_use
-      child: FlatButton(
+       FlatButton(
+         minWidth: 150,
+         height: 55,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
         ),
@@ -121,7 +121,7 @@ class BtnLogin extends StatelessWidget {
             }
           });
         },
-      ),
+     
     );
   }
 }
