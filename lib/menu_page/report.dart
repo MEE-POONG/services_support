@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:services_support/home/home.dart';
+import 'package:services_support/home/bottomnavbar.dart';
 
 class Report extends StatelessWidget {
   const Report({Key? key}) : super(key: key);
@@ -13,13 +13,6 @@ class Report extends StatelessWidget {
           style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios),
-          onPressed: () {
-            Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => Home()));
-          },
-        ),
         actions: [
           IconButton(
             icon: Icon(
@@ -39,6 +32,9 @@ class Report extends StatelessWidget {
         elevation: 4,
       ),
       body: Body(),
+      bottomNavigationBar: BottomNavBarFb5(
+        i: 5,
+      ),
     );
   }
 }
@@ -89,7 +85,7 @@ class _BodyState extends State<Body> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   // ignore: deprecated_member_use
-                  RaisedButton(
+                  OutlinedButton(
                     child: Text("โหลดตัวอย่างรายงาน"),
                     onPressed: () {},
                   ),
@@ -99,6 +95,19 @@ class _BodyState extends State<Body> {
                     onPressed: () {},
                   ),
                 ],
+              ),
+              SizedBox(height: 30),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                child: TextField(
+                  keyboardType: TextInputType.text,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                  ),
+                  maxLines: 10,
+                  // controller: Data2,
+                ),
               ),
             ],
           ),

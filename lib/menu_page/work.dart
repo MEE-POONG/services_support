@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 // Import the firebase_core and cloud_firestore plugin
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:services_support/home/bottomnavbar.dart';
 
 class Work extends StatelessWidget {
   const Work({Key? key}) : super(key: key);
@@ -10,6 +11,9 @@ class Work extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Body(),
+      bottomNavigationBar: BottomNavBarFb5(
+        i: 3,
+      ),
     );
   }
 }
@@ -167,7 +171,7 @@ class _BodyState extends State<Body> {
                           keyboardType: TextInputType.text,
                           decoration: InputDecoration(
                             border: OutlineInputBorder(),
-                            labelText: "วางข้อความที่ได้รับจากSMS",
+                            labelText: "วางข้อความที่ได้รับจากTTSM",
                           ),
                           maxLines: 10,
                           controller: Data1,
@@ -215,7 +219,7 @@ class _BodyState extends State<Body> {
                           keyboardType: TextInputType.text,
                           decoration: InputDecoration(
                             border: OutlineInputBorder(),
-                            labelText: "วางข้อความที่ได้รับจากSMS",
+                            labelText: "วางข้อความที่ได้รับจากTTSM",
                           ),
                           maxLines: 10,
                           controller: Data2,
@@ -263,7 +267,7 @@ class _BodyState extends State<Body> {
                           keyboardType: TextInputType.text,
                           decoration: InputDecoration(
                             border: OutlineInputBorder(),
-                            labelText: "วางข้อความที่ได้รับจากSMS",
+                            labelText: "วางข้อความที่ได้รับจากTTSM",
                           ),
                           maxLines: 10,
                           controller: Data3,
@@ -310,7 +314,7 @@ class _BodyState extends State<Body> {
                           keyboardType: TextInputType.text,
                           decoration: InputDecoration(
                             border: OutlineInputBorder(),
-                            labelText: "วางข้อความที่ได้รับจากSMS",
+                            labelText: "วางข้อความที่ได้รับจากTTSM",
                           ),
                           maxLines: 10,
                           controller: Data4,

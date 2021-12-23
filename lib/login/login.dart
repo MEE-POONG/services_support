@@ -113,7 +113,7 @@ class _SignFormState extends State<SignForm> {
           children: [
             SizedBox(height: 10),
             Image.asset(
-              "assets/images/New iconApp pre2-2.png",
+              "assets/images/New icon.png",
               height: 200,
               width: 200,
             ),

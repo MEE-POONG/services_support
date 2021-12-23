@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:services_support/check_name/tab1.dart';
-import 'package:services_support/home/home.dart';
+import 'package:services_support/home/bottomnavbar.dart';
 
 class CheckName extends StatelessWidget {
   const CheckName({Key? key}) : super(key: key);
@@ -14,13 +14,6 @@ class CheckName extends StatelessWidget {
           style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios),
-          onPressed: () {
-            Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => Home()));
-          },
-        ),
         actions: [
           IconButton(
             icon: Icon(
@@ -58,7 +51,9 @@ class _BodyState extends State<Body> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Tab1(),
-      
+      bottomNavigationBar: BottomNavBarFb5(
+        i: 2,
+      ),
     );
   }
 }

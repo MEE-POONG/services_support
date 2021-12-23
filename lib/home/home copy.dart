@@ -123,7 +123,9 @@ class _BodyState extends State<Body> {
           ),
         ],
       ),
-      bottomNavigationBar: BottomNavBarFb5(),
+      bottomNavigationBar: BottomNavBarFb5(
+        i: 1,
+      ),
     );
   }
 }

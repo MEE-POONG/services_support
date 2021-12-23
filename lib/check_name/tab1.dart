@@ -78,15 +78,6 @@ class _Tab1State extends State<Tab1> {
         .catchError((error) => print("Failed to add CM: $error"));
   }
 
-  // clearData() {
-  //   setState(() {
-  //     _input = "";
-
-  //     nameController.clear();
-  //   });
-  //   print("CLEAR");
-  // }
-
   @override
   Widget build(BuildContext context) {
     var time = DateTime.now();
@@ -115,7 +106,7 @@ class _Tab1State extends State<Tab1> {
                 ),
               ),
               Container(
-                height: 350,
+                height: 300,
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
@@ -149,7 +140,7 @@ class _Tab1State extends State<Tab1> {
                                 child: TextFormField(
                                   decoration:
                                       InputDecoration(hintText: "Numer Phone"),
-                                       keyboardType: TextInputType.number,
+                                  keyboardType: TextInputType.number,
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
                                       return 'กรุณากรอกเบอร์โทร';
@@ -181,16 +172,13 @@ class _Tab1State extends State<Tab1> {
                         ),
                       ),
                       Container(
-                        height: 80,
+                        height: 60,
                         child: Container(),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Container(
-                          height: 1,
-                          color: Colors.black,
-                        ),
-                      ),
+                      // Divider(
+                      //   height: 15,
+                      //   thickness: 2,
+                      // ),
                       SingleChildScrollView(
                         child: Container(
                           height: 300,
@@ -214,32 +202,31 @@ class _Tab1State extends State<Tab1> {
                                   Map<String, dynamic> data =
                                       document.data()! as Map<String, dynamic>;
                                   // ignore: deprecated_member_use
-                                  return TextButton(
+                                  return OutlinedButton(
                                     onPressed: () {
                                       Navigator.of(context).push(
                                           MaterialPageRoute(
                                               builder: (context) => Home()));
                                     },
                                     child: ListTile(
-                                     // tileColor: Colors.grey[300],
+                                      // tileColor: Colors.grey[300],
                                       title: Row(
                                         children: [
                                           Text(
                                             data['name'],
                                             style: TextStyle(
-                                                fontSize: 18,
-                                                ),
+                                              fontSize: 16,
+                                            ),
                                           ),
-                                          SizedBox(width: 20,),
+                                         
                                           Text(
-                                            data['phone'],
+                                            ' ' + data['phone'],
                                             style: TextStyle(
-                                                fontSize: 18,
-                                                ),
+                                              fontSize: 16,
+                                            ),
                                           ),
                                         ],
                                       ),
-                                     
                                     ),
                                   );
                                 }).toList(),
@@ -378,7 +365,6 @@ class _Tab1State extends State<Tab1> {
                                   return dialog;
                                 });
                             setState(() {
-                             
                               _input1 = criticalController.text;
                               _input2 = minorController.text;
                               _input3 = majorController.text;
@@ -396,22 +382,11 @@ class _Tab1State extends State<Tab1> {
                   ),
                 ],
               ),
+               SizedBox(height: 250),
             ],
           ),
         ),
       ),
     );
   }
-}
-
-void displayMessage() {
-  var context;
-  showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        AlertDialog dialog = AlertDialog(
-          content: Text("ยืนยันสำเร็จ"),
-        );
-        return dialog;
-      });
 }

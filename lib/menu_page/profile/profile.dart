@@ -1,6 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:services_support/home/home.dart';
-import 'package:services_support/menu_page/profile/profile_setting.dart';
+import 'package:services_support/splash_screen/splash.dart';
 
 class Profile extends StatelessWidget {
   const Profile({Key? key}) : super(key: key);
@@ -20,7 +21,15 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
+  bool checkBox0 = false;
+  bool checkBox1 = false;
+  bool checkBox2 = false;
+  bool checkBox3 = false;
+  bool checkBox4 = false;
+  bool checkBox5 = false;
+  
   bool showPassword = false;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,18 +53,20 @@ class _BodyState extends State<Body> {
               color: Colors.black,
             ),
             onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (BuildContext context) => SettingsPage()));
+              // Navigator.of(context).push(MaterialPageRoute(
+              //     builder: (BuildContext context) => SettingsPage()));
             },
           ),
+          
         ],
         flexibleSpace: Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [Colors.deepPurple, Colors.lightBlue],
-              ),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Colors.deepPurple, Colors.lightBlue],
             ),
           ),
+        ),
+        elevation: 10,
       ),
       body: Container(
         padding: EdgeInsets.only(left: 16, top: 25, right: 16),
@@ -65,13 +76,8 @@ class _BodyState extends State<Body> {
           },
           child: ListView(
             children: [
-              Text(
-                "Shazam",
-                style: TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
-              ),
-              SizedBox(
-                height: 15,
-              ),
+              Text("User Profile",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500)),
               Center(
                 child: Stack(
                   children: [
@@ -93,7 +99,7 @@ class _BodyState extends State<Body> {
                           image: DecorationImage(
                               fit: BoxFit.cover,
                               image: AssetImage(
-                                "assets/images/Shazam.jpeg",
+                                "assets/images/AJ_Call_center.png",
                               ))),
                     ),
                     Positioned(
@@ -119,50 +125,197 @@ class _BodyState extends State<Body> {
                 ),
               ),
               SizedBox(
-                height: 35,
+                height: 30,
               ),
-              buildTextField("Full Name", "Yuranan Prachuapsuk", false),
-              buildTextField("E-mail", "Shazam@gmail.com", false),
-              buildTextField("Password", "********", true),
-              buildTextField("Location", "Meepoong co.ltd.", false),
-              SizedBox(
-                height: 35,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  // ignore: deprecated_member_use
-                  OutlineButton(
-                    padding: EdgeInsets.symmetric(horizontal: 50),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20)),
-                    onPressed: () {
-                       Navigator.of(context).pop();
-                    },
-                    child: Text("CANCEL",
-                        style: TextStyle(
-                            fontSize: 14,
-                            letterSpacing: 2.2,
-                            color: Colors.black)),
-                  ),
-                  // ignore: deprecated_member_use
-                  RaisedButton(
-                    onPressed: () {},
-                    color: Colors.lightBlue,
-                    padding: EdgeInsets.symmetric(horizontal: 50),
-                    elevation: 2,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20)),
-                    child: Text(
-                      "SAVE",
-                      style: TextStyle(
-                          fontSize: 14,
-                          letterSpacing: 2.2,
-                          color: Colors.white),
+              Container(
+                child: Column(
+                  children: [
+                    Form(
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Container(
+                                child: SizedBox(
+                                  width: 200,
+                                  child: buildTextField(
+                                      "ชื่อ-สกุล", "Yuranan Prachuapsuk"),
+                                ),
+                              ),
+
+                              // SizedBox(height: 10,),
+                              Container(
+                                child: SizedBox(
+                                  width: 120,
+                                  child:
+                                      buildTextField("เบอร์โทร", "0981181233"),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Container(
+                                child: SizedBox(
+                                  width: 200,
+                                  child: buildTextField(
+                                      "หมายเลขบัตรประชาชน", "13016000000"),
+                                ),
+                              ),
+
+                              //  SizedBox(height: 10,),
+                              Container(
+                                child: SizedBox(
+                                  width: 120,
+                                  child: buildTextField("Team", "Wifi-NMA"),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Container(
+                            child: SizedBox(
+                              width: 330,
+                              child: buildTextField(
+                                  "Location", "Meepoong co.ltd."),
+                            ),
+                          ),
+                          SizedBox(height: 30),
+                          Text(
+                            'ข้อมูลอบรม AIS Passport',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 20.0,
+                              color: Colors.blue,
+                            ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Checkbox(
+                                value: checkBox0,
+                                onChanged: (value) {
+                                  setState(() {
+                                    this.checkBox0 = value!;
+                                  });
+                                },
+                              ),
+                              Text("G-ทั่วไป"),
+                              Checkbox(
+                                value: checkBox1,
+                                onChanged: (value) {
+                                  setState(() {
+                                    this.checkBox1 = value!;
+                                  });
+                                },
+                              ),
+                              Text("E-ไฟฟ้า"),
+                              Checkbox(
+                                value: checkBox2,
+                                onChanged: (value) {
+                                  setState(() {
+                                    this.checkBox2 = value!;
+                                  });
+                                },
+                              ),
+                              Text("T-ที่สูง"),
+                            ],
+                          ),
+                          Divider(height: 15, thickness: 2),
+                          Text(
+                            'ข้อมูลอบรม Lotus Passport',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 20.0,
+                              color: Colors.blue,
+                            ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Checkbox(
+                                value: checkBox3,
+                                onChanged: (value) {
+                                  setState(() {
+                                    this.checkBox3 = value!;
+                                  });
+                                },
+                              ),
+                              Text("Lotus G"),
+                              Checkbox(
+                                value: checkBox4,
+                                onChanged: (value) {
+                                  setState(() {
+                                    this.checkBox4 = value!;
+                                  });
+                                },
+                              ),
+                              Text("Lotus E"),
+                              Checkbox(
+                                value: checkBox5,
+                                onChanged: (value) {
+                                  setState(() {
+                                    this.checkBox5 = value!;
+                                  });
+                                },
+                              ),
+                              Text("Lotus S,P"),
+                            ],
+                          ),
+                          Divider(height: 15, thickness: 2),
+                        ],
+                      ),
                     ),
-                  )
-                ],
-              )
+                    SizedBox(
+                      height: 35,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        // ignore: deprecated_member_use
+                        OutlineButton(
+                          padding: EdgeInsets.symmetric(horizontal: 45),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20)),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Text("SAVE",
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  letterSpacing: 2.2,
+                                  color: Colors.black)),
+                        ),
+                        // ignore: deprecated_member_use
+                        RaisedButton(
+                          onPressed: () {
+                            _auth.signOut();
+                            Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SplashSrceen()),
+                              ModalRoute.withName('/'),
+                            );
+                          },
+                          color: Colors.lightBlue,
+                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          elevation: 2,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20)),
+                          child: Text(
+                            "SIGN OUT",
+                            style: TextStyle(
+                                fontSize: 14,
+                                letterSpacing: 2.2,
+                                color: Colors.white),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
@@ -171,26 +324,14 @@ class _BodyState extends State<Body> {
   }
 
   Widget buildTextField(
-      String labelText, String placeholder, bool isPasswordTextField) {
+    String labelText,
+    String placeholder,
+  ) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 35.0),
+      padding: const EdgeInsets.only(bottom: 4),
       child: TextField(
-        obscureText: isPasswordTextField ? showPassword : false,
         decoration: InputDecoration(
-            suffixIcon: isPasswordTextField
-                ? IconButton(
-                    onPressed: () {
-                      setState(() {
-                        showPassword = !showPassword;
-                      });
-                    },
-                    icon: Icon(
-                      Icons.remove_red_eye,
-                      color: Colors.grey,
-                    ),
-                  )
-                : null,
-            contentPadding: EdgeInsets.only(bottom: 3),
+            contentPadding: EdgeInsets.only(bottom: 1),
             labelText: labelText,
             floatingLabelBehavior: FloatingLabelBehavior.always,
             hintText: placeholder,

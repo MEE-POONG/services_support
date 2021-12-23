@@ -35,7 +35,6 @@ class _BodyState extends State<Body> {
   bool checkBox5 = false;
   bool checkBox6 = false;
 
-  String dropdownvalue = 'เลือก';
   String _currentSubCaseValue = '';
   String _currentActionValue = '';
   String _currentFaulttypeValue = '';
@@ -66,30 +65,52 @@ class _BodyState extends State<Body> {
     'AC Adaptor-154',
     'AP-101',
     'Core-104',
-    'Ef From Customer Side-105',
+    'Effect From Customer Side-105',
     'Hub-103',
     'L2-102',
     'Optic ตอนนอกขาด-124',
     'RJ45-155'
   ];
-  var items4 = [
-    'PM3-20',
-    'PM5-21',
-    'RECTIFIER UNIT FAILED-3',
-    'SA-17',
-    'SA3-19',
-    'SE-18',
-    'SFP BBU 10G 10KM-26',
-    'SFP BBU 10G 15KM-27',
-    'SFP BBU 2.5G 15KM-22',
-    'SFP BBU 2.5G 2KM-128',
-    'SFP BBU 6G 1.4KM-23',
-    'SFP BBU 6G 10KM-25',
-    'SFP BBU 6G 15KM-133',
-    'SFP BBU 6G 2KM-24',
-    'UTP-123'
+
+  var items1_1 = ['Air-Condition_69', 'Filter_70', 'Module-68'];
+  var items1_2 = [
+    'AP-95',
+    'Config-96',
+    'Confirm Link&Service-97',
+    'Effect from costomer side-100',
+    'Surge-98',
+    'UTP-99'
   ];
-  var items5 = [
+  var items1_3 = [
+    'Adapter-73',
+    'AP-72',
+    'Config-74',
+    'Confirm Link&Service-80',
+    'Effect from customer side-81',
+    'Optic ตอนนอกขาด-71',
+    'Patch cord-75',
+    'Router-76',
+    'SFP-77',
+    'Switch-78',
+    'UTP-79'
+  ];
+  var items1_4 = [
+    'Config-83',
+    'Confirm Link&Service-84',
+    'DSLAM Card Control-85',
+    'DSLAM Card Power-86',
+    'DSLAM Hang-88',
+    'Effect from customer side-94',
+    'GPON-89',
+    'OLT Card Control-90',
+    'OLT Card Power-91',
+    'Optic ตอนนอกขาด-82',
+    'PLC Splitter-92',
+    'SFP-93'
+  ];
+  var items1_5 = ['PM SITE ล้าง Filter-110', 'Visual Check Tower-111'];
+  var items1_6 = ['AC MAIN FAILED-67', 'ไฟฟ้า Clear-66'];
+  var items1_7 = [
     'ABIA-28',
     'AMIA-135',
     'ASIA-117',
@@ -108,20 +129,112 @@ class _BodyState extends State<Body> {
     'Door open-1',
     'FC Adaptor(แกนI)-144',
     'FOUA 9.8G/20KM-156',
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
+    'FOUC 9.8G/300M-160',
+    'FPAA-136',
+    'FS3-12',
+    'FS3A-13',
+    'FS5-14',
+    'FS5A-15',
+    'Patch cord-114',
+    'PM3-20',
+    'PM5-21',
+    'RECTIFIER UNIT FAILED-3',
+    'SA-17',
+    'SA3-19',
+    'SE-18',
+    'SFP BBU 10G 10KM-26',
+    'SFP BBU 10G 15KM-27',
+    'SFP BBU 2.5G 15KM-22',
+    'SFP BBU 2.5G 2KM-128',
+    'SFP BBU 6G 1.4KM-23',
+    'SFP BBU 6G 10KM-25',
+    'SFP BBU 6G 15KM-133',
+    'SFP BBU 6G 2KM-24',
+    'UTP-123'
+  ];
+  var items1_8 = [
+    'AAU-151',
+    'AHEGA-63',
+    'AHEGB-64',
+    'AHEGC-146',
+    'Antenna-29',
+    'AP-115',
+    'Aoto Clear-145',
+    'BPF-57',
+    'CPRI LC-LC Dual 80 M FUFDD-52',
+    'CPRI FC-LC 10M-113',
+    'CPRI FC-LC 50M-143',
+    'CPRI LC-FC 10M FUFAV-43',
+    'CPRI LC-FC 100M FUFAU-47',
+    'CPRI LC-FC 30M FUFAZ-44',
+    'CPRI LC-FC 50M FUFAT-45',
+    'CPRI LC-FC 70M FUFEJ-46',
+    'CPRI LC-LC 10M FUFBC-48',
+    'CPRI LC-LC 100M FUFAY-51',
+    'CPRI LC-LC 100M-142',
+    'CPRI LC-LC 30M FUFBA-49',
+    'CPRI LC-LC 50M FUFBB-50',
+    'CPRI LC-LC 60M-140',
+    'CPRI LC-LC 80M-141',
+    'CPRI LC-LC Armoured 60M-130',
+    'DC Connector-30',
+    'FC Adaptor(แกนI)-153',
+    'FOSH 6G/300M SFP H-53',
+    'FOSI 6G/15KM SFP I-54',
+    'FOUA 9.8G/20KM-55',
+    'FOUC 9.8G/300M-56',
+    'FPAA-157',
+    'FPAD-159',
+    'FPAE-158',
+    'FRGT-147',
+    'FXDD-65',
+    'GPS-122',
+    'Jumper-33',
+    'Microwave-150',
+    'ODU-125',
+    'OPDCD1-127',
+    'PPC BOX-58',
+    'R8862A S2100-60',
+    'R8862A S9000-59',
+    'R8881 AC-32',
+    'R8881 DC-31',
+    'R8882-61',
+    'R8892E-62',
+    'RET ACE-131',
+    'RET AGISSON-148',
+    'RET Cable-34',
+    'RET COMBA-119',
+    'RET FIBERHOME-120',
+    'RET Goodtrl-149',
+    'RET HW-118',
+    'RET MOBI-35',
+    'RET RCU-132',
+    'SFP RRU 10G 10KM-40',
+    'SFP RRU 10G 15KM-41',
+    'SFP RRU 2.5G 15KM-36',
+    'SFP RRU 2.5G 2KM-129',
+    'SFP RRU 6G 1.4KM-37',
+    'SFP RRU 6G 10KM-39',
+    'SFP RRU 6G 15KM-134',
+    'SFP RRU 6G 2KM-38',
+    'Splitter-42',
+    'ZTE830-121',
+    'ปรับ Antenna-112'
+  ];
+  var items1_9 = ['CPRI-107', 'Hardware-109', 'Optic ตอนนอกขาด-106', 'SFP-108'];
+  var items1_10 = [
+    'AC Adaptor-154',
+    'AP-101',
+    'Core-104',
+    'Effect From Customer Side-105',
+    'Hub-103',
+    'L2-102',
+    'Optic ตอนนอกขาด-124',
+    'RJ45-155'
   ];
 
-  String get title => dropdownvalue;
+  TextEditingController checkProblemCaseController =
+      TextEditingController(text: ' =>  =>  => Not Clear');
 
   @override
   Widget build(BuildContext context) {
@@ -193,7 +306,6 @@ class _BodyState extends State<Body> {
               padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
               child: TextField(
                 decoration: InputDecoration(hintText: "ระบุการแก้ไข"),
-                // textAlign: TextAlign.center,
                 onChanged: (newText) {},
               ),
             ),
@@ -307,7 +419,6 @@ class _BodyState extends State<Body> {
                 color: Colors.blue,
               ),
             ),
-
             SizedBox(height: 20),
             SingleChildScrollView(
               child: Row(
@@ -344,6 +455,38 @@ class _BodyState extends State<Body> {
                                                   debugPrint('VAL = $val');
                                                   _currentSubCaseValue =
                                                       val.toString();
+                                                  _currentFaulttypeValue = '';
+                                                  if (val == 'AIR') {
+                                                    items3 = items1_1;
+                                                  }
+                                                  if (val == 'AIRNET') {
+                                                    items3 = items1_2;
+                                                  }
+                                                  if (val == 'EDS') {
+                                                    items3 = items1_3;
+                                                  }
+                                                  if (val == 'FBB') {
+                                                    items3 = items1_4;
+                                                  }
+                                                  if (val == 'PM') {
+                                                    items3 = items1_5;
+                                                  }
+                                                  if (val == 'Power') {
+                                                    items3 = items1_6;
+                                                  }
+                                                  if (val == 'Radio') {
+                                                    items3 = items1_7;
+                                                  }
+                                                  if (val ==
+                                                      'Radio(Work on Tower)') {
+                                                    items3 = items1_8;
+                                                  }
+                                                  if (val == 'Transmission') {
+                                                    items3 = items1_9;
+                                                  }
+                                                  if (val == 'WIFI') {
+                                                    items3 = items1_10;
+                                                  }
                                                 });
                                                 Navigator.of(context).pop();
                                                 // isShowLocation2 = true;
@@ -357,7 +500,6 @@ class _BodyState extends State<Body> {
                       );
                     },
                   ),
-
                   // ignore: deprecated_member_use
                   FlatButton(
                     minWidth: 0,
@@ -401,7 +543,6 @@ class _BodyState extends State<Body> {
                       );
                     },
                   ),
-
                   // ignore: deprecated_member_use
                   FlatButton(
                       minWidth: 0,
@@ -434,6 +575,7 @@ class _BodyState extends State<Body> {
                                                     debugPrint('VAL = $val');
                                                     _currentFaulttypeValue =
                                                         val.toString();
+                                                    //      checkSubCaseController.text =
                                                   });
                                                   Navigator.of(context).pop();
                                                   // isShowLocation2 = true;
@@ -449,22 +591,30 @@ class _BodyState extends State<Body> {
                 ],
               ),
             ),
-            checkBox3
-                ? Text(_currentSubCaseValue +
-                    ' => ' +
-                    _currentActionValue +
-                    ' => ' +
-                    _currentFaulttypeValue +
-                    ' => ' +
-                    'Clear')
-                : Text(_currentSubCaseValue +
-                    ' => ' +
-                    _currentActionValue +
-                    ' => ' +
-                    _currentFaulttypeValue +
-                    ' => ' +
-                    'Not Clear'),
-
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: TextField(
+                  decoration: InputDecoration(
+                      hintText: checkBox3
+                          ? checkProblemCaseController.text =
+                              _currentSubCaseValue +
+                                  ' => ' +
+                                  _currentActionValue +
+                                  ' => ' +
+                                  _currentFaulttypeValue +
+                                  ' => ' +
+                                  'Clear'
+                          : checkProblemCaseController.text =
+                              _currentSubCaseValue +
+                                  ' => ' +
+                                  _currentActionValue +
+                                  ' => ' +
+                                  _currentFaulttypeValue +
+                                  ' => ' +
+                                  'Not Clear'),
+                  textAlign: TextAlign.center,
+                  controller: checkProblemCaseController),
+            ),
             RowWidget(),
             // ignore: dead_code
             checkBox2 ? SizedBox1() : Text(""),
@@ -493,8 +643,8 @@ class _BodyState extends State<Body> {
                     actions: <Widget>[
                       TextButton(
                         onPressed: () {
-                           Navigator.of(context).push(MaterialPageRoute(
-                  builder: (BuildContext context) => Report()));
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (BuildContext context) => Report()));
                         },
                         child: const Text('OK'),
                       ),
@@ -503,9 +653,7 @@ class _BodyState extends State<Body> {
                 );
               },
             ),
-            SizedBox(
-              height: 50,
-            ),
+            SizedBox(height: 300),
           ],
         ),
       ),
@@ -527,14 +675,7 @@ Widget SizedBox1() {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Container(
-              height: 0.5,
-              color: Colors.black,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(7.0),
+            padding: const EdgeInsets.symmetric(horizontal: 7),
             child: Text(
               "อุปกรณ์ที่เปลี่ยน(ห้ามแก้ไขชื่อ Spare ถ้ามีเพิ่มเติมให้ใส่เครื่องหมาย,คั้น)",
               style: TextStyle(fontSize: 13),
@@ -548,8 +689,7 @@ Widget SizedBox1() {
                   width: 250,
                   child: TextFormField(
                     decoration: InputDecoration(
-                      labelText: "",
-                      // hintText: 'AP',floatingLabelBehavior: FloatingLabelBehavior.always,
+                      hintText:"AP",
                     ),
                     onChanged: (newText) {},
                   ),
@@ -560,7 +700,7 @@ Widget SizedBox1() {
                   width: 100,
                   child: TextFormField(
                     keyboardType: TextInputType.number,
-                    decoration: InputDecoration(labelText: "จำนวน"),
+                    decoration: InputDecoration(hintText: "จำนวน"),
                     onChanged: (newText) {},
                   ),
                 ),
@@ -579,7 +719,6 @@ Widget SizedBox1() {
                 child: SizedBox(
                   width: 250,
                   child: TextFormField(
-                    keyboardType: TextInputType.number,
                     decoration: InputDecoration(labelText: "Serial In:"),
                     onChanged: (newText) {},
                   ),
@@ -608,7 +747,6 @@ Widget SizedBox1() {
                 child: SizedBox(
                   width: 250,
                   child: TextFormField(
-                    keyboardType: TextInputType.number,
                     decoration: InputDecoration(labelText: "Serial Out:"),
                     onChanged: (newText) {},
                   ),

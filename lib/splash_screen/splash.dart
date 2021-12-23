@@ -56,7 +56,7 @@ class _BodyState extends State<Body> {
                 style: TextStyle(color: Colors.black),
               ),
               Image.asset(
-                "assets/images/New iconApp pre2-2.png",
+                "assets/images/New icon.png",
                 height: 400,
                 width: double.infinity,
               ),
@@ -69,7 +69,7 @@ class _BodyState extends State<Body> {
               ),
               Text(
                 "<< Mee Report by Meepoong.com >>",
-                style: TextStyle(fontSize: 15,color: Colors.white60),
+                style: TextStyle(fontSize: 15, color: Colors.white60),
               ),
               Spacer(),
             ],
@@ -87,41 +87,40 @@ class BtnLogin extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return 
-      // ignore: deprecated_member_use
-       FlatButton(
-         minWidth: 150,
-         height: 55,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
+    return
+        // ignore: deprecated_member_use
+        FlatButton(
+      minWidth: 150,
+      height: 55,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+      ),
+      color: Colors.white60,
+      child: Text(
+        "เข้าสู่ระบบ/ลงทะเบียน",
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 20,
+          color: Colors.indigo,
         ),
-        color: Colors.white60,
-        child: Text(
-          "เข้าสู่ระบบ/ลงทะเบียน",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
-            color: Colors.indigo,
-          ),
-        ),
-        onPressed: () {
-          FirebaseAuth.instance.authStateChanges().listen((User? user) {
-            if (user == null) {
-              Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(builder: (context) => SignIn()),
-                ModalRoute.withName('/'),
-              );
-            } else {
-              Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(builder: (context) => Home()),
-                ModalRoute.withName('/'),
-              );
-            }
-          });
-        },
-     
+      ),
+      onPressed: () {
+        FirebaseAuth.instance.authStateChanges().listen((User? user) {
+          if (user == null) {
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => SignIn()),
+              (Route<dynamic> route) => false,
+            );
+          } else {
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => Home()),
+              (Route<dynamic> route) => false,
+            );
+          }
+        });
+      },
     );
   }
 }

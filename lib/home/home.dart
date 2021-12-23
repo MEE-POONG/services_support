@@ -40,20 +40,16 @@ class _BodyState extends State<Body> {
           style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,
-        leading: IconButton(
-          icon: Icon(Icons.menu),
-          onPressed: () {
-            Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => Profile()));
-          },
-        ),
         actions: [
           IconButton(
             icon: Icon(
-              Icons.search,
+              Icons.person,
               size: 30,
             ),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => Profile()));
+            },
           ),
         ],
         flexibleSpace: Container(
@@ -85,10 +81,9 @@ class _BodyState extends State<Body> {
               ],
             ),
           ),
-          
           Container(
             height: 250,
-            child:  StreamBuilder<QuerySnapshot>(
+            child: StreamBuilder<QuerySnapshot>(
               stream: _worksStream,
               builder: (BuildContext context,
                   AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -106,16 +101,16 @@ class _BodyState extends State<Body> {
                     Map<String, dynamic> data =
                         document.data()! as Map<String, dynamic>;
 
-                    return TextButton(
+                    return OutlinedButton(
                       onPressed: () {
-                        Navigator.of(context).push(
-                            MaterialPageRoute(builder: (context) => Working()));
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => BodyWorking()));
                       },
                       child: ListTile(
-                        tileColor: Colors.blue[200],
+                        // tileColor: Colors.blue[200],
                         title: Text(data['JobId'],
                             style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold)),
+                                fontSize: 18, fontWeight: FontWeight.w500)),
                         subtitle: Text(data['Site']),
                       ),
                     );
@@ -126,7 +121,9 @@ class _BodyState extends State<Body> {
           ),
         ],
       ),
-      bottomNavigationBar: BottomNavBarFb5(),
+      bottomNavigationBar: BottomNavBarFb5(
+        i: 1,
+      ),
     );
   }
 }
