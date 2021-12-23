@@ -8,6 +8,8 @@ import 'package:services_support/menu_page/profile/profile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:services_support/menu_page/working/working.dart';
 
+import 'package:localstorage/localstorage.dart';
+
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
 
@@ -31,6 +33,13 @@ class _BodyState extends State<Body> {
   //final FirebaseAuth _auth = FirebaseAuth.instance;
   final Stream<QuerySnapshot> _worksStream =
       FirebaseFirestore.instance.collection('work').snapshots();
+  final LocalStorage storage = new LocalStorage('mee_report_app');
+
+  _saveToStorage(key, data) {
+    storage.setItem('JobKey', key);
+    storage.setItem('JobId', data);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -100,9 +109,9 @@ class _BodyState extends State<Body> {
                       snapshot.data!.docs.map((DocumentSnapshot document) {
                     Map<String, dynamic> data =
                         document.data()! as Map<String, dynamic>;
-
                     return OutlinedButton(
                       onPressed: () {
+                        _saveToStorage(document.id, data['JobId']);
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => BodyWorking()));
                       },

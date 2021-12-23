@@ -2,10 +2,19 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:maps_launcher/maps_launcher.dart';
 import 'package:services_support/home/bottomnavbar.dart';
+import 'package:services_support/home/home.dart';
 import 'package:services_support/menu_page/working/done/done.dart';
 
-class Working extends StatelessWidget {
+import 'package:localstorage/localstorage.dart';
+import 'package:services_support/models/work.dart';
+
+class Working extends StatefulWidget {
   // const Working({Key? key}) : super(key: key);
+  @override
+  _WorkingState createState() => _WorkingState();
+}
+
+class _WorkingState extends State<Working> {
   final Stream<QuerySnapshot> _worksStream =
       FirebaseFirestore.instance.collection('work').snapshots();
 
@@ -18,15 +27,6 @@ class Working extends StatelessWidget {
           // "เลือกไซต์เพื่อเริ่มดำเนินการ",
           style: TextStyle(color: Colors.white),
         ),
-        actions: [
-          IconButton(
-            icon: Icon(
-              Icons.search,
-              size: 30,
-            ),
-            onPressed: () {},
-          ),
-        ],
         flexibleSpace: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
@@ -114,6 +114,26 @@ class BodyWorking extends StatefulWidget {
 class _BodyState extends State<BodyWorking> {
   bool isOnsite = false;
   bool isDone = false;
+
+  final LocalStorage storage = new LocalStorage('mee_report_app');
+  String item = '';
+  String JobKey = '';
+
+  @override
+  initState() {
+    super.initState();
+    item = storage.getItem('JobId');
+    JobKey = storage.getItem('JobKey');
+    print(JobKey);
+    if (item == '') {
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => Home()),
+        (Route<dynamic> route) => false,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -154,7 +174,7 @@ class _BodyState extends State<BodyWorking> {
             child: Row(
               children: [
                 Text(
-                  "รายละเอียดไซต์งาน : ",
+                  "รายละเอียดไซต์งาน : $item",
                   style: TextStyle(color: Colors.white, fontSize: 15),
                 ),
               ],
@@ -172,28 +192,10 @@ class _BodyState extends State<BodyWorking> {
                 ),
                 color: Colors.purple,
                 onPressed: () {
-                  showDialog<String>(
-                    context: context,
-                    builder: (BuildContext context) => AlertDialog(
-                      title: const Text('Drpart'),
-                      content: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 80),
-                        child: const Text(
-                          'ยืนยันสำเร็จ',
-                          style: TextStyle(fontSize: 18),
-                        ),
-                      ),
-                      actions: <Widget>[
-                        TextButton(
-                            child: const Text('OK'),
-                            onPressed: () {
-                              MapsLauncher.launchCoordinates(14.9698804,
-                                  102.1020475, 'MEE POONG CO., LTD.');
-                              Navigator.pop(context, 'OK');
-                            }),
-                      ],
-                    ),
-                  );
+                  // เพิ่มเวลา depart
+                  updateDepart();
+                  // show dialog และแสดงแผนที่
+                  dialogSuccessAndShowMap(context);
                 },
               ),
               // ignore: deprecated_member_use
@@ -201,25 +203,8 @@ class _BodyState extends State<BodyWorking> {
                   child: Text('Onsite', style: TextStyle(color: Colors.white)),
                   color: Colors.orange,
                   onPressed: () {
-                    showDialog<String>(
-                      context: context,
-                      builder: (BuildContext context) => AlertDialog(
-                        title: const Text('Onsite'),
-                        content: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 80),
-                          child: const Text(
-                            'ยืนยันสำเร็จ',
-                            style: TextStyle(fontSize: 18),
-                          ),
-                        ),
-                        actions: <Widget>[
-                          TextButton(
-                            onPressed: () => Navigator.pop(context, 'OK'),
-                            child: const Text('OK'),
-                          ),
-                        ],
-                      ),
-                    );
+                    updateOnsite();
+                    showDialogSuccess(context);
                     setState(() {
                       isOnsite = true;
                     });
@@ -229,6 +214,7 @@ class _BodyState extends State<BodyWorking> {
                   child: Text('Done', style: TextStyle(color: Colors.white)),
                   color: Colors.green,
                   onPressed: () {
+                    updateAlarmClear();
                     setState(() {
                       isDone = true;
                     });
@@ -249,5 +235,73 @@ class _BodyState extends State<BodyWorking> {
         ],
       ),
     );
+  }
+
+  void updateAlarmClear() {
+    FirebaseFirestore.instance
+        .collection('work')
+        .doc(JobKey)
+        .update({'AlarmClear': new DateTime.now()});
+  }
+
+  void showDialogSuccess(BuildContext context) {
+    showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: const Text('Onsite'),
+        content: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 80),
+          child: const Text(
+            'ยืนยันสำเร็จ',
+            style: TextStyle(fontSize: 18),
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.pop(context, 'OK'),
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void updateOnsite() {
+    FirebaseFirestore.instance
+        .collection('work')
+        .doc(JobKey)
+        .update({'OnSite': new DateTime.now()});
+  }
+
+  void dialogSuccessAndShowMap(BuildContext context) {
+    showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: const Text('Drpart'),
+        content: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 80),
+          child: const Text(
+            'ยืนยันสำเร็จ',
+            style: TextStyle(fontSize: 18),
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+              child: const Text('OK'),
+              onPressed: () {
+                MapsLauncher.launchCoordinates(
+                    14.9698804, 102.1020475, 'MEE POONG CO., LTD.');
+                Navigator.pop(context, 'OK');
+              }),
+        ],
+      ),
+    );
+  }
+
+  void updateDepart() {
+    FirebaseFirestore.instance
+        .collection('work')
+        .doc(JobKey)
+        .update({'Depart': new DateTime.now()});
   }
 }
