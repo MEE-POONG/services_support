@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:services_support/home/home.dart';
@@ -87,13 +88,35 @@ class _SignFormState extends State<SignForm> {
       email: _email.text,
       password: _password.text,
     )
-        .then((user) {
-      print(user);
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => Home(),
-        ),
-      );
+        .then((userCredential) {
+      FirebaseFirestore.instance
+          .collection('user')
+          .doc(userCredential.user?.uid)
+          .set({
+        "uid": userCredential.user?.uid,
+        "displayName": userCredential.user?.displayName,
+        "email": userCredential.user?.email,
+        "emailVerified": userCredential.user?.emailVerified,
+        "isAnonymous": userCredential.user?.isAnonymous,
+        "phoneNumber": userCredential.user?.phoneNumber,
+        "photoURL": userCredential.user?.photoURL,
+        "tenantId": userCredential.user?.tenantId,
+        "hashCode": userCredential.user?.hashCode
+      }).then((value) {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => Home(),
+          ),
+        );
+      }).catchError((error) {
+        print(error);
+        print(error.message);
+        // ignore: deprecated_member_use
+        Scaffold.of(context).showSnackBar(SnackBar(
+          content: Text(error.message, style: TextStyle(color: Colors.white)),
+          backgroundColor: Colors.red,
+        ));
+      });
     }).catchError((error) {
       print(error);
       print(error.message);
@@ -131,7 +154,9 @@ class _SignFormState extends State<SignForm> {
             ),
             SizedBox(height: 20),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20,),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 20,
+              ),
               child: TextFormField(
                   obscureText: true,
                   controller: _password,

@@ -30,14 +30,24 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  //final FirebaseAuth _auth = FirebaseAuth.instance;
-  final Stream<QuerySnapshot> _worksStream =
-      FirebaseFirestore.instance.collection('work').snapshots();
+  Stream<QuerySnapshot> _worksStream = FirebaseFirestore.instance
+      .collection('work')
+      .where('updateBy', whereIn: ['']).snapshots();
+
   final LocalStorage storage = new LocalStorage('mee_report_app');
 
   _saveToStorage(key, data) {
     storage.setItem('JobKey', key);
     storage.setItem('JobId', data);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _worksStream = FirebaseFirestore.instance
+        .collection('work')
+        .where('updateBy', whereIn: ['']).snapshots();
+        print(_worksStream);
   }
 
   @override

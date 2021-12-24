@@ -28,9 +28,18 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  //final FirebaseAuth _auth = FirebaseAuth.instance;
-  final Stream<QuerySnapshot> _worksStream =
-      FirebaseFirestore.instance.collection('work').snapshots();
+  Stream<QuerySnapshot> _worksStream = FirebaseFirestore.instance
+      .collection('work')
+      .where('updateBy', whereIn: ['']).snapshots();
+
+  @override
+  void initState() {
+    super.initState();
+    _worksStream = FirebaseFirestore.instance
+        .collection('work')
+        .where('updateBy', whereIn: ['']).snapshots();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 // Import the firebase_core and cloud_firestore plugin
@@ -43,6 +44,7 @@ String _input4 = "";
 class _BodyState extends State<Body> {
   // Create a CollectionReference called users that references the firestore collection
   CollectionReference addWork = FirebaseFirestore.instance.collection('work');
+  String? _currentUserId = FirebaseAuth.instance.currentUser?.uid;
 
   Future<void> addInputWork(
     type,
@@ -88,10 +90,11 @@ class _BodyState extends State<Body> {
           'FinshTime': _listData[7].replaceAll("Finish Before ", "").toString(),
           'AssignTo': str.substring(str.indexOf("to") + 3, str.indexOf("by")),
           'AssignBy': str.substring(str.indexOf("by") + 3),
+          'Type': type,
           'createAt': DateTime.now(),
-          'createBy': 'ADMIN',
+          'createBy': _currentUserId,
           'updateAt': DateTime.now(),
-          'updateBy': 'ADMIN',
+          'updateBy': _currentUserId
         })
         .then((value) => print("CM Added $value"))
         .catchError((error) => print("Failed to add CM: $error"));

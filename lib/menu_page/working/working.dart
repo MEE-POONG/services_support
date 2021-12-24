@@ -15,8 +15,17 @@ class Working extends StatefulWidget {
 }
 
 class _WorkingState extends State<Working> {
-  final Stream<QuerySnapshot> _worksStream =
-      FirebaseFirestore.instance.collection('work').snapshots();
+  Stream<QuerySnapshot> _worksStream = FirebaseFirestore.instance
+      .collection('work')
+      .where('updateBy', whereIn: ['']).snapshots();
+
+  @override
+  void initState() {
+    super.initState();
+    _worksStream = FirebaseFirestore.instance
+        .collection('work')
+        .where('updateBy', whereIn: ['']).snapshots();
+  }
 
   @override
   Widget build(BuildContext context) {

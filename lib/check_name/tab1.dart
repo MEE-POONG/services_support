@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:services_support/home/home.dart';
 
@@ -11,10 +12,11 @@ class Tab1 extends StatefulWidget {
 
 class _Tab1State extends State<Tab1> {
 //final FirebaseAuth _auth = FirebaseAuth.instance;
-  final Stream<QuerySnapshot> _worksStream =
-      FirebaseFirestore.instance.collection('worksheet').snapshots();
-  final Stream<QuerySnapshot> _nameStream1 =
-      FirebaseFirestore.instance.collection('name').snapshots();
+  String? _currentUserId = FirebaseAuth.instance.currentUser?.uid;
+
+  Stream<QuerySnapshot> _nameStream1 = FirebaseFirestore.instance
+      .collection('name')
+      .where('updateBy', whereIn: ['']).snapshots();
 
   CollectionReference addWorks =
       FirebaseFirestore.instance.collection('worksheet');
@@ -39,6 +41,15 @@ class _Tab1State extends State<Tab1> {
   String _input3 = "";
   String _input4 = "";
   String _input5 = "";
+
+  @override
+  void initState() {
+    super.initState();
+    _nameStream1 = FirebaseFirestore.instance
+        .collection('name')
+        .where('updateBy', whereIn: [_currentUserId]).snapshots();
+  }
+
   Future<void> addInputWork(
     type,
     data,
@@ -53,7 +64,11 @@ class _Tab1State extends State<Tab1> {
             'Minor': _input2,
             'Major': _input3,
             'None': _input4,
-            'CheckBox': _input5
+            'CheckBox': _input5,
+            'createAt': DateTime.now(),
+            'createBy': _currentUserId,
+            'updateAt': DateTime.now(),
+            'updateBy': _currentUserId
           },
         )
         .then((value) => print("Name $value"))
@@ -72,6 +87,10 @@ class _Tab1State extends State<Tab1> {
           {
             'name': _input,
             'phone': _input0,
+            'createAt': DateTime.now(),
+            'createBy': _currentUserId,
+            'updateAt': DateTime.now(),
+            'updateBy': _currentUserId
           },
         )
         .then((value) => print("Name $value"))
@@ -218,7 +237,6 @@ class _Tab1State extends State<Tab1> {
                                               fontSize: 16,
                                             ),
                                           ),
-                                         
                                           Text(
                                             ' ' + data['phone'],
                                             style: TextStyle(
@@ -382,7 +400,7 @@ class _Tab1State extends State<Tab1> {
                   ),
                 ],
               ),
-               SizedBox(height: 250),
+              SizedBox(height: 250),
             ],
           ),
         ),
