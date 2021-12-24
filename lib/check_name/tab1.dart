@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:services_support/home/home.dart';
+import 'package:services_support/menu_page/report.dart';
 
 class Tab1 extends StatefulWidget {
   const Tab1({Key? key}) : super(key: key);
@@ -64,7 +65,7 @@ class _Tab1State extends State<Tab1> {
             'Minor': _input2,
             'Major': _input3,
             'None': _input4,
-            'CheckBox': _input5,
+            'Ststus': _input5,
             'createAt': DateTime.now(),
             'createBy': _currentUserId,
             'updateAt': DateTime.now(),
@@ -222,11 +223,7 @@ class _Tab1State extends State<Tab1> {
                                       document.data()! as Map<String, dynamic>;
                                   // ignore: deprecated_member_use
                                   return OutlinedButton(
-                                    onPressed: () {
-                                      Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                              builder: (context) => Home()));
-                                    },
+                                    onPressed: () {},
                                     child: ListTile(
                                       // tileColor: Colors.grey[300],
                                       title: Row(
@@ -378,6 +375,13 @@ class _Tab1State extends State<Tab1> {
                                                     color: Colors.blueAccent)),
                                             onPressed: () {
                                               Navigator.pop(context);
+                                              Navigator.pushAndRemoveUntil(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        Report()),
+                                                (Route<dynamic> route) => false,
+                                              );
                                             })
                                       ]);
                                   return dialog;
