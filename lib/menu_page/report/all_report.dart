@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:localstorage/localstorage.dart';
 import 'package:services_support/home/bottomnavbar.dart';
 import 'package:intl/intl.dart';
@@ -89,7 +90,6 @@ class _AllReportState extends State<AllReport> {
       });
       return doc.data();
     }).toList();
-
 
     setState(() {
       _reportWork = _reportWork.toString() + '\n=== PM ===';
@@ -185,16 +185,29 @@ class _AllReportState extends State<AllReport> {
         ),
         elevation: 4,
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-        child: TextField(
-          controller: wortsheetController,
-          keyboardType: TextInputType.text,
-          decoration: InputDecoration(
-            border: OutlineInputBorder(),
-          ),
-          maxLines: 40,
-          // controller: Data2,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              child: TextField(
+                controller: wortsheetController,
+                keyboardType: TextInputType.text,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                ),
+                maxLines: 20,
+                // controller: Data2,
+              ),
+            ),
+            RaisedButton(
+              child: Text("Copy Report"),
+              onPressed: () {
+                Clipboard.setData(
+                    ClipboardData(text: wortsheetController.text));
+              },
+            ),
+          ],
         ),
       ),
       bottomNavigationBar: BottomNavBarFb5(
