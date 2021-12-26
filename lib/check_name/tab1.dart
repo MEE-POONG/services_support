@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:services_support/home/home.dart';
-import 'package:services_support/menu_page/report.dart';
+import 'package:services_support/menu_page/report/report.dart';
 
 class Tab1 extends StatefulWidget {
   const Tab1({Key? key}) : super(key: key);

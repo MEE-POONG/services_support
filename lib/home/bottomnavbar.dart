@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:services_support/home/home.dart';
 import 'package:services_support/check_name/check_name.dart';
-import 'package:services_support/menu_page/report.dart';
+import 'package:services_support/menu_page/report/report.dart';
 import 'package:services_support/menu_page/work.dart';
 import 'package:services_support/menu_page/working/working.dart';
 
@@ -43,7 +43,7 @@ class _BottomNavBarFb5State extends State<BottomNavBarFb5> {
           child: Padding(
             padding: const EdgeInsets.only(left: 25.0, right: 25.0),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 IconBottomBar(
                     text: "Home",

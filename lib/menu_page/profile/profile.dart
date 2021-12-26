@@ -140,7 +140,7 @@ class _BodyState extends State<Body> {
                                 child: SizedBox(
                                   width: 200,
                                   child: buildTextField(
-                                      "ชื่อ-สกุล", "Yuranan Prachuapsuk"),
+                                      "ชื่อ-สกุล", ""),
                                 ),
                               ),
 
@@ -149,7 +149,7 @@ class _BodyState extends State<Body> {
                                 child: SizedBox(
                                   width: 120,
                                   child:
-                                      buildTextField("เบอร์โทร", "0981181233"),
+                                      buildTextField("เบอร์โทร", ""),
                                 ),
                               ),
                             ],
@@ -161,7 +161,7 @@ class _BodyState extends State<Body> {
                                 child: SizedBox(
                                   width: 200,
                                   child: buildTextField(
-                                      "หมายเลขบัตรประชาชน", "13016000000"),
+                                      "หมายเลขบัตรประชาชน", ""),
                                 ),
                               ),
 
@@ -169,7 +169,7 @@ class _BodyState extends State<Body> {
                               Container(
                                 child: SizedBox(
                                   width: 120,
-                                  child: buildTextField("Team", "Wifi-NMA"),
+                                  child: buildTextField("Team", ""),
                                 ),
                               ),
                             ],
@@ -178,7 +178,7 @@ class _BodyState extends State<Body> {
                             child: SizedBox(
                               width: 330,
                               child: buildTextField(
-                                  "Location", "Meepoong co.ltd."),
+                                  "Location", ""),
                             ),
                           ),
                           SizedBox(height: 30),

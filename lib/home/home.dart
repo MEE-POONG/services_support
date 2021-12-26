@@ -1,5 +1,6 @@
 // import 'package:firebase_auth/firebase_auth.dart';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:services_support/home/bottomnavbar.dart';
@@ -30,6 +31,8 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
+
+  String? _currentUserId = FirebaseAuth.instance.currentUser?.uid;
   Stream<QuerySnapshot> _worksStream = FirebaseFirestore.instance
       .collection('work')
       .where('updateBy', whereIn: ['']).snapshots();
@@ -46,8 +49,7 @@ class _BodyState extends State<Body> {
     super.initState();
     _worksStream = FirebaseFirestore.instance
         .collection('work')
-        .where('updateBy', whereIn: ['']).snapshots();
-        print(_worksStream);
+        .where('updateBy', whereIn: [_currentUserId]).snapshots();
   }
 
   @override

@@ -56,33 +56,34 @@ class _BodyState extends State<Body> {
     List _listData = str.split(":");
 
     setState(() {
-      Data1.text = 'JobId: ' +
-          _listData[0].toString() +
-          '\n' +
-          'Alarm: ' +
-          _listData[1].toString() +
-          '\n' +
-          'Site: ' +
-          _listData[2].toString().split("-")[0] +
-          '\n' +
-          'LocationFault: ' +
-          _listData[2].toString().split("-")[1].split(" ")[0] +
-          '\n' +
-          'Priority: ' +
-          _listData[6].toString() +
-          '\n' +
-          'FinshTime: ' +
-          _listData[7].replaceAll("Finish Before ", "").toString() +
-          '\n' +
-          'AssignTo: ' +
-          str.substring(str.indexOf("to") + 3, str.indexOf("by")) +
-          '\n' +
-          'AssignBy: ' +
-          str.substring(str.indexOf("by") + 3);
+      // Data1.text = 'JobId: ' +
+      //     _listData[0].toString() +
+      //     '\n' +
+      //     'Alarm: ' +
+      //     _listData[1].toString() +
+      //     '\n' +
+      //     'Site: ' +
+      //     _listData[2].toString().split("-")[0] +
+      //     '\n' +
+      //     'LocationFault: ' +
+      //     _listData[2].toString().split("-")[1].split(" ")[0] +
+      //     '\n' +
+      //     'Priority: ' +
+      //     _listData[6].toString() +
+      //     '\n' +
+      //     'FinshTime: ' +
+      //     _listData[7].replaceAll("Finish Before ", "").toString() +
+      //     '\n' +
+      //     'AssignTo: ' +
+      //     str.substring(str.indexOf("to") + 3, str.indexOf("by")) +
+      //     '\n' +
+      //     'AssignBy: ' +
+      //     str.substring(str.indexOf("by") + 3);
     });
     return addWork
         .add({
           'JobId': _listData[0].toString(),
+          'JobDetail': Data1.text,
           'Alarm': _listData[1].toString(),
           'Site': _listData[2].toString().split("-")[0],
           'LocationFault': _listData[2].toString().split("-")[1].split(" ")[0],
@@ -160,192 +161,200 @@ class _BodyState extends State<Body> {
           child: TabBarView(
             children: <Widget>[
               Scaffold(
-                body: Container(
-                  child: Column(
-                    children: <Widget>[
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text("รายละเอียดงาน", style: TextStyle(fontSize: 15)),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 10),
-                        child: TextField(
-                          keyboardType: TextInputType.text,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: "วางข้อความที่ได้รับจากTTSM",
-                          ),
-                          maxLines: 10,
-                          controller: Data1,
+                body: SingleChildScrollView(
+                  child: Container(
+                    child: Column(
+                      children: <Widget>[
+                        SizedBox(
+                          height: 10,
                         ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          // ignore: deprecated_member_use
-                          RaisedButton(
-                            child: Text("Update"),
-                            onPressed: () async {
-                              setState(() {
-                                _inputCm = Data1.text;
-                              });
-                              await addInputWork("CM", Data1.text);
-                            },
+                        Text("รายละเอียดงาน", style: TextStyle(fontSize: 15)),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 10),
+                          child: TextField(
+                            keyboardType: TextInputType.text,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                              labelText: "วางข้อความที่ได้รับจากTTSM",
+                            ),
+                            maxLines: 10,
+                            controller: Data1,
                           ),
-                          // ignore: deprecated_member_use
-                          RaisedButton(
-                            child: Text("ล้างข้อมูล"),
-                            onPressed: () {
-                              clearData();
-                            },
-                          ),
-                        ],
-                      ),
-                      Text(Data1.text)
-                    ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            // ignore: deprecated_member_use
+                            RaisedButton(
+                              child: Text("Update"),
+                              onPressed: () async {
+                                setState(() {
+                                  _inputCm = Data1.text;
+                                });
+                                await addInputWork("CM", Data1.text);
+                              },
+                            ),
+                            // ignore: deprecated_member_use
+                            RaisedButton(
+                              child: Text("ล้างข้อมูล"),
+                              onPressed: () {
+                                clearData();
+                              },
+                            ),
+                          ],
+                        ),
+                        Text(_inputCm)
+                      ],
+                    ),
                   ),
                 ),
               ),
               Scaffold(
-                body: Container(
-                  child: Column(
-                    children: <Widget>[
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text("รายละเอียดงาน", style: TextStyle(fontSize: 15)),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 10),
-                        child: TextField(
-                          keyboardType: TextInputType.text,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: "วางข้อความที่ได้รับจากTTSM",
-                          ),
-                          maxLines: 10,
-                          controller: Data2,
+                body: SingleChildScrollView(
+                  child: Container(
+                    child: Column(
+                      children: <Widget>[
+                        SizedBox(
+                          height: 10,
                         ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          // ignore: deprecated_member_use
-                          RaisedButton(
-                            child: Text("Update"),
-                            onPressed: () async {
-                              setState(() {
-                                _input2 = Data2.text;
-                              });
-                              await addInputWork("CM MANUAL", Data2.text);
-                            },
+                        Text("รายละเอียดงาน", style: TextStyle(fontSize: 15)),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 10),
+                          child: TextField(
+                            keyboardType: TextInputType.text,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                              labelText: "วางข้อความที่ได้รับจากTTSM",
+                            ),
+                            maxLines: 10,
+                            controller: Data2,
                           ),
-                          // ignore: deprecated_member_use
-                          RaisedButton(
-                            child: Text("ล้างข้อมูล"),
-                            onPressed: () {
-                              clearData();
-                            },
-                          ),
-                        ],
-                      ),
-                      Text("$_input2")
-                    ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            // ignore: deprecated_member_use
+                            RaisedButton(
+                              child: Text("Update"),
+                              onPressed: () async {
+                                setState(() {
+                                  _input2 = Data2.text;
+                                });
+                                await addInputWork("CM MANUAL", Data2.text);
+                              },
+                            ),
+                            // ignore: deprecated_member_use
+                            RaisedButton(
+                              child: Text("ล้างข้อมูล"),
+                              onPressed: () {
+                                clearData();
+                              },
+                            ),
+                          ],
+                        ),
+                        Text("$_input2")
+                      ],
+                    ),
                   ),
                 ),
               ),
               Scaffold(
-                body: Container(
-                  child: Column(
-                    children: <Widget>[
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text("รายละเอียดงาน", style: TextStyle(fontSize: 15)),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 10),
-                        child: TextField(
-                          keyboardType: TextInputType.text,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: "วางข้อความที่ได้รับจากTTSM",
-                          ),
-                          maxLines: 10,
-                          controller: Data3,
+                body: SingleChildScrollView(
+                  child: Container(
+                    child: Column(
+                      children: <Widget>[
+                        SizedBox(
+                          height: 10,
                         ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          // ignore: deprecated_member_use
-                          RaisedButton(
-                            child: Text("Update"),
-                            onPressed: () {
-                              setState(() {
-                                _input3 = Data3.text;
-                              });
-                            },
+                        Text("รายละเอียดงาน", style: TextStyle(fontSize: 15)),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 10),
+                          child: TextField(
+                            keyboardType: TextInputType.text,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                              labelText: "วางข้อความที่ได้รับจากTTSM",
+                            ),
+                            maxLines: 10,
+                            controller: Data3,
                           ),
-                          // ignore: deprecated_member_use
-                          RaisedButton(
-                            child: Text("ล้างข้อมูล"),
-                            onPressed: () {
-                              clearData();
-                            },
-                          ),
-                        ],
-                      ),
-                      Text("$_input3")
-                    ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            // ignore: deprecated_member_use
+                            RaisedButton(
+                              child: Text("Update"),
+                              onPressed: () {
+                                setState(() {
+                                  _input3 = Data3.text;
+                                });
+                              },
+                            ),
+                            // ignore: deprecated_member_use
+                            RaisedButton(
+                              child: Text("ล้างข้อมูล"),
+                              onPressed: () {
+                                clearData();
+                              },
+                            ),
+                          ],
+                        ),
+                        Text("$_input3")
+                      ],
+                    ),
                   ),
                 ),
               ),
               Scaffold(
-                body: Container(
-                  child: Column(
-                    children: <Widget>[
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text("รายละเอียดงาน", style: TextStyle(fontSize: 15)),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 10),
-                        child: TextField(
-                          keyboardType: TextInputType.text,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: "วางข้อความที่ได้รับจากTTSM",
-                          ),
-                          maxLines: 10,
-                          controller: Data4,
+                body: SingleChildScrollView(
+                  child: Container(
+                    child: Column(
+                      children: <Widget>[
+                        SizedBox(
+                          height: 10,
                         ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          // ignore: deprecated_member_use
-                          RaisedButton(
-                            child: Text("Update"),
-                            onPressed: () {
-                              setState(() {
-                                _input4 = Data4.text;
-                              });
-                            },
+                        Text("รายละเอียดงาน", style: TextStyle(fontSize: 15)),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 10),
+                          child: TextField(
+                            keyboardType: TextInputType.text,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                              labelText: "วางข้อความที่ได้รับจากTTSM",
+                            ),
+                            maxLines: 10,
+                            controller: Data4,
                           ),
-                          // ignore: deprecated_member_use
-                          RaisedButton(
-                            child: Text("ล้างข้อมูล"),
-                            onPressed: () {
-                              clearData();
-                            },
-                          ),
-                        ],
-                      ),
-                      Text("$_input4")
-                    ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            // ignore: deprecated_member_use
+                            RaisedButton(
+                              child: Text("Update"),
+                              onPressed: () {
+                                setState(() {
+                                  _input4 = Data4.text;
+                                });
+                              },
+                            ),
+                            // ignore: deprecated_member_use
+                            RaisedButton(
+                              child: Text("ล้างข้อมูล"),
+                              onPressed: () {
+                                clearData();
+                              },
+                            ),
+                          ],
+                        ),
+                        Text("$_input4")
+                      ],
+                    ),
                   ),
                 ),
               ),

@@ -1,6 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:services_support/menu_page/report.dart';
+import 'package:localstorage/localstorage.dart';
+import 'package:services_support/menu_page/report/report.dart';
 
 class Done extends StatefulWidget {
   const Done({Key? key}) : super(key: key);
@@ -27,6 +30,8 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
+  String? _currentUserId = FirebaseAuth.instance.currentUser?.uid;
+
   bool checkBox0 = false;
   bool checkBox1 = false;
   bool checkBox2 = false;
@@ -236,6 +241,25 @@ class _BodyState extends State<Body> {
   TextEditingController checkProblemCaseController =
       TextEditingController(text: ' =>  =>  => Not Clear');
 
+  TextEditingController defactController = TextEditingController();
+  TextEditingController sectorController = TextEditingController();
+  TextEditingController correctionController = TextEditingController();
+  TextEditingController remarkController = TextEditingController();
+
+  TextEditingController apController = TextEditingController();
+  TextEditingController gobbetController = TextEditingController();
+  TextEditingController serialInController = TextEditingController();
+  TextEditingController serialOutController = TextEditingController();
+  var _formkey;
+
+  final LocalStorage storage = new LocalStorage('mee_report_app');
+  String JobKey = '';
+  @override
+  void initState() {
+    super.initState();
+    JobKey = storage.getItem('JobKey');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -271,6 +295,7 @@ class _BodyState extends State<Body> {
                     width: 280,
                     height: 40,
                     child: TextFormField(
+                      controller: defactController,
                       decoration: InputDecoration(hintText: "ระบุอาการเสีย"),
                       onChanged: (newText) {},
                     ),
@@ -282,6 +307,7 @@ class _BodyState extends State<Body> {
                     height: 40,
                     child: TextFormField(
                       keyboardType: TextInputType.number,
+                      controller: sectorController,
                       decoration: InputDecoration(hintText: "Sector"),
                       onChanged: (newText) {},
                     ),
@@ -305,6 +331,7 @@ class _BodyState extends State<Body> {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
               child: TextField(
+                controller: correctionController,
                 decoration: InputDecoration(hintText: "ระบุการแก้ไข"),
                 onChanged: (newText) {},
               ),
@@ -617,7 +644,115 @@ class _BodyState extends State<Body> {
             ),
             RowWidget(),
             // ignore: dead_code
-            checkBox2 ? SizedBox1() : Text(""),
+            checkBox2
+                ? Container(
+                    child: Form(
+                      key: _formkey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 7),
+                            child: Text(
+                              "อุปกรณ์ที่เปลี่ยน(ห้ามแก้ไขชื่อ Spare ถ้ามีเพิ่มเติมให้ใส่เครื่องหมาย,คั้น)",
+                              style: TextStyle(fontSize: 13),
+                            ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Container(
+                                child: SizedBox(
+                                  width: 250,
+                                  child: TextFormField(
+                                    controller: apController,
+                                    decoration: InputDecoration(
+                                      hintText: "AP",
+                                    ),
+                                    onChanged: (newText) {},
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                child: SizedBox(
+                                  width: 100,
+                                  child: TextFormField(
+                                    controller: gobbetController,
+                                    keyboardType: TextInputType.number,
+                                    decoration:
+                                        InputDecoration(hintText: "จำนวน"),
+                                    onChanged: (newText) {},
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Text(
+                                "Equipment move in Serial No.(ของดี>เปลี่ยนเข้า)",
+                                style: TextStyle(fontSize: 13)),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Container(
+                                child: SizedBox(
+                                  width: 250,
+                                  child: TextFormField(
+                                    controller: serialInController,
+                                    decoration: InputDecoration(
+                                        labelText: "Serial In:"),
+                                    onChanged: (newText) {},
+                                  ),
+                                ),
+                              ),
+                              // ignore: deprecated_member_use
+                              FlatButton(
+                                child: Text(
+                                  'Scan In',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                color: Colors.grey,
+                                onPressed: () {},
+                              )
+                            ],
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Text(
+                                "Equipment move Out Serial No.(ของเสีย>เปลี่ยนออก)",
+                                style: TextStyle(fontSize: 13)),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Container(
+                                child: SizedBox(
+                                  width: 250,
+                                  child: TextFormField(
+                                    controller: serialOutController,
+                                    decoration: InputDecoration(
+                                        labelText: "Serial Out:"),
+                                    onChanged: (newText) {},
+                                  ),
+                                ),
+                              ),
+                              // ignore: deprecated_member_use
+                              FlatButton(
+                                child: Text(
+                                  'Scan Out',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                color: Colors.grey,
+                                onPressed: () {},
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ) /*  */ : Text(""),
             SizedBox(
               height: 10,
             ),
@@ -628,7 +763,9 @@ class _BodyState extends State<Body> {
                 style: TextStyle(color: Colors.white),
               ),
               color: Colors.blue,
-              onPressed: () {
+              onPressed:  () async {
+                updateDone();
+
                 showDialog<String>(
                   context: context,
                   builder: (BuildContext context) => AlertDialog(
@@ -659,112 +796,41 @@ class _BodyState extends State<Body> {
       ),
     );
   }
+
+  void updateDone() {
+    final data = {
+      'Defact': defactController.text,
+      'Sector': sectorController.text,
+      'Correction': correctionController.text.isEmpty
+          ? '<>'
+          : correctionController.text,
+      'Check0': checkBox0 ? 'Yes' : 'No',
+      'Check1': checkBox1 ? 'Yes' : 'No',
+      'Check2': checkBox2 ? 'AP' : 'No',
+      'Check3': checkBox3 ? 'Clear' : 'Not Clear',
+      'Check4': checkBox4 ? 'Yes' : 'No',
+      'Check5': checkBox5 ? 'Yes' : 'No',
+      'Check6': checkBox6 ? 'Yes' : 'No',
+      'Remark': remarkController.text,
+      'SubCause': _currentSubCaseValue,
+      'Action': _currentActionValue,
+      'FaultType': _currentFaulttypeValue,
+      'ProblemCase': checkProblemCaseController.text,
+      'AP': apController.text,
+      'APLenght': gobbetController.text,
+      'SerialIn': serialInController.text,
+      'SerialOut': serialOutController.text,
+      'LeaveAt': new DateTime.now(),
+      'UpdateAt': new DateTime.now(),
+      'UpdateBy': _currentUserId
+    };
+    FirebaseFirestore.instance
+        .collection('work')
+        .doc(JobKey)
+        .update(data);
+  }
 }
 
 Widget RowWidget() {
   return Row();
-}
-
-// ignore: non_constant_identifier_names
-Widget SizedBox1() {
-  var _formkey;
-  return Container(
-    child: Form(
-      key: _formkey,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 7),
-            child: Text(
-              "อุปกรณ์ที่เปลี่ยน(ห้ามแก้ไขชื่อ Spare ถ้ามีเพิ่มเติมให้ใส่เครื่องหมาย,คั้น)",
-              style: TextStyle(fontSize: 13),
-            ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Container(
-                child: SizedBox(
-                  width: 250,
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                      hintText:"AP",
-                    ),
-                    onChanged: (newText) {},
-                  ),
-                ),
-              ),
-              Container(
-                child: SizedBox(
-                  width: 100,
-                  child: TextFormField(
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(hintText: "จำนวน"),
-                    onChanged: (newText) {},
-                  ),
-                ),
-              ),
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Text("Equipment move in Serial No.(ของดี>เปลี่ยนเข้า)",
-                style: TextStyle(fontSize: 13)),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Container(
-                child: SizedBox(
-                  width: 250,
-                  child: TextFormField(
-                    decoration: InputDecoration(labelText: "Serial In:"),
-                    onChanged: (newText) {},
-                  ),
-                ),
-              ),
-              // ignore: deprecated_member_use
-              FlatButton(
-                child: Text(
-                  'Scan In',
-                  style: TextStyle(color: Colors.white),
-                ),
-                color: Colors.grey,
-                onPressed: () {},
-              )
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Text("Equipment move Out Serial No.(ของเสีย>เปลี่ยนออก)",
-                style: TextStyle(fontSize: 13)),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Container(
-                child: SizedBox(
-                  width: 250,
-                  child: TextFormField(
-                    decoration: InputDecoration(labelText: "Serial Out:"),
-                    onChanged: (newText) {},
-                  ),
-                ),
-              ),
-              // ignore: deprecated_member_use
-              FlatButton(
-                child: Text(
-                  'Scan Out',
-                  style: TextStyle(color: Colors.white),
-                ),
-                color: Colors.grey,
-                onPressed: () {},
-              )
-            ],
-          ),
-        ],
-      ),
-    ),
-  );
 }
