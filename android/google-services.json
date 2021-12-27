@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "900236572098",
+    "project_id": "mee-report-3774a",
+    "storage_bucket": "mee-report-3774a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:900236572098:android:ab79cf139a85942343d25b",
+        "android_client_info": {
+          "package_name": "com.meepoong.meereport"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "900236572098-v11cgtacocaub485tlmls1hm00qhih7g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyApvdP4_PqFtkcRGIuzsSzmqfZSo65ANP4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "900236572098-v11cgtacocaub485tlmls1hm00qhih7g.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "900236572098-q6d57gckhjtotn633feeqdqp5tm6tfck.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.meepoong.mee-report"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
