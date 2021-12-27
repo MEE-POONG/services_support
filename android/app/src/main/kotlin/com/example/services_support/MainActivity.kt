@@ -1,4 +1,4 @@
-package com.example.services_support
+package com.meepoong.meereport
 
 import io.flutter.embedding.android.FlutterActivity
 
