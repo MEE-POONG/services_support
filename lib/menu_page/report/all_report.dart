@@ -34,6 +34,10 @@ class _AllReportState extends State<AllReport> {
 
   Future<List<dynamic>?> getWorkCollection() async {
     // Get docs from collection reference
+    QuerySnapshot queryWorkSnapshot = await _fireStore
+        .collection('worksheet')
+        .where('updateBy', whereIn: [_currentUserId]).get();
+
     QuerySnapshot querySnapshot = await _fireStore
         .collection('work')
         .where('updateBy', whereIn: [_currentUserId]).get();
@@ -58,9 +62,19 @@ class _AllReportState extends State<AllReport> {
       return doc.data();
     }).toList();
 
-    int length = querySnapshot.docs.length;
+    int indexCM = 0;
+    querySnapshot.docs.map((doc) {
+      print(doc.data());
+      if (doc.get('Type') == 'CM') {
+        setState(() {
+          indexCM += 1;
+        });
+      }
+      return doc.data();
+    }).toList();
+
     setState(() {
-      _reportWork = _reportWork.toString() + '\nจำนวนงานรวม $length งาน';
+      _reportWork = _reportWork.toString() + '\nจำนวนงานรวม $indexCM งาน';
     });
 
     setState(() {
@@ -68,7 +82,7 @@ class _AllReportState extends State<AllReport> {
     });
 
     setState(() {
-      _reportWork = _reportWork.toString() + '\n' + 'Indoor: $length งาน';
+      _reportWork = _reportWork.toString() + '\n' + 'Indoor: $indexCM งาน';
     });
 
     setState(() {
@@ -78,16 +92,17 @@ class _AllReportState extends State<AllReport> {
     int index = 0;
     querySnapshot.docs.map((doc) {
       print(doc.data());
-
-      index += 1;
-      setState(() {
-        _reportWork = _reportWork.toString() +
-            '\n$index.Sub type: \n' +
-            doc.get('ProblemCase') +
-            '\n'
-                'Detail: ' +
-            doc.get('JobDetail');
-      });
+      if (doc.get('Type') == 'CM') {
+        index += 1;
+        setState(() {
+          _reportWork = _reportWork.toString() +
+              '\n$index.Sub type: \n' +
+              doc.get('ProblemCase') +
+              '\n'
+                  'Detail: ' +
+              doc.get('JobDetail');
+        });
+      }
       return doc.data();
     }).toList();
 
@@ -135,21 +150,47 @@ class _AllReportState extends State<AllReport> {
       _reportWork = _reportWork.toString() + '\n=== งานค้าง ===';
     });
 
+    final TextEndJob = queryWorkSnapshot
+        .docs[queryWorkSnapshot.docs.length - 1]
+        .get('TextEndJob');
     setState(() {
-      _reportWork = _reportWork.toString() + '\n' + 'Critical = 0';
+      _reportWork =
+          _reportWork.toString() + '\n' + '$TextEndJob';
     });
+
+
+    final CriticalEndJob = queryWorkSnapshot
+        .docs[queryWorkSnapshot.docs.length - 1]
+        .get('CriticalEndJob');
     setState(() {
-      _reportWork = _reportWork.toString() + '\n' + 'Mojor = 0';
+      _reportWork =
+          _reportWork.toString() + '\n' + 'Critical = $CriticalEndJob';
     });
+
+    final MajorEndJob = queryWorkSnapshot
+        .docs[queryWorkSnapshot.docs.length - 1]
+        .get('MajorEndJob');
     setState(() {
-      _reportWork = _reportWork.toString() + '\n' + 'Minor = 0';
+      _reportWork = _reportWork.toString() + '\n' + 'Mojor = $MajorEndJob';
     });
+
+    final MinorEndJob = queryWorkSnapshot
+        .docs[queryWorkSnapshot.docs.length - 1]
+        .get('MinorEndJob');
     setState(() {
-      _reportWork = _reportWork.toString() + '\n' + 'None = 0';
+      _reportWork = _reportWork.toString() + '\n' + 'Minor = $MinorEndJob';
     });
+
+    final NoneEndJob = queryWorkSnapshot.docs[queryWorkSnapshot.docs.length - 1]
+        .get('NoneEndJob');
+    setState(() {
+      _reportWork = _reportWork.toString() + '\n' + 'None = $NoneEndJob';
+    });
+
     setState(() {
       _reportWork = _reportWork.toString() + '\n' + 'อุปกร์ที่ใช้';
     });
+
     setState(() {
       _reportWork = _reportWork.toString() + '\n' + 'AP Ru';
     });

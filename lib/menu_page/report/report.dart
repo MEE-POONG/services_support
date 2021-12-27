@@ -63,12 +63,16 @@ class _BodyState extends State<Body> {
 
   final LocalStorage storage = new LocalStorage('mee_report_app');
   String JobId = '';
+  String JobKey = '';
+  String worksheetId = '';
 
   @override
   void initState() {
     super.initState();
     // getNameCollection();
     JobId = storage.getItem('JobId');
+    JobKey = storage.getItem('JobKey');
+
     getWorksheetCollection();
     getWorkCollection();
   }
@@ -118,6 +122,11 @@ class _BodyState extends State<Body> {
         DateFormat('dd-MM-yyyy').format(updateAt.toDate()).toString();
     String formattedTime =
         DateFormat('HH:mm:ss').format(updateAt.toDate()).toString();
+
+    setState(() {
+      worksheetId = querySnapshot.docs[querySnapshot.docs.length - 1].id;
+      print(worksheetId);
+    });
 
     setState(() {
       _report = _report.toString() + 'Date: ' + formattedDate + '\n';
@@ -190,7 +199,7 @@ class _BodyState extends State<Body> {
       _report = _report.toString() + 'None = $None\n';
     });
 
-    print(_report);
+    // print(_report);
     setState(() {
       reportController.text = _report.toString();
     });
@@ -201,7 +210,7 @@ class _BodyState extends State<Body> {
     QuerySnapshot querySnapshot = await _fireStore
         .collection('work')
         .where('JobId', whereIn: [JobId]).get();
-    print(querySnapshot.docs[0].get('JobId'));
+    // print(querySnapshot.docs[0].get('JobId'));
 
     final LeaveAt = querySnapshot.docs[0].get('LeaveAt');
     String formattedDate =
@@ -353,9 +362,15 @@ class _BodyState extends State<Body> {
     });
 
     wortsheetController.text = _reportWork.toString();
-    print(_reportWork);
+    // print(_reportWork);
   }
 
+  TextEditingController textFieldController = TextEditingController();
+  TextEditingController criticalController = TextEditingController(text: '0');
+  TextEditingController minorController = TextEditingController(text: '0');
+  TextEditingController majorController = TextEditingController(text: '0');
+  TextEditingController noneController = TextEditingController(text: '0');
+  bool checkWidget = false;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -395,19 +410,143 @@ class _BodyState extends State<Body> {
                   // ignore: deprecated_member_use
                   OutlinedButton(
                     child: Text("โหลดตัวอย่างรายงาน"),
-                    onPressed: () {},
-                  ),
-                  // ignore: deprecated_member_use
-                  RaisedButton(
-                    child: Text("ส่งรายงาน"),
                     onPressed: () {
                       Navigator.of(context).push(
                           MaterialPageRoute(builder: (context) => AllReport()));
                     },
                   ),
+                  // ignore: deprecated_member_use
+                  RaisedButton(
+                    child: Text("ส่งรายงาน"),
+                    onPressed: () {
+                      setState(() {
+                        checkWidget = true;
+                      });
+                    },
+                  ),
                 ],
               ),
-              SizedBox(height: 30),
+              RowWidget(),
+              if (checkWidget)
+                Container(
+                  child: Form(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Divider(height: 20, thickness: 2),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 7),
+                          child: Text(
+                              "คุณมีจำนวน 0 ใบงานที่ต้องชี้แจงเหตุผลที่ไม่สามารถปิดงานได้",
+                              style: TextStyle(
+                                  fontSize: 14, color: Colors.redAccent)),
+                        ),
+                        SizedBox(height: 20),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Container(
+                              child: SizedBox(
+                                width: 250,
+                                child: TextFormField(
+                                  decoration: InputDecoration(
+                                      hintText: "สาเหตุที่เข้าปิดงานไม่ได้"),
+                                  validator: (value) {},
+                                  controller: textFieldController,
+                                ),
+                              ),
+                            ),
+                            // ignore: deprecated_member_use
+                            FlatButton(
+                              child: Text(
+                                'บันทึก',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              color: Colors.grey,
+                              onPressed: () {},
+                            )
+                          ],
+                        ),
+                        SizedBox(height: 20),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 7),
+                          child: Text(
+                            "จำนวนใบงานค้างใน TTSM",
+                            style: TextStyle(
+                                fontSize: 18, color: Colors.blueAccent),
+                          ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Container(
+                              child: SizedBox(
+                                width: 60,
+                                child: TextFormField(
+                                  controller: criticalController,
+                                  keyboardType: TextInputType.number,
+                                  decoration:
+                                      InputDecoration(labelText: "Critical:"),
+                                  onChanged: (newText) {},
+                                ),
+                              ),
+                            ),
+                            Container(
+                              child: SizedBox(
+                                width: 50,
+                                child: TextFormField(
+                                  controller: majorController,
+                                  keyboardType: TextInputType.number,
+                                  decoration:
+                                      InputDecoration(labelText: "Major"),
+                                  onChanged: (newText) {},
+                                ),
+                              ),
+                            ),
+                            Container(
+                              child: SizedBox(
+                                width: 50,
+                                child: TextFormField(
+                                  controller: minorController,
+                                  keyboardType: TextInputType.number,
+                                  decoration:
+                                      InputDecoration(labelText: "Minor"),
+                                  onChanged: (newText) {},
+                                ),
+                              ),
+                            ),
+                            Container(
+                              child: SizedBox(
+                                width: 50,
+                                child: TextFormField(
+                                  controller: noneController,
+                                  keyboardType: TextInputType.number,
+                                  decoration:
+                                      InputDecoration(labelText: "None"),
+                                  onChanged: (newText) {},
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 20),
+                        // ignore: deprecated_member_use
+                        FlatButton(
+                          child: Text(
+                            'ส่งและสร้างใบงาน',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          color: Colors.grey,
+                          onPressed: () async {
+                            submit();
+                          },
+                        )
+                      ],
+                    ),
+                  ),
+                )
+              else
+                SizedBox(height: 30),
               Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
@@ -454,4 +593,52 @@ class _BodyState extends State<Body> {
       ],
     );
   }
+
+  void submit() {
+    final data = {
+      'TextEndJob': textFieldController.text,
+      'CriticalEndJob': criticalController.text,
+      'MajorEndJob': majorController.text,
+      'MinorEndJob': minorController.text,
+      'NoneEndJob': noneController.text,
+      'updateAt': new DateTime.now(),
+      'updateBy': _currentUserId
+    };
+
+    FirebaseFirestore.instance
+        .collection('worksheet')
+        .doc(worksheetId)
+        .update(data)
+        .then((value) => showDialogSuccess(context));
+  }
+}
+
+Widget RowWidget() {
+  return Column();
+}
+
+void showDialogSuccess(BuildContext context) {
+  showDialog<String>(
+    context: context,
+    builder: (BuildContext context) => AlertDialog(
+      // title: const Text('Onsite'),
+      content: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 80),
+        child: const Text(
+          'ยืนยันสำเร็จ',
+          style: TextStyle(fontSize: 18),
+        ),
+      ),
+      actions: <Widget>[
+        TextButton(
+          onPressed: () {
+            Navigator.pop(context, 'OK');
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (context) => AllReport()));
+          },
+          child: const Text('OK'),
+        ),
+      ],
+    ),
+  );
 }

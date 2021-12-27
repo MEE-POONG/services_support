@@ -31,7 +31,6 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-
   String? _currentUserId = FirebaseAuth.instance.currentUser?.uid;
   Stream<QuerySnapshot> _worksStream = FirebaseFirestore.instance
       .collection('work')
@@ -39,9 +38,10 @@ class _BodyState extends State<Body> {
 
   final LocalStorage storage = new LocalStorage('mee_report_app');
 
-  _saveToStorage(key, data) {
+  _saveToStorage(key, data, Site) {
     storage.setItem('JobKey', key);
     storage.setItem('JobId', data);
+    storage.setItem('Site', Site);
   }
 
   @override
@@ -123,7 +123,8 @@ class _BodyState extends State<Body> {
                         document.data()! as Map<String, dynamic>;
                     return OutlinedButton(
                       onPressed: () {
-                        _saveToStorage(document.id, data['JobId']);
+                        _saveToStorage(
+                            document.id, data['JobId'], data['Site']);
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => BodyWorking()));
                       },

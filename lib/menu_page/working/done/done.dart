@@ -821,8 +821,8 @@ class _BodyState extends State<Body> {
       'SerialIn': serialInController.text,
       'SerialOut': serialOutController.text,
       'LeaveAt': new DateTime.now(),
-      'UpdateAt': new DateTime.now(),
-      'UpdateBy': _currentUserId
+      'updateAt': new DateTime.now(),
+      'updateBy': _currentUserId
     };
     FirebaseFirestore.instance
         .collection('work')

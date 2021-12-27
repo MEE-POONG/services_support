@@ -6,7 +6,6 @@ import 'package:services_support/home/home.dart';
 import 'package:services_support/menu_page/working/done/done.dart';
 
 import 'package:localstorage/localstorage.dart';
-import 'package:services_support/models/work.dart';
 
 class Working extends StatefulWidget {
   // const Working({Key? key}) : super(key: key);
@@ -127,13 +126,19 @@ class _BodyState extends State<BodyWorking> {
   final LocalStorage storage = new LocalStorage('mee_report_app');
   String item = '';
   String JobKey = '';
+  String Site = '';
+  String siteName = 'ไม่ระบุ';
+  dynamic lat = 14.9698804;
+  dynamic long = 102.1020475;
 
   @override
   initState() {
     super.initState();
     item = storage.getItem('JobId');
     JobKey = storage.getItem('JobKey');
-    print(JobKey);
+    Site = storage.getItem('Site');
+    getLocationCollection();
+    print(Site);
     if (item == '') {
       Navigator.pushAndRemoveUntil(
         context,
@@ -141,6 +146,23 @@ class _BodyState extends State<BodyWorking> {
         (Route<dynamic> route) => false,
       );
     }
+  }
+
+  final _fireStore = FirebaseFirestore.instance;
+
+  Future<List<dynamic>?> getLocationCollection() async {
+    // Get docs from collection reference
+    QuerySnapshot querySnapshot = await _fireStore
+        .collection('location')
+        .where('SITE', whereIn: [Site]).get();
+    if (querySnapshot.docs.length > 0) {
+      setState(() {
+        lat = querySnapshot.docs[0].get('LAT');
+        long = querySnapshot.docs[0].get('LONG');
+        siteName = querySnapshot.docs[0].get('SITENAME');
+      });
+    }
+    print(querySnapshot.docs.length);
   }
 
   @override
@@ -257,11 +279,11 @@ class _BodyState extends State<BodyWorking> {
     showDialog<String>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: const Text('Onsite'),
+        // title: const Text('Onsite'),
         content: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 80),
           child: const Text(
-            'ยืนยันสำเร็จ',
+            'Onsite ยืนยันสำเร็จ',
             style: TextStyle(fontSize: 18),
           ),
         ),
@@ -286,11 +308,11 @@ class _BodyState extends State<BodyWorking> {
     showDialog<String>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: const Text('Drpart'),
+        //  title: const Text('Drpart'),
         content: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 80),
           child: const Text(
-            'ยืนยันสำเร็จ',
+            'Drpart ยืนยันสำเร็จ',
             style: TextStyle(fontSize: 18),
           ),
         ),
@@ -298,8 +320,7 @@ class _BodyState extends State<BodyWorking> {
           TextButton(
               child: const Text('OK'),
               onPressed: () {
-                MapsLauncher.launchCoordinates(
-                    14.9698804, 102.1020475, 'MEE POONG CO., LTD.');
+                MapsLauncher.launchCoordinates(lat, long, siteName);
                 Navigator.pop(context, 'OK');
               }),
         ],
