@@ -90,7 +90,7 @@ class _BodyState extends State<Body> {
                 colors: [Colors.deepPurple, Colors.lightBlue],
               ),
             ),
-            height: 50,
+            height: 40,
             padding: EdgeInsets.symmetric(horizontal: 15),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,

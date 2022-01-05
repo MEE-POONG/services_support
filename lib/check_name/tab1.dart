@@ -1,7 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:localstorage/localstorage.dart';
 import 'package:services_support/menu_page/report/report.dart';
+import 'package:intl/intl.dart';
 
 class Tab1 extends StatefulWidget {
   const Tab1({Key? key}) : super(key: key);
@@ -23,7 +26,7 @@ class _Tab1State extends State<Tab1> {
   CollectionReference addName = FirebaseFirestore.instance.collection('name');
   final _formInputTTSMKey = GlobalKey<FormState>();
   final _formInputNameKey = GlobalKey<FormState>();
-
+  TextEditingController wortsheetController = TextEditingController();
   TextEditingController nameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController criticalController = TextEditingController(text: '0');
@@ -34,6 +37,7 @@ class _Tab1State extends State<Tab1> {
       TextEditingController(text: 'พร้อมรับงาน');
   bool isShowName = false;
   bool checkBox = false;
+  bool checkWidget = false;
   String _input = "";
   String _input0 = "";
   String _input1 = "";
@@ -41,6 +45,12 @@ class _Tab1State extends State<Tab1> {
   String _input3 = "";
   String _input4 = "";
   String _input5 = "";
+
+  String? _report = 'Job Report: \n';
+  final _fireStore = FirebaseFirestore.instance;
+  String worksheetId = '';
+  TextEditingController reportController = TextEditingController();
+  final LocalStorage storage = new LocalStorage('mee_report_app');
 
   @override
   void initState() {
@@ -50,6 +60,125 @@ class _Tab1State extends State<Tab1> {
         .where('updateBy', whereIn: [_currentUserId]).snapshots();
   }
 
+  Future<List<dynamic>?> getNameCollection(dynamic id) async {
+    // Get docs from collection reference
+    QuerySnapshot querySnapshot = await _fireStore
+        .collection('name')
+        .where('updateBy', whereIn: [_currentUserId]).get();
+    int index = 0;
+    setState(() {
+      _report =
+          _report.toString() + '-------------------------\n' + 'รายชื่อทีมงาน';
+    });
+    // Get data from docs and convert map to List
+    querySnapshot.docs.map((doc) {
+      index += 1;
+      setState(() {
+        _report = _report.toString() +
+            '\n' +
+            index.toString() +
+            '. ' +
+            doc.get('name') +
+            ' Tel. ' +
+            doc.get('phone');
+      });
+      return doc.data();
+    }).toList();
+
+    setState(() {
+      _report = _report.toString() + '\n-------------------------';
+    });
+    getWorksheetStatusCollection(id);
+  }
+
+  Future<List<dynamic>?> getWorksheetCollection(dynamic id) async {
+    // Get docs from collection reference
+    DocumentSnapshot<Map<String, dynamic>> querySnapshot =
+        await _fireStore.collection('worksheet').doc(id).get();
+    // Get data from docs and convert map to List
+    final updateAt = querySnapshot.get('updateAt');
+    String formattedDate =
+        DateFormat('dd-MM-yyyy').format(updateAt.toDate()).toString();
+    String formattedTime =
+        DateFormat('HH:mm:ss').format(updateAt.toDate()).toString();
+
+    setState(() {
+      worksheetId = querySnapshot.id;
+      print(worksheetId);
+    });
+
+    setState(() {
+      _report = _report.toString() + 'Date: ' + formattedDate + '\n';
+    });
+    setState(() {
+      _report = _report.toString() + 'Time: ' + formattedTime + '\n';
+    });
+
+    setState(() {
+      _report = _report.toString() + '-------------------------\n';
+    });
+    QuerySnapshot querySnapshot1 = await _fireStore
+        .collection('user')
+        .where('uid', whereIn: [_currentUserId]).get();
+    final Team =
+        querySnapshot1.docs[querySnapshot1.docs.length - 1].get('Team');
+    setState(() {
+      _report = _report.toString() + 'Team: ' + Team + '\n';
+    });
+    final Location =
+        querySnapshot1.docs[querySnapshot1.docs.length - 1].get('Location');
+    setState(() {
+      _report = _report.toString() + 'พื้นที่รับผิดชอบ: ' + Location + '\n';
+    });
+    getNameCollection(id);
+  }
+
+  Future<List<dynamic>?> getWorksheetStatusCollection(dynamic id) async {
+    // Get docs from collection reference
+    DocumentSnapshot<Map<String, dynamic>> querySnapshot =
+        await _fireStore.collection('worksheet').doc(id).get();
+    // Get data from docs and convert map to List
+    final Ststus = querySnapshot.get('Ststus');
+
+    setState(() {
+      _report = _report.toString() + '\nStstus: ' + Ststus + '\n';
+    });
+
+    setState(() {
+      _report = _report.toString() + '-------------------------';
+    });
+
+    final Critical = querySnapshot.get('Critical');
+    final Major = querySnapshot.get('Major');
+    final Minor = querySnapshot.get('Minor');
+    final None = querySnapshot.get('None');
+
+    setState(() {
+      _report = _report.toString() + '\nจำนวนใบงานใน TTSM\n';
+    });
+
+    setState(() {
+      _report = _report.toString() + 'Critical = $Critical\n';
+    });
+
+    setState(() {
+      _report = _report.toString() + 'Major = $Major\n';
+    });
+
+    setState(() {
+      _report = _report.toString() + 'Minor = $Minor\n';
+    });
+
+    setState(() {
+      _report = _report.toString() + 'None = $None\n';
+    });
+
+    // print(_report);
+    setState(() {
+      reportController.text = _report.toString();
+    });
+  }
+
   Future<void> addInputWork(
     type,
     data,
@@ -57,22 +186,22 @@ class _Tab1State extends State<Tab1> {
     setState(() {
       nameController.text = '';
     });
-    return addWorks
-        .add(
-          {
-            'Critical': _input1,
-            'Minor': _input2,
-            'Major': _input3,
-            'None': _input4,
-            'Ststus': _input5,
-            'createAt': DateTime.now(),
-            'createBy': _currentUserId,
-            'updateAt': DateTime.now(),
-            'updateBy': _currentUserId
-          },
-        )
-        .then((value) => print("Name $value"))
-        .catchError((error) => print("Failed to add CM: $error"));
+    return addWorks.add(
+      {
+        'Critical': _input1,
+        'Minor': _input2,
+        'Major': _input3,
+        'None': _input4,
+        'Ststus': _input5,
+        'createAt': DateTime.now(),
+        'createBy': _currentUserId,
+        'updateAt': DateTime.now(),
+        'updateBy': _currentUserId
+      },
+    ).then((value) {
+      getWorksheetCollection(value.id);
+      storage.setItem('WorkID', value.id);
+    }).catchError((error) => print("Failed to add CM: $error"));
   }
 
   Future<void> addInputName(
@@ -81,6 +210,7 @@ class _Tab1State extends State<Tab1> {
   ) async {
     setState(() {
       nameController.text = '';
+      phoneController.text = '';
     });
     return addName
         .add(
@@ -113,7 +243,7 @@ class _Tab1State extends State<Tab1> {
                     colors: [Colors.deepPurple, Colors.lightBlue],
                   ),
                 ),
-                height: 50,
+                height: 40,
                 padding: EdgeInsets.symmetric(horizontal: 15),
                 child: Row(
                   children: [
@@ -125,7 +255,7 @@ class _Tab1State extends State<Tab1> {
                 ),
               ),
               Container(
-                height: 300,
+                height: 220,
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
@@ -251,7 +381,7 @@ class _Tab1State extends State<Tab1> {
                     colors: [Colors.deepPurple, Colors.lightBlue],
                   ),
                 ),
-                height: 50,
+                height: 40,
                 padding: EdgeInsets.symmetric(horizontal: 15),
                 child: Row(
                   children: [
@@ -365,14 +495,18 @@ class _Tab1State extends State<Tab1> {
                                                 style: TextStyle(
                                                     color: Colors.blueAccent)),
                                             onPressed: () {
+                                              setState(() {
+                                                checkWidget = true;
+                                              });
+
                                               Navigator.pop(context);
-                                              Navigator.pushAndRemoveUntil(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        Report()),
-                                                (Route<dynamic> route) => false,
-                                              );
+                                              // Navigator.pushAndRemoveUntil(
+                                              //   context,
+                                              //   MaterialPageRoute(
+                                              //       builder: (context) =>
+                                              //           Report()),
+                                              //   (Route<dynamic> route) => false,
+                                              // );
                                             })
                                       ]);
                                   return dialog;
@@ -395,6 +529,33 @@ class _Tab1State extends State<Tab1> {
                   ),
                 ],
               ),
+              RowWidget(),
+              if (checkWidget)
+                Container(
+                    child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 10),
+                      child: TextField(
+                        controller: reportController,
+                        keyboardType: TextInputType.text,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                        ),
+                        maxLines: 8,
+                        // controller: Data2,
+                      ),
+                    ),
+                    RaisedButton(
+                      child: Text("Copy "),
+                      onPressed: () {
+                        Clipboard.setData(
+                            ClipboardData(text: reportController.text));
+                      },
+                    ),
+                  ],
+                )),
               SizedBox(height: 250),
             ],
           ),
@@ -402,4 +563,8 @@ class _Tab1State extends State<Tab1> {
       ),
     );
   }
+}
+
+Widget RowWidget() {
+  return Column();
 }

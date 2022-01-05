@@ -599,6 +599,7 @@ class _BodyState extends State<Body> {
                                                     _currentFaulttypeValue,
                                                 onChanged: (val) {
                                                   setState(() {
+                                                    apController.text = val.toString();
                                                     debugPrint('VAL = $val');
                                                     _currentFaulttypeValue =
                                                         val.toString();
@@ -780,6 +781,7 @@ class _BodyState extends State<Body> {
                     actions: <Widget>[
                       TextButton(
                         onPressed: () {
+                           Navigator.pop(context, 'OK');
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (BuildContext context) => Report()));
                         },

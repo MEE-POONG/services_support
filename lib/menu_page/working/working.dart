@@ -128,8 +128,8 @@ class _BodyState extends State<BodyWorking> {
   String JobKey = '';
   String Site = '';
   String siteName = 'ไม่ระบุ';
-  dynamic lat = 14.9698804;
-  dynamic long = 102.1020475;
+  dynamic lat = 0.0;
+  dynamic long = 0.0;
 
   @override
   initState() {
@@ -280,13 +280,11 @@ class _BodyState extends State<BodyWorking> {
       context: context,
       builder: (BuildContext context) => AlertDialog(
         // title: const Text('Onsite'),
-        content: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 80),
-          child: const Text(
-            'Onsite ยืนยันสำเร็จ',
-            style: TextStyle(fontSize: 18),
-          ),
+        content: const Text(
+          'Onsite ยืนยันสำเร็จ',
+          style: TextStyle(fontSize: 16),
         ),
+
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.pop(context, 'OK'),
@@ -309,13 +307,11 @@ class _BodyState extends State<BodyWorking> {
       context: context,
       builder: (BuildContext context) => AlertDialog(
         //  title: const Text('Drpart'),
-        content: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 80),
-          child: const Text(
-            'Drpart ยืนยันสำเร็จ',
-            style: TextStyle(fontSize: 18),
-          ),
+        content: const Text(
+          'Drpart ยืนยันสำเร็จ',
+          style: TextStyle(fontSize: 16),
         ),
+
         actions: <Widget>[
           TextButton(
               child: const Text('OK'),

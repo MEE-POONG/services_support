@@ -92,7 +92,7 @@ class _SignFormState extends State<SignForm> {
       FirebaseFirestore.instance
           .collection('user')
           .doc(userCredential.user?.uid)
-          .set({
+          .update({
         "uid": userCredential.user?.uid,
         "displayName": userCredential.user?.displayName,
         "email": userCredential.user?.email,
@@ -109,13 +109,34 @@ class _SignFormState extends State<SignForm> {
           ),
         );
       }).catchError((error) {
-        print(error);
-        print(error.message);
-        // ignore: deprecated_member_use
-        Scaffold.of(context).showSnackBar(SnackBar(
-          content: Text(error.message, style: TextStyle(color: Colors.white)),
-          backgroundColor: Colors.red,
-        ));
+        FirebaseFirestore.instance
+            .collection('user')
+            .doc(userCredential.user?.uid)
+            .set({
+          "uid": userCredential.user?.uid,
+          "displayName": userCredential.user?.displayName,
+          "email": userCredential.user?.email,
+          "emailVerified": userCredential.user?.emailVerified,
+          "isAnonymous": userCredential.user?.isAnonymous,
+          "phoneNumber": userCredential.user?.phoneNumber,
+          "photoURL": userCredential.user?.photoURL,
+          "tenantId": userCredential.user?.tenantId,
+          "hashCode": userCredential.user?.hashCode
+        }).then((value) {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => Home(),
+            ),
+          );
+        }).catchError((error) {
+          print(error);
+          print(error.message);
+          // ignore: deprecated_member_use
+          Scaffold.of(context).showSnackBar(SnackBar(
+            content: Text(error.message, style: TextStyle(color: Colors.white)),
+            backgroundColor: Colors.red,
+          ));
+        });
       });
     }).catchError((error) {
       print(error);

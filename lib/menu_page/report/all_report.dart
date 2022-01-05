@@ -21,6 +21,7 @@ class _AllReportState extends State<AllReport> {
 
   final LocalStorage storage = new LocalStorage('mee_report_app');
   String JobId = '';
+  String WorkID = '';
 
   final _fireStore = FirebaseFirestore.instance;
 
@@ -29,14 +30,15 @@ class _AllReportState extends State<AllReport> {
     super.initState();
     // getNameCollection();
     JobId = storage.getItem('JobId');
+    WorkID = storage.getItem('WorkID');
+
     getWorkCollection();
   }
 
   Future<List<dynamic>?> getWorkCollection() async {
     // Get docs from collection reference
-    QuerySnapshot queryWorkSnapshot = await _fireStore
-        .collection('worksheet')
-        .where('updateBy', whereIn: [_currentUserId]).get();
+    DocumentSnapshot<Map<String, dynamic>> queryWorkSnapshot =
+        await _fireStore.collection('worksheet').doc(WorkID).get();
 
     QuerySnapshot querySnapshot = await _fireStore
         .collection('work')
@@ -150,39 +152,28 @@ class _AllReportState extends State<AllReport> {
       _reportWork = _reportWork.toString() + '\n=== งานค้าง ===';
     });
 
-    final TextEndJob = queryWorkSnapshot
-        .docs[queryWorkSnapshot.docs.length - 1]
-        .get('TextEndJob');
+    final TextEndJob = queryWorkSnapshot.get('TextEndJob');
     setState(() {
-      _reportWork =
-          _reportWork.toString() + '\n' + '$TextEndJob';
+      _reportWork = _reportWork.toString() + '\n' + '$TextEndJob';
     });
 
-
-    final CriticalEndJob = queryWorkSnapshot
-        .docs[queryWorkSnapshot.docs.length - 1]
-        .get('CriticalEndJob');
+    final CriticalEndJob = queryWorkSnapshot.get('CriticalEndJob');
     setState(() {
       _reportWork =
           _reportWork.toString() + '\n' + 'Critical = $CriticalEndJob';
     });
 
-    final MajorEndJob = queryWorkSnapshot
-        .docs[queryWorkSnapshot.docs.length - 1]
-        .get('MajorEndJob');
+    final MajorEndJob = queryWorkSnapshot.get('MajorEndJob');
     setState(() {
       _reportWork = _reportWork.toString() + '\n' + 'Mojor = $MajorEndJob';
     });
 
-    final MinorEndJob = queryWorkSnapshot
-        .docs[queryWorkSnapshot.docs.length - 1]
-        .get('MinorEndJob');
+    final MinorEndJob = queryWorkSnapshot.get('MinorEndJob');
     setState(() {
       _reportWork = _reportWork.toString() + '\n' + 'Minor = $MinorEndJob';
     });
 
-    final NoneEndJob = queryWorkSnapshot.docs[queryWorkSnapshot.docs.length - 1]
-        .get('NoneEndJob');
+    final NoneEndJob = queryWorkSnapshot.get('NoneEndJob');
     setState(() {
       _reportWork = _reportWork.toString() + '\n' + 'None = $NoneEndJob';
     });

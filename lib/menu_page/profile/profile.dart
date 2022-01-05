@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:services_support/home/home.dart';
@@ -27,9 +28,40 @@ class _BodyState extends State<Body> {
   bool checkBox3 = false;
   bool checkBox4 = false;
   bool checkBox5 = false;
-  
+
   bool showPassword = false;
+  String? _currentUserId = FirebaseAuth.instance.currentUser?.uid;
+
+  TextEditingController nameController = TextEditingController();
+  TextEditingController phonController = TextEditingController();
+  TextEditingController teamController = TextEditingController();
+  TextEditingController passportController = TextEditingController();
+  TextEditingController locationController = TextEditingController();
+
   final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  final _fireStore = FirebaseFirestore.instance;
+  Future<List<dynamic>?> getWorkCollection() async {
+    QuerySnapshot querySnapshot1 = await _fireStore
+        .collection('user')
+        .where('uid', whereIn: [_currentUserId]).get();
+    final Team =
+        querySnapshot1.docs[querySnapshot1.docs.length - 1].get('Team');
+    final Location =
+        querySnapshot1.docs[querySnapshot1.docs.length - 1].get('Location');
+    final Name =
+        querySnapshot1.docs[querySnapshot1.docs.length - 1].get('Name');
+    final Passport =
+        querySnapshot1.docs[querySnapshot1.docs.length - 1].get('Passport');
+    final Passport1 =
+        querySnapshot1.docs[querySnapshot1.docs.length - 1].get('Passport');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,7 +89,6 @@ class _BodyState extends State<Body> {
               //     builder: (BuildContext context) => SettingsPage()));
             },
           ),
-          
         ],
         flexibleSpace: Container(
           decoration: BoxDecoration(
@@ -85,42 +116,44 @@ class _BodyState extends State<Body> {
                       width: 130,
                       height: 130,
                       decoration: BoxDecoration(
-                          border: Border.all(
-                              width: 4,
-                              color: Theme.of(context).scaffoldBackgroundColor),
-                          boxShadow: [
-                            BoxShadow(
-                                spreadRadius: 2,
-                                blurRadius: 10,
-                                color: Colors.black.withOpacity(0.1),
-                                offset: Offset(0, 10))
-                          ],
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: AssetImage(
-                                "assets/images/AJ_Call_center.png",
-                              ))),
+                        border: Border.all(
+                            width: 4,
+                            color: Theme.of(context).scaffoldBackgroundColor),
+                        boxShadow: [
+                          BoxShadow(
+                              spreadRadius: 2,
+                              blurRadius: 10,
+                              color: Colors.black.withOpacity(0.1),
+                              offset: Offset(0, 10))
+                        ],
+                        shape: BoxShape.circle,
+                        // image: DecorationImage(
+                        //   fit: BoxFit.cover,
+                        //   image: AssetImage(
+                        //     "assets/images/AJ_Call_center.png",
+                        //   ),
+                        // ),
+                      ),
                     ),
-                    Positioned(
-                        bottom: 0,
-                        right: 0,
-                        child: Container(
-                          height: 40,
-                          width: 40,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              width: 4,
-                              color: Theme.of(context).scaffoldBackgroundColor,
-                            ),
-                            color: Colors.lightBlue,
-                          ),
-                          child: Icon(
-                            Icons.edit,
-                            color: Colors.white,
-                          ),
-                        )),
+                    // Positioned(
+                    //     bottom: 0,
+                    //     right: 0,
+                    //     child: Container(
+                    //       height: 40,
+                    //       width: 40,
+                    //       decoration: BoxDecoration(
+                    //         shape: BoxShape.circle,
+                    //         border: Border.all(
+                    //           width: 4,
+                    //           color: Theme.of(context).scaffoldBackgroundColor,
+                    //         ),
+                    //         color: Colors.lightBlue,
+                    //       ),
+                    //       child: Icon(
+                    //         Icons.edit,
+                    //         color: Colors.white,
+                    //       ),
+                    //     )),
                   ],
                 ),
               ),
@@ -140,7 +173,10 @@ class _BodyState extends State<Body> {
                                 child: SizedBox(
                                   width: 200,
                                   child: buildTextField(
-                                      "ชื่อ-สกุล", ""),
+                                    "ชื่อ-สกุล",
+                                    "",
+                                    nameController,
+                                  ),
                                 ),
                               ),
 
@@ -148,8 +184,11 @@ class _BodyState extends State<Body> {
                               Container(
                                 child: SizedBox(
                                   width: 120,
-                                  child:
-                                      buildTextField("เบอร์โทร", ""),
+                                  child: buildTextField(
+                                    "เบอร์โทร",
+                                    "",
+                                    phonController,
+                                  ),
                                 ),
                               ),
                             ],
@@ -161,7 +200,10 @@ class _BodyState extends State<Body> {
                                 child: SizedBox(
                                   width: 200,
                                   child: buildTextField(
-                                      "หมายเลขบัตรประชาชน", ""),
+                                    "หมายเลขบัตรประชาชน",
+                                    "",
+                                    passportController,
+                                  ),
                                 ),
                               ),
 
@@ -169,7 +211,11 @@ class _BodyState extends State<Body> {
                               Container(
                                 child: SizedBox(
                                   width: 120,
-                                  child: buildTextField("Team", ""),
+                                  child: buildTextField(
+                                    "Team",
+                                    "",
+                                    teamController,
+                                  ),
                                 ),
                               ),
                             ],
@@ -178,93 +224,118 @@ class _BodyState extends State<Body> {
                             child: SizedBox(
                               width: 330,
                               child: buildTextField(
-                                  "Location", ""),
+                                "Location",
+                                "",
+                                locationController,
+                              ),
                             ),
                           ),
                           SizedBox(height: 30),
-                          Text(
-                            'ข้อมูลอบรม AIS Passport',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 20.0,
-                              color: Colors.blue,
-                            ),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Checkbox(
-                                value: checkBox0,
-                                onChanged: (value) {
-                                  setState(() {
-                                    this.checkBox0 = value!;
-                                  });
-                                },
-                              ),
-                              Text("G-ทั่วไป"),
-                              Checkbox(
-                                value: checkBox1,
-                                onChanged: (value) {
-                                  setState(() {
-                                    this.checkBox1 = value!;
-                                  });
-                                },
-                              ),
-                              Text("E-ไฟฟ้า"),
-                              Checkbox(
-                                value: checkBox2,
-                                onChanged: (value) {
-                                  setState(() {
-                                    this.checkBox2 = value!;
-                                  });
-                                },
-                              ),
-                              Text("T-ที่สูง"),
-                            ],
-                          ),
-                          Divider(height: 15, thickness: 2),
-                          Text(
-                            'ข้อมูลอบรม Lotus Passport',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 20.0,
-                              color: Colors.blue,
-                            ),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Checkbox(
-                                value: checkBox3,
-                                onChanged: (value) {
-                                  setState(() {
-                                    this.checkBox3 = value!;
-                                  });
-                                },
-                              ),
-                              Text("Lotus G"),
-                              Checkbox(
-                                value: checkBox4,
-                                onChanged: (value) {
-                                  setState(() {
-                                    this.checkBox4 = value!;
-                                  });
-                                },
-                              ),
-                              Text("Lotus E"),
-                              Checkbox(
-                                value: checkBox5,
-                                onChanged: (value) {
-                                  setState(() {
-                                    this.checkBox5 = value!;
-                                  });
-                                },
-                              ),
-                              Text("Lotus S,P"),
-                            ],
-                          ),
-                          Divider(height: 15, thickness: 2),
+                          // Text(
+                          //   'ข้อมูลอบรม AIS Passport',
+                          //   textAlign: TextAlign.center,
+                          //   style: TextStyle(
+                          //     fontSize: 20.0,
+                          //     color: Colors.blue,
+                          //   ),
+                          // ),
+                          // Row(
+                          //   mainAxisAlignment: MainAxisAlignment.center,
+                          //   children: <Widget>[
+                          //     Checkbox(
+                          //       value: checkBox0,
+                          //       onChanged: (value) {
+                          //         setState(() {
+                          //           this.checkBox0 = value!;
+                          //         });
+                          //       },
+                          //     ),
+                          //     Text("G-ทั่วไป"),
+                          //     Checkbox(
+                          //       value: checkBox1,
+                          //       onChanged: (value) {
+                          //         setState(() {
+                          //           this.checkBox1 = value!;
+                          //         });
+                          //       },
+                          //     ),
+                          //     Text("E-ไฟฟ้า"),
+                          //     Checkbox(
+                          //       value: checkBox2,
+                          //       onChanged: (value) {
+                          //         setState(() {
+                          //           this.checkBox2 = value!;
+                          //         });
+                          //       },
+                          //     ),
+                          //     Text("T-ที่สูง"),
+                          //   ],
+                          // ),
+                          // Divider(height: 15, thickness: 2),
+                          // Text(
+                          //   'ข้อมูลอบรม Lotus Passport',
+                          //   textAlign: TextAlign.center,
+                          //   style: TextStyle(
+                          //     fontSize: 20.0,
+                          //     color: Colors.blue,
+                          //   ),
+                          // ),
+                          // Row(
+                          //   mainAxisAlignment: MainAxisAlignment.center,
+                          //   children: <Widget>[
+                          //     Checkbox(
+                          //       value: checkBox3,
+                          //       onChanged: (value) {
+                          //         setState(() {
+                          //           this.checkBox3 = value!;
+                          //         });
+                          //       },
+                          //     ),
+                          //     Text("Lotus G"),
+                          //     Checkbox(
+                          //       value: checkBox4,
+                          //       onChanged: (value) {
+                          //         setState(() {
+                          //           this.checkBox4 = value!;
+                          //         });
+                          //       },
+                          //     ),
+                          //     Text("Lotus E"),
+                          //     Checkbox(
+                          //       value: checkBox5,
+                          //       onChanged: (value) {
+                          //         setState(() {
+                          //           this.checkBox5 = value!;
+                          //         });
+                          //       },
+                          //     ),
+                          //     Text("Lotus S,P"),
+                          //   ],
+                          // ),
+                          // Divider(height: 15, thickness: 2),
                         ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 35,
+                    ),
+                    SizedBox(
+                      width: double.infinity, // <-- match_parent
+                      child: RaisedButton(
+                        onPressed: () {},
+                        color: Colors.lightBlue,
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        elevation: 2,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20)),
+                        child: Text(
+                          "SAVE",
+                          style: TextStyle(
+                            fontSize: 14,
+                            letterSpacing: 2.2,
+                            color: Colors.white,
+                          ),
+                        ),
                       ),
                     ),
                     SizedBox(
@@ -281,7 +352,7 @@ class _BodyState extends State<Body> {
                           onPressed: () {
                             Navigator.of(context).pop();
                           },
-                          child: Text("SAVE",
+                          child: Text("BACK",
                               style: TextStyle(
                                   fontSize: 14,
                                   letterSpacing: 2.2,
@@ -326,10 +397,12 @@ class _BodyState extends State<Body> {
   Widget buildTextField(
     String labelText,
     String placeholder,
+    TextEditingController controller,
   ) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 4),
       child: TextField(
+        controller: controller,
         decoration: InputDecoration(
             contentPadding: EdgeInsets.only(bottom: 1),
             labelText: labelText,

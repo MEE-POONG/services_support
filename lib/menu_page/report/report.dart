@@ -58,12 +58,13 @@ class _BodyState extends State<Body> {
   TextEditingController wortsheetController = TextEditingController();
   TextEditingController reportController = TextEditingController();
 
-  String? _report = 'Job Report: \n';
+  String? _report = '';
   String? _reportWork = 'Job Report: \n';
 
   final LocalStorage storage = new LocalStorage('mee_report_app');
   String JobId = '';
   String JobKey = '';
+  String WorkID = '';
   String worksheetId = '';
 
   @override
@@ -72,138 +73,12 @@ class _BodyState extends State<Body> {
     // getNameCollection();
     JobId = storage.getItem('JobId');
     JobKey = storage.getItem('JobKey');
+    WorkID = storage.getItem('WorkID');
 
-    getWorksheetCollection();
     getWorkCollection();
   }
 
   final _fireStore = FirebaseFirestore.instance;
-
-  Future<List<dynamic>?> getNameCollection() async {
-    // Get docs from collection reference
-    QuerySnapshot querySnapshot = await _fireStore
-        .collection('name')
-        .where('updateBy', whereIn: [_currentUserId]).get();
-    int index = 0;
-    setState(() {
-      _report =
-          _report.toString() + '-------------------------\n' + 'รายชื่อทีมงาน';
-    });
-    // Get data from docs and convert map to List
-    querySnapshot.docs.map((doc) {
-      index += 1;
-      setState(() {
-        _report = _report.toString() +
-            '\n' +
-            index.toString() +
-            '. ' +
-            doc.get('name') +
-            ' Tel. ' +
-            doc.get('phone');
-      });
-      return doc.data();
-    }).toList();
-
-    setState(() {
-      _report = _report.toString() + '\n-------------------------';
-    });
-    getWorksheetStatusCollection();
-  }
-
-  Future<List<dynamic>?> getWorksheetCollection() async {
-    // Get docs from collection reference
-    QuerySnapshot querySnapshot = await _fireStore
-        .collection('worksheet')
-        .where('updateBy', whereIn: [_currentUserId]).get();
-    // Get data from docs and convert map to List
-    final updateAt =
-        querySnapshot.docs[querySnapshot.docs.length - 1].get('updateAt');
-    String formattedDate =
-        DateFormat('dd-MM-yyyy').format(updateAt.toDate()).toString();
-    String formattedTime =
-        DateFormat('HH:mm:ss').format(updateAt.toDate()).toString();
-
-    setState(() {
-      worksheetId = querySnapshot.docs[querySnapshot.docs.length - 1].id;
-      print(worksheetId);
-    });
-
-    setState(() {
-      _report = _report.toString() + 'Date: ' + formattedDate + '\n';
-    });
-    setState(() {
-      _report = _report.toString() + 'Time: ' + formattedTime + '\n';
-    });
-
-    setState(() {
-      _report = _report.toString() + '-------------------------\n';
-    });
-    QuerySnapshot querySnapshot1 = await _fireStore
-        .collection('user')
-        .where('uid', whereIn: [_currentUserId]).get();
-    final Team =
-        querySnapshot1.docs[querySnapshot1.docs.length - 1].get('Team');
-    setState(() {
-      _report = _report.toString() + 'Team: ' + Team + '\n';
-    });
-    final Location =
-        querySnapshot1.docs[querySnapshot1.docs.length - 1].get('Location');
-    setState(() {
-      _report = _report.toString() + 'พื้นที่รับผิดชอบ: ' + Location + '\n';
-    });
-    getNameCollection();
-  }
-
-  Future<List<dynamic>?> getWorksheetStatusCollection() async {
-    // Get docs from collection reference
-    QuerySnapshot querySnapshot = await _fireStore
-        .collection('worksheet')
-        .where('updateBy', whereIn: [_currentUserId]).get();
-    // Get data from docs and convert map to List
-    final Ststus =
-        querySnapshot.docs[querySnapshot.docs.length - 1].get('Ststus');
-
-    setState(() {
-      _report = _report.toString() + '\nStstus: ' + Ststus + '\n';
-    });
-
-    setState(() {
-      _report = _report.toString() + '-------------------------';
-    });
-
-    final Critical =
-        querySnapshot.docs[querySnapshot.docs.length - 1].get('Critical');
-    final Major =
-        querySnapshot.docs[querySnapshot.docs.length - 1].get('Major');
-    final Minor =
-        querySnapshot.docs[querySnapshot.docs.length - 1].get('Minor');
-    final None = querySnapshot.docs[querySnapshot.docs.length - 1].get('None');
-
-    setState(() {
-      _report = _report.toString() + '\nจำนวนใบงานใน TTSM\n';
-    });
-
-    setState(() {
-      _report = _report.toString() + 'Critical = $Critical\n';
-    });
-
-    setState(() {
-      _report = _report.toString() + 'Major = $Major\n';
-    });
-
-    setState(() {
-      _report = _report.toString() + 'Minor = $Minor\n';
-    });
-
-    setState(() {
-      _report = _report.toString() + 'None = $None\n';
-    });
-
-    // print(_report);
-    setState(() {
-      reportController.text = _report.toString();
-    });
-  }
 
   Future<List<dynamic>?> getWorkCollection() async {
     // Get docs from collection reference
@@ -236,18 +111,18 @@ class _BodyState extends State<Body> {
         .collection('name')
         .where('updateBy', whereIn: [_currentUserId]).get();
     int index = 0;
-    querySnapshot2.docs.map((doc) {
-      index += 1;
-      setState(() {
-        _reportWork = _reportWork.toString() +
-            '\n' +
-            'ชื่อ: ' +
-            doc.get('name') +
-            '\nเบอร์โทร: ' +
-            doc.get('phone');
-      });
-      return doc.data();
-    }).toList();
+    // querySnapshot2.docs.map((doc) {
+    //   index += 1;
+    setState(() {
+      _reportWork = _reportWork.toString() +
+          '\n' +
+          'ชื่อ: ' +
+          querySnapshot2.docs[0].get('name') +
+          '\nเบอร์โทร: ' +
+          querySnapshot2.docs[0].get('phone');
+    });
+    //   return doc.data();
+    // }).toList();
 
     setState(() {
       _reportWork = _reportWork.toString() + '\n-------------------------';
@@ -295,64 +170,76 @@ class _BodyState extends State<Body> {
     final Defact = querySnapshot.docs[0].get('Defact');
     setState(() {
       _reportWork = _reportWork.toString() + '\n อาการเสีย: $Defact';
+      _report = _report.toString() + 'อาการเสีย: $Defact';
     });
 
     final Sector = querySnapshot.docs[0].get('Sector');
     setState(() {
       _reportWork = _reportWork.toString() + '\n Setor: $Sector';
+      _report = _report.toString() + '\n Setor: $Sector';
     });
 
     final Check0 = querySnapshot.docs[0].get('Check0');
     setState(() {
       _reportWork = _reportWork.toString() + '\n 1.ที่สูง: $Check0';
+      _report = _report.toString() + '\n 1.ที่สูง: $Check0';
     });
 
     final Check1 = querySnapshot.docs[0].get('Check1');
     setState(() {
       _reportWork = _reportWork.toString() + '\n 2.เทปพันสาย: $Check1';
+      _report = _report.toString() + '\n 2.เทปพันสาย: $Check1';
     });
 
     final Check2 = querySnapshot.docs[0].get('Check2');
     setState(() {
       _reportWork = _reportWork.toString() + '\n 3.สแปร์ที่ใช้: $Check2';
+      _report = _report.toString() + '\n 3.สแปร์ที่ใช้: $Check2';
     });
 
     final Check3 = querySnapshot.docs[0].get('Check3');
     setState(() {
       _reportWork = _reportWork.toString() + '\n 4.ปั่นไฟ: $Check3';
+      _report = _report.toString() + '\n 4.ปั่นไฟ: $Check3';
     });
 
     final Correction = querySnapshot.docs[0].get('Correction');
     setState(() {
       _reportWork =
           _reportWork.toString() + '\n 5.รายละเอียดการแก้ไข: $Correction';
+      _report = _report.toString() + '\n 5.รายละเอียดการแก้ไข: $Correction';
     });
 
     final Check4 = querySnapshot.docs[0].get('Check4');
     setState(() {
       _reportWork =
           _reportWork.toString() + '\n 6.Defect จากงานที่ติดตั้ง: $Check4';
+      _report = _report.toString() + '\n 6.Defect จากงานที่ติดตั้ง: $Check4';
     });
 
     final Check5 = querySnapshot.docs[0].get('Check5');
     setState(() {
       _reportWork = _reportWork.toString() + '\n 7.ใช้กุญแจ: $Check5';
+      _report = _report.toString() + '\n 7.ใช้กุญแจ: $Check5';
     });
 
     final Check6 = querySnapshot.docs[0].get('Check6');
     setState(() {
       _reportWork = _reportWork.toString() + '\n 8.Alarm Status: $Check6';
+      _report = _report.toString() + '\n 8.Alarm Status: $Check6';
     });
 
     if (Check2 != 'No') {
       final SerialIn = querySnapshot.docs[0].get('SerialIn');
       setState(() {
         _reportWork = _reportWork.toString() + '\n\n Equip-In: $SerialIn';
+        _report = _report.toString() + '\n\n Equip-In: $SerialIn';
       });
 
       final SerialOut = querySnapshot.docs[0].get('SerialOut');
       setState(() {
         _reportWork = _reportWork.toString() + '\n Equip-Out: $SerialOut';
+        _report = _report.toString() + '\n Equip-Out: $SerialOut';
       });
     }
     final JobDetail = querySnapshot.docs[0].get('JobDetail');
@@ -362,10 +249,11 @@ class _BodyState extends State<Body> {
     });
 
     wortsheetController.text = _reportWork.toString();
+    reportController.text = _report.toString();
     // print(_reportWork);
   }
 
-  TextEditingController textFieldController = TextEditingController();
+  TextEditingController textFieldController = TextEditingController(text: '');
   TextEditingController criticalController = TextEditingController(text: '0');
   TextEditingController minorController = TextEditingController(text: '0');
   TextEditingController majorController = TextEditingController(text: '0');
@@ -408,13 +296,13 @@ class _BodyState extends State<Body> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   // ignore: deprecated_member_use
-                  OutlinedButton(
-                    child: Text("โหลดตัวอย่างรายงาน"),
-                    onPressed: () {
-                      Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => AllReport()));
-                    },
-                  ),
+                  // OutlinedButton(
+                  //   child: Text(""),
+                  //   onPressed: () {
+                  //     Navigator.of(context).push(
+                  //         MaterialPageRoute(builder: (context) => AllReport()));
+                  //   },
+                  // ),
                   // ignore: deprecated_member_use
                   RaisedButton(
                     child: Text("ส่งรายงาน"),
@@ -442,31 +330,31 @@ class _BodyState extends State<Body> {
                                   fontSize: 14, color: Colors.redAccent)),
                         ),
                         SizedBox(height: 20),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Container(
-                              child: SizedBox(
-                                width: 250,
-                                child: TextFormField(
-                                  decoration: InputDecoration(
-                                      hintText: "สาเหตุที่เข้าปิดงานไม่ได้"),
-                                  validator: (value) {},
-                                  controller: textFieldController,
-                                ),
-                              ),
-                            ),
-                            // ignore: deprecated_member_use
-                            FlatButton(
-                              child: Text(
-                                'บันทึก',
-                                style: TextStyle(color: Colors.white),
-                              ),
-                              color: Colors.grey,
-                              onPressed: () {},
-                            )
-                          ],
-                        ),
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        //   children: [
+                        //     Container(
+                        //       child: SizedBox(
+                        //         width: 250,
+                        //         child: TextFormField(
+                        //           decoration: InputDecoration(
+                        //               hintText: "สาเหตุที่เข้าปิดงานไม่ได้"),
+                        //           validator: (value) {},
+                        //           controller: textFieldController,
+                        //         ),
+                        //       ),
+                        //     ),
+                        //     // ignore: deprecated_member_use
+                        //     FlatButton(
+                        //       child: Text(
+                        //         'บันทึก',
+                        //         style: TextStyle(color: Colors.white),
+                        //       ),
+                        //       color: Colors.grey,
+                        //       onPressed: () {},
+                        //     )
+                        //   ],
+                        // ),
                         SizedBox(height: 20),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 7),
@@ -604,10 +492,12 @@ class _BodyState extends State<Body> {
       'updateAt': new DateTime.now(),
       'updateBy': _currentUserId
     };
+    print(WorkID + ' : WorkID');
+    print(data);
 
     FirebaseFirestore.instance
         .collection('worksheet')
-        .doc(worksheetId)
+        .doc(WorkID)
         .update(data)
         .then((value) => showDialogSuccess(context));
   }
