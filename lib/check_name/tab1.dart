@@ -344,7 +344,57 @@ class _Tab1State extends State<Tab1> {
                                       document.data()! as Map<String, dynamic>;
                                   // ignore: deprecated_member_use
                                   return OutlinedButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      if (snapshot.data!.docs[0].id !=
+                                          document.id) {
+                                        showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              AlertDialog dialog = AlertDialog(
+                                                  content: Text("ต้องการลบ " +
+                                                      data['name'] +
+                                                      'ป่าว'),
+                                                  actions: [
+                                                    TextButton(
+                                                        child: Text('ยกเลิก',
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .blueAccent)),
+                                                        onPressed: () {
+                                                          Navigator.pop(
+                                                              context);
+                                                          // Navigator.pushAndRemoveUntil(
+                                                          //   context,
+                                                          //   MaterialPageRoute(
+                                                          //       builder: (context) =>
+                                                          //           Report()),
+                                                          //   (Route<dynamic> route) => false,
+                                                          // );
+                                                        }),
+                                                    TextButton(
+                                                        child: Text('ลบ',
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .blueAccent)),
+                                                        onPressed: () {
+                                                          addName
+                                                              .doc(document.id)
+                                                              .delete();
+                                                          Navigator.pop(
+                                                              context);
+                                                          // Navigator.pushAndRemoveUntil(
+                                                          //   context,
+                                                          //   MaterialPageRoute(
+                                                          //       builder: (context) =>
+                                                          //           Report()),
+                                                          //   (Route<dynamic> route) => false,
+                                                          // );
+                                                        })
+                                                  ]);
+                                              return dialog;
+                                            });
+                                      }
+                                    },
                                     child: ListTile(
                                       // tileColor: Colors.grey[300],
                                       title: Row(

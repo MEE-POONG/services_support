@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:localstorage/localstorage.dart';
 import 'package:services_support/home/home.dart';
 import 'package:services_support/check_name/check_name.dart';
 import 'package:services_support/menu_page/report/report.dart';
@@ -26,6 +27,18 @@ class _BottomNavBarFb5State extends State<BottomNavBarFb5> {
   final backgroundColor = const Color(0xffffffff);
 
   final errorColor = const Color(0xffEF4444);
+
+  String JobId = '';
+  String WorkID = '';
+  final LocalStorage storage = new LocalStorage('mee_report_app');
+
+  @override
+  void initState() {
+    super.initState();
+
+    JobId = storage.getItem('JobId');
+    WorkID = storage.getItem('WorkID');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -78,17 +91,17 @@ class _BottomNavBarFb5State extends State<BottomNavBarFb5> {
                         (Route<dynamic> route) => false,
                       );
                     }),
-                IconBottomBar(
-                    text: "ทำงาน",
-                    icon: Icons.construction,
-                    selected: widget.i == 4,
-                    onPressed: () {
-                      Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(builder: (context) => Working()),
-                        (Route<dynamic> route) => false,
-                      );
-                    }),
+                // IconBottomBar(
+                //     text: "ทำงาน",
+                //     icon: Icons.construction,
+                //     selected: widget.i == 4,
+                //     onPressed: () {
+                //       Navigator.pushAndRemoveUntil(
+                //         context,
+                //         MaterialPageRoute(builder: (context) => Working()),
+                //         (Route<dynamic> route) => false,
+                //       );
+                //     }),
                 IconBottomBar(
                   text: "Report",
                   icon: Icons.history_edu,

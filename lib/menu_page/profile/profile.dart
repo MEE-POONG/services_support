@@ -43,23 +43,19 @@ class _BodyState extends State<Body> {
   @override
   void initState() {
     super.initState();
+    getWorkCollection();
   }
 
   final _fireStore = FirebaseFirestore.instance;
   Future<List<dynamic>?> getWorkCollection() async {
-    QuerySnapshot querySnapshot1 = await _fireStore
-        .collection('user')
-        .where('uid', whereIn: [_currentUserId]).get();
-    final Team =
-        querySnapshot1.docs[querySnapshot1.docs.length - 1].get('Team');
-    final Location =
-        querySnapshot1.docs[querySnapshot1.docs.length - 1].get('Location');
-    final Name =
-        querySnapshot1.docs[querySnapshot1.docs.length - 1].get('Name');
-    final Passport =
-        querySnapshot1.docs[querySnapshot1.docs.length - 1].get('Passport');
-    final Passport1 =
-        querySnapshot1.docs[querySnapshot1.docs.length - 1].get('Passport');
+    DocumentSnapshot<Map<String, dynamic>> querySnapshot1 =
+        await _fireStore.collection('user').doc(_currentUserId).get();
+    print(querySnapshot1.get('Team'));
+    teamController.text = querySnapshot1.get('Team');
+    locationController.text = querySnapshot1.get('Location');
+    nameController.text = querySnapshot1.get('displayName');
+    passportController.text = querySnapshot1.get('passport');
+    phonController.text = querySnapshot1.get('phoneNumber');
   }
 
   @override
@@ -316,31 +312,31 @@ class _BodyState extends State<Body> {
                         ],
                       ),
                     ),
-                    SizedBox(
-                      height: 35,
-                    ),
-                    SizedBox(
-                      width: double.infinity, // <-- match_parent
-                      child: RaisedButton(
-                        onPressed: () {},
-                        color: Colors.lightBlue,
-                        padding: EdgeInsets.symmetric(horizontal: 20),
-                        elevation: 2,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20)),
-                        child: Text(
-                          "SAVE",
-                          style: TextStyle(
-                            fontSize: 14,
-                            letterSpacing: 2.2,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 35,
-                    ),
+                    // SizedBox(
+                    //   height: 35,
+                    // ),
+                    // SizedBox(
+                    //   width: double.infinity, // <-- match_parent
+                    //   child: RaisedButton(
+                    //     onPressed: () {},
+                    //     color: Colors.lightBlue,
+                    //     padding: EdgeInsets.symmetric(horizontal: 20),
+                    //     elevation: 2,
+                    //     shape: RoundedRectangleBorder(
+                    //         borderRadius: BorderRadius.circular(20)),
+                    //     child: Text(
+                    //       "SAVE",
+                    //       style: TextStyle(
+                    //         fontSize: 14,
+                    //         letterSpacing: 2.2,
+                    //         color: Colors.white,
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
+                    // SizedBox(
+                    //   height: 35,
+                    // ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
