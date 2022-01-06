@@ -305,7 +305,9 @@ class _BodyState extends State<Body> {
                   // ),
                   // ignore: deprecated_member_use
                   RaisedButton(
-                    child: Text("ส่งรายงาน"),
+                    color: Colors.blue[900],
+                    child: Text("ส่งรายงาน",
+                        style: TextStyle(color: Colors.white)),
                     onPressed: () {
                       setState(() {
                         checkWidget = true;
@@ -428,7 +430,10 @@ class _BodyState extends State<Body> {
                           onPressed: () async {
                             submit();
                           },
-                        )
+                        ),
+                        Container(height: 20),
+                        Divider(height: 20, thickness: 2),
+                        Container(height: 20),
                       ],
                     ),
                   ),
