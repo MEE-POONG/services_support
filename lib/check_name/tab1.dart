@@ -353,7 +353,7 @@ class _Tab1State extends State<Tab1> {
                                               AlertDialog dialog = AlertDialog(
                                                   content: Text("ต้องการลบ " +
                                                       data['name'] +
-                                                      'ป่าว'),
+                                                      '  หรือไม่'),
                                                   actions: [
                                                     TextButton(
                                                         child: Text('ยกเลิก',

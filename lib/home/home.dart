@@ -121,19 +121,23 @@ class _BodyState extends State<Body> {
                       snapshot.data!.docs.map((DocumentSnapshot document) {
                     Map<String, dynamic> data =
                         document.data()! as Map<String, dynamic>;
-                    return OutlinedButton(
-                      onPressed: () {
-                        _saveToStorage(
-                            document.id, data['JobId'], data['Site']);
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => BodyWorking()));
-                      },
-                      child: ListTile(
-                        // tileColor: Colors.blue[200],
-                        title: Text(data['JobId'],
-                            style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.w500)),
-                        subtitle: Text(data['Site']),
+                    return Dismissible(
+                      key: Key(document.id.toString()),
+                      background: Container(decoration: BoxDecoration(color: Color(0xffffe6e6))),
+                      child: OutlinedButton(
+                        onPressed: () {
+                          _saveToStorage(
+                              document.id, data['JobId'], data['Site']);
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => BodyWorking()));
+                        },
+                        child: ListTile(
+                          // tileColor: Colors.blue[200],
+                          title: Text(data['JobId'],
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.w500)),
+                          subtitle: Text(data['Site']),
+                        ),
                       ),
                     );
                   }).toList(),
