@@ -123,7 +123,8 @@ class _BodyState extends State<Body> {
                         document.data()! as Map<String, dynamic>;
                     return Dismissible(
                       key: Key(document.id.toString()),
-                      background: Container(decoration: BoxDecoration(color: Color(0xffffe6e6))),
+                      background: Container(
+                          decoration: BoxDecoration(color: Color(0xffffe6e6))),
                       child: OutlinedButton(
                         onPressed: () {
                           _saveToStorage(
