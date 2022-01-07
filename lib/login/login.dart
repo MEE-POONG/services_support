@@ -162,32 +162,32 @@ class _SignFormState extends State<SignForm> {
               width: 200,
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 40),
               child: TextFormField(
                   controller: _email,
                   decoration: InputDecoration(
                       // labelText: "Username ID",
-                      hintText: "      Username ID",
+                      hintText: "Username ID",
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(40),
                       )),
-                  textAlign: TextAlign.start),
+                  textAlign: TextAlign.center),
             ),
             SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.symmetric(
-                horizontal: 20,
+                horizontal: 40,
               ),
               child: TextFormField(
                   obscureText: true,
                   controller: _password,
                   decoration: InputDecoration(
                       // labelText: "Password",
-                      hintText: '     Password',
+                      hintText: 'Password',
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(40),
                       )),
-                  textAlign: TextAlign.start),
+                  textAlign: TextAlign.center),
             ),
             SizedBox(height: 5),
             Row(
