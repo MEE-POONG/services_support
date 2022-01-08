@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:localstorage/localstorage.dart';
 import 'package:services_support/home/home.dart';
 import 'package:services_support/check_name/check_name.dart';
 import 'package:services_support/menu_page/report/report.dart';
 import 'package:services_support/menu_page/work.dart';
-import 'package:services_support/menu_page/working/working.dart';
 
 class BottomNavBarFb5 extends StatefulWidget {
   const BottomNavBarFb5({
@@ -28,16 +26,11 @@ class _BottomNavBarFb5State extends State<BottomNavBarFb5> {
 
   final errorColor = const Color(0xffEF4444);
 
-  String JobId = '';
-  String WorkID = '';
-  final LocalStorage storage = new LocalStorage('mee_report_app');
 
   @override
   void initState() {
     super.initState();
 
-    JobId = storage.getItem('JobId');
-    WorkID = storage.getItem('WorkID');
   }
 
   @override
