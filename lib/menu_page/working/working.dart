@@ -32,9 +32,9 @@ class _WorkingState extends State<Working> {
       appBar: AppBar(
         title: Text(
           "Working",
-          // "เลือกไซต์เพื่อเริ่มดำเนินการ",
           style: TextStyle(color: Colors.white),
         ),
+        centerTitle: true,
         flexibleSpace: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
@@ -174,6 +174,7 @@ class _BodyState extends State<BodyWorking> {
           // "เลือกไซต์เพื่อเริ่มดำเนินการ",
           style: TextStyle(color: Colors.white),
         ),
+        centerTitle: true,
         actions: [
           IconButton(
             icon: Icon(

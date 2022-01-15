@@ -60,6 +60,7 @@ class _AppState extends State<App> {
         appBarTheme: AppBarTheme(
           color: Colors.white10,
           elevation: 0,
+          // ignore: deprecated_member_use
           brightness: Brightness.light,
           iconTheme: IconThemeData(
             color: Colors.black,

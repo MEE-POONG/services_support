@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:localstorage/localstorage.dart';
-import 'package:services_support/menu_page/report/report.dart';
 import 'package:intl/intl.dart';
 
 class Tab1 extends StatefulWidget {
@@ -78,8 +77,8 @@ class _Tab1State extends State<Tab1> {
             '\n' +
             index.toString() +
             '. ' +
-            doc.get('name') +
-            ' Tel. ' +
+            doc.get('name') + ' (L)' +'\n'+
+            ' Tel. ' + 
             doc.get('phone');
       });
       return doc.data();
@@ -138,10 +137,10 @@ class _Tab1State extends State<Tab1> {
     DocumentSnapshot<Map<String, dynamic>> querySnapshot =
         await _fireStore.collection('worksheet').doc(id).get();
     // Get data from docs and convert map to List
-    final Ststus = querySnapshot.get('Ststus');
+    final Status = querySnapshot.get('Status');
 
     setState(() {
-      _report = _report.toString() + '\nStstus: ' + Ststus + '\n';
+      _report = _report.toString() + '\nStatus: ' + Status + '\n';
     });
 
     setState(() {
@@ -192,7 +191,7 @@ class _Tab1State extends State<Tab1> {
         'Minor': _input2,
         'Major': _input3,
         'None': _input4,
-        'Ststus': _input5,
+        'Status': _input5,
         'createAt': DateTime.now(),
         'createBy': _currentUserId,
         'updateAt': DateTime.now(),
@@ -352,8 +351,7 @@ class _Tab1State extends State<Tab1> {
                                             builder: (BuildContext context) {
                                               AlertDialog dialog = AlertDialog(
                                                   content: Text("ต้องการลบ " +
-                                                      data['name'] +
-                                                      '  หรือไม่'),
+                                                      data['name'] ),
                                                   actions: [
                                                     TextButton(
                                                         child: Text('ยกเลิก',
@@ -597,6 +595,7 @@ class _Tab1State extends State<Tab1> {
                         // controller: Data2,
                       ),
                     ),
+                    // ignore: deprecated_member_use
                     RaisedButton(
                       child: Text("Copy "),
                       onPressed: () {
