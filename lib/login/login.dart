@@ -189,21 +189,21 @@ class _SignFormState extends State<SignForm> {
                       )),
                   textAlign: TextAlign.center),
             ),
-            SizedBox(height: 5),
-            Row(
-              children: [
-                Checkbox(
-                  value: checkBox,
-                  activeColor: Colors.green,
-                  onChanged: (value) {
-                    setState(() {
-                      checkBox = value!;
-                    });
-                  },
-                ),
-                Text("จดจำรหัสผ่าน"),
-              ],
-            ),
+            SizedBox(height: 10),
+            // Row(
+            //   children: [
+            //     Checkbox(
+            //       value: checkBox,
+            //       activeColor: Colors.green,
+            //       onChanged: (value) {
+            //         setState(() {
+            //           checkBox = value!;
+            //         });
+            //       },
+            //     ),
+            //     Text("จดจำรหัสผ่าน"),
+            //   ],
+            // ),
             Padding(
               padding: const EdgeInsets.all(10),
               child: SizedBox(

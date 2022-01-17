@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:services_support/home/home.dart';
 import 'package:services_support/login/login.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
@@ -56,7 +55,7 @@ class _BodyState extends State<Body> {
                 style: TextStyle(color: Colors.black),
               ),
               Image.asset(
-                "assets/images/New icon.png",
+                "assets/images/New iconApp pre2-2.png",
                 height: 400,
                 width: double.infinity,
               ),

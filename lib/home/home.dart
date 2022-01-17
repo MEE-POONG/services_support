@@ -124,23 +124,26 @@ class _BodyState extends State<Body> {
                       key: Key(document.id.toString()),
                       background: Container(
                           decoration: BoxDecoration(color: Color(0xffffe6e6))),
-                      
                       confirmDismiss: (DismissDirection direction) async {
                         return await showDialog(
                           context: context,
                           builder: (BuildContext context) {
                             return AlertDialog(
                               title: const Text("Confirm"),
-                              content: const Text(
-                                  "ต้องการลบ Job Report"),
+                              content:  Text(
+                                  "ต้องการลบ " + data['JobId']),
                               actions: <Widget>[
+                                // ignore: deprecated_member_use
                                 FlatButton(
                                     onPressed: () {
                                       FirebaseFirestore.instance
-      .collection('work').doc(document.id)
-                                                              .delete();
-                                        Navigator.of(context).pop(true);},
+                                          .collection('work')
+                                          .doc(document.id)
+                                          .delete();
+                                      Navigator.of(context).pop(true);
+                                    },
                                     child: const Text("DELETE")),
+                                // ignore: deprecated_member_use
                                 FlatButton(
                                   onPressed: () =>
                                       Navigator.of(context).pop(false),

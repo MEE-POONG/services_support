@@ -175,7 +175,7 @@ class _BodyState extends State<Body> {
 
     final Sector = querySnapshot.docs[0].get('Sector');
     setState(() {
-      _reportWork = _reportWork.toString() + '\n Sector: <> $Sector';
+      _reportWork = _reportWork.toString() + '\n Sector:  $Sector';
       _report = _report.toString() + '\n Sector:  $Sector';
     });
 

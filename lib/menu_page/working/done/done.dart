@@ -802,7 +802,7 @@ class _BodyState extends State<Body> {
   void updateDone() {
     final data = {
       'Defact': defactController.text,
-      'Sector': sectorController.text,
+      'Sector': sectorController.text.isEmpty ? '<>' : sectorController.text,
       'Correction': correctionController.text.isEmpty
           ? '<>'
           : correctionController.text,
@@ -813,7 +813,7 @@ class _BodyState extends State<Body> {
       'Check4': checkBox4 ? 'Yes' : 'No',
       'Check5': checkBox5 ? 'Yes' : 'No',
       'Check6': checkBox6 ? 'Clear' : 'Not Clear',
-      'Remark': remarkController.text,
+      'Remark': remarkController.text, 
       'SubCause': _currentSubCaseValue,
       'Action': _currentActionValue,
       'FaultType': _currentFaulttypeValue,

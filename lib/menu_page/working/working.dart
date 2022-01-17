@@ -128,8 +128,8 @@ class _BodyState extends State<BodyWorking> {
   String JobKey = '';
   String Site = '';
   String siteName = 'ไม่ระบุ';
-  dynamic lat = 0.0;
-  dynamic long = 0.0;
+  dynamic lat = 14.969811;
+  dynamic long = 102.102264;
 
   @override
   initState() {
@@ -288,9 +288,11 @@ class _BodyState extends State<BodyWorking> {
 
         actions: <Widget>[
           TextButton(
-            onPressed: () => Navigator.pop(context, 'OK'),
-            child: const Text('OK'),
-          ),
+              onPressed: () {
+                Navigator.pop(context, 'OK');
+                
+              },
+              child: const Text('OK')),
         ],
       ),
     );
@@ -332,3 +334,4 @@ class _BodyState extends State<BodyWorking> {
         .update({'Depart': new DateTime.now()});
   }
 }
+
